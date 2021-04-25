@@ -7,6 +7,7 @@ import Animated, {
   useAnimatedStyle,
   Easing,
 } from 'react-native-reanimated';
+
 import { transparent, blueShade } from '../../global/colors';
 
 const bg = require('../../global/images/rectangle-bg.png');
