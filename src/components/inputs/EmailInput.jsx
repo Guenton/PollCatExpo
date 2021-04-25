@@ -19,9 +19,9 @@ const styles = ScaledSheet.create({
   },
 });
 
-const EmailInput = ({ isGreen }) => (
+const EmailInput = ({ containerStyle, isGreen }) => (
   <Input
-    containerStyle={styles.container}
+    containerStyle={[styles.container, containerStyle]}
     inputContainerStyle={styles.border}
     placeholder={i18n.t('email')}
     leftIcon={<Icon type="font-awesome-5" name="at" color={isGreen ? green : blue} />}

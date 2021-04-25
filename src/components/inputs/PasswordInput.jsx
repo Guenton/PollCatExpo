@@ -19,9 +19,9 @@ const styles = ScaledSheet.create({
   },
 });
 
-const PasswordInput = ({ isGreen }) => (
+const PasswordInput = ({ containerStyle, isGreen }) => (
   <Input
-    containerStyle={styles.container}
+    containerStyle={[styles.container, containerStyle]}
     inputContainerStyle={styles.border}
     placeholder={i18n.t('password')}
     leftIcon={<Icon type="font-awesome-5" name="key" color={isGreen ? green : blue} />}
