@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import Curtain from '../components/containers/Curtain';
+import PollCatLogo from '../components/images/PollCatLogo';
 
 const LoginScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <Curtain>
-        <Text>Open up App.js to start working on your app!</Text>
+        <PollCatLogo />
       </Curtain>
     </View>
   );
