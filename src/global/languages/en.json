@@ -1,4 +1,8 @@
 {
   "test": "Testing application language capabilities",
-  "logoTitle": "<PollCat />"
+  "logoTitle": "<PollCat />",
+  "loginFormHeader": "Hi There Cat!",
+  "loginFormSubHeader": "Please Log in to continue",
+  "email": "Email",
+  "password": "Password"
 }
