@@ -7,9 +7,7 @@ import { green, blue, grey } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   container: {
-    width: '290@s',
     height: '50@s',
-    alignSelf: 'center',
   },
   border: {
     borderColor: grey,
@@ -17,12 +15,16 @@ const styles = ScaledSheet.create({
     borderRadius: '10@s',
     paddingHorizontal: '10@s',
   },
+  text: {
+    fontSize: '12@s',
+  },
 });
 
 const EmailInput = ({ containerStyle, isGreen }) => (
   <Input
     containerStyle={[styles.container, containerStyle]}
     inputContainerStyle={styles.border}
+    inputStyle={styles.text}
     placeholder={i18n.t('email')}
     leftIcon={<Icon type="font-awesome-5" name="at" color={isGreen ? green : blue} />}
   />

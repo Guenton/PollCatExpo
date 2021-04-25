@@ -4,5 +4,6 @@
   "loginFormHeader": "Hi There Cat!",
   "loginFormSubHeader": "Please Log in to continue",
   "email": "Email",
-  "password": "Password"
+  "password": "Password",
+  "forgotPassword": "Forgot password?"
 }
