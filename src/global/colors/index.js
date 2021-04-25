@@ -1,4 +1,5 @@
 export const white = '#FFFFFF';
+export const grey = '#9A9A9A';
 export const black = '#000000';
 export const transparent = '#00000000';
 
@@ -13,6 +14,7 @@ export const yellowShade = '#F2E30F99';
 
 export default {
   white,
+  grey,
   black,
   transparent,
   blue,

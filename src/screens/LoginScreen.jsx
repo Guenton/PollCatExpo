@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 
 import Curtain from '../components/containers/Curtain';
+import LoginForm from '../components/forms/LoginForm';
 import GuenTon from '../components/images/GuenTon';
 import PollCatLogo from '../components/images/PollCatLogo';
 
@@ -18,6 +19,9 @@ const LoginScreen = () => (
     <Curtain>
       <PollCatLogo />
     </Curtain>
+
+    <LoginForm />
+
     <GuenTon />
   </View>
 );
