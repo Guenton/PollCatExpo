@@ -3,6 +3,8 @@
   "logoTitle": "<PollCat />",
   "loginFormHeader": "Hi There Cat!",
   "loginFormSubHeader": "Please Log in to continue",
+  "noAccount": "No Kitten Account?",
+  "signUp": "Sign Up",
   "email": "Email",
   "password": "Password",
   "forgotPassword": "Forgot password?"

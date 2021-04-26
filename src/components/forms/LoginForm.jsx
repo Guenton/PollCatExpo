@@ -8,6 +8,7 @@ import EmailInput from '../inputs/EmailInput';
 import PasswordInput from '../inputs/PasswordInput';
 import ForgotPasswordButton from '../buttons/ForgotPasswordButton';
 import PawButton from '../buttons/PawButton';
+import FormFooter from '../labels/FormFooter';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -27,6 +28,8 @@ const LoginForm = () => (
     </View>
 
     <PawButton style={styles.paw} isGreen onPress={() => {}} />
+
+    <FormFooter label={i18n.t('noAccount')} boldLabel={i18n.t('signUp')} onPress={() => {}} />
   </View>
 );
 

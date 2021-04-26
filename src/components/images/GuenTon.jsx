@@ -7,10 +7,11 @@ const guenton = require('../../global/images/guenton.png');
 const styles = ScaledSheet.create({
   container: {
     alignSelf: 'flex-end',
+    marginRight: '2@s',
   },
   image: {
-    height: '28@s',
-    width: '100@s',
+    height: '21@s',
+    width: '66@s',
   },
 });
 
