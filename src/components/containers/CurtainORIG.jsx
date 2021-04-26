@@ -1,13 +1,16 @@
 import React from 'react';
 import { Dimensions, StatusBar, ImageBackground, View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
-import { useSpring, animated } from 'react-spring';
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  Easing,
+} from 'react-native-reanimated';
 
-import { transparent, blueShade, greenShade, pinkShade } from '../../global/colors';
+import { transparent, blueShade } from '../../global/colors';
 
-const AnimatedView = animated(View);
 const bg = require('../../global/images/rectangle-bg.png');
-
 const width = Dimensions.get('window').width;
 const styles = ScaledSheet.create({
   container: {
@@ -31,33 +34,27 @@ const styles = ScaledSheet.create({
   },
 });
 
-const Curtain = ({ children, color, height }) => {
-  const animateColorTo = () => {
-    if (color === 'green') return { ...styles.content, backgroundColor: greenShade };
-    else if (color === 'pink') return { ...styles.content, backgroundColor: pinkShade };
-    else return styles.content;
+const Curtain = ({ children }) => {
+  const animHeight = useSharedValue(250);
+
+  const config = {
+    duration: 500,
+    easing: Easing.bezier(0.5, 0.01, 0, 1),
   };
 
-  const colorize = useSpring({
-    to: animateColorTo(),
-    from: styles.content,
-    config: { duration: 750 },
-  });
-
-  const resize = useSpring({
-    to: { ...styles.container, height },
-    from: styles.container,
-  });
+  const anim = useAnimatedStyle(() => ({
+    height: withTiming(animHeight.value, config),
+  }));
 
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={transparent} animated translucent />
 
-      <AnimatedView style={resize}>
+      <Animated.View style={[styles.container, anim]}>
         <ImageBackground style={styles.image} source={bg} resizeMode="cover">
-          <AnimatedView style={colorize}>{children}</AnimatedView>
+          <View style={styles.content}>{children}</View>
         </ImageBackground>
-      </AnimatedView>
+      </Animated.View>
     </>
   );
 };
