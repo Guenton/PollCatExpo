@@ -21,8 +21,8 @@ const LoginScreen = () => {
     <View style={styles.container}>
       {view === 'login' && (
         <>
-          <PollCatCurtain />
-          <LoginForm onGoSignUp={() => setView('signup')} />
+          <PollCatCurtain color="blue" height={scale(250)} />
+          <LoginForm onGoSignup={() => setView('signup')} />
         </>
       )}
 

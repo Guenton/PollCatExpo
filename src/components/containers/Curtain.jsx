@@ -32,14 +32,14 @@ const styles = ScaledSheet.create({
 });
 
 const Curtain = ({ children, color, height }) => {
-  const animateColorTo = () => {
+  const animateColor = () => {
     if (color === 'green') return { ...styles.content, backgroundColor: greenShade };
     else if (color === 'pink') return { ...styles.content, backgroundColor: pinkShade };
     else return styles.content;
   };
 
   const colorize = useSpring({
-    to: animateColorTo(),
+    to: animateColor(),
     from: styles.content,
     config: { duration: 750 },
   });

@@ -1,17 +1,23 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
-import { scale } from 'react-native-size-matters';
+import { scale, ScaledSheet } from 'react-native-size-matters';
 
-import { green, blue } from '../../global/colors';
+const styles = ScaledSheet.create({
+  container: {
+    zIndex: 5,
+    elevation: 5,
+  },
+});
 
-const PawButton = ({ style, isGreen, onPress }) => (
+const PawButton = ({ style, color, disabled, onPress }) => (
   <Icon
-    containerStyle={style}
+    containerStyle={[styles.container, style]}
     name="paw"
     type="font-awesome-5"
-    color={isGreen ? green : blue}
+    color={color}
     size={scale(26)}
     onPress={() => onPress()}
+    disabled={disabled}
     reverse
     raised
   />

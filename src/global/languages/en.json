@@ -11,5 +11,6 @@
   "signupFormHeader": "Create A Kitten Account",
   "signupFormSubHeader": "Signup to get started",
   "alreadySignedUp": "Already a Cat?",
-  "login": "Log In"
+  "login": "Log In",
+  "confirmPassword": "Confirm Password"
 }

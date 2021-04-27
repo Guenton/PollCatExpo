@@ -7,17 +7,17 @@ import FormHeader from '../labels/FormHeader';
 import EmailInput from '../inputs/EmailInput';
 import PasswordInput from '../inputs/PasswordInput';
 import ForgotPasswordButton from '../buttons/ForgotPasswordButton';
-import PawButton from '../buttons/PawButton';
+import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
   inputContainer: { width: '290@s', alignSelf: 'center' },
-  email: { marginBottom: '15@s' },
+  email: { marginBottom: '18@s' },
   paw: { alignSelf: 'center' },
 });
 
-const LoginForm = ({ onGoSignUp }) => (
+const LoginForm = ({ onGoSignup }) => (
   <View style={styles.container}>
     <FormHeader label={i18n.t('loginFormHeader')} subLabel={i18n.t('loginFormSubHeader')} />
 
@@ -27,12 +27,12 @@ const LoginForm = ({ onGoSignUp }) => (
       <ForgotPasswordButton onPress={() => {}} />
     </View>
 
-    <PawButton style={styles.paw} isGreen onPress={() => {}} />
+    <GradientPawButton style={styles.paw} variant="login" onPress={() => {}} />
 
     <FormFooter
       label={i18n.t('noAccount')}
       boldLabel={i18n.t('signUp')}
-      onPress={() => onGoSignUp()}
+      onPress={() => onGoSignup()}
     />
   </View>
 );

@@ -20,14 +20,21 @@ const styles = ScaledSheet.create({
   },
 });
 
-const PasswordInput = ({ containerStyle, isGreen }) => (
-  <Input
-    containerStyle={[styles.container, containerStyle]}
-    inputContainerStyle={styles.border}
-    inputStyle={styles.text}
-    placeholder={i18n.t('password')}
-    leftIcon={<Icon type="font-awesome-5" name="key" color={isGreen ? green : blue} />}
-  />
-);
+const PasswordInput = ({ containerStyle, isGreen, isConfirm }) => {
+  const variant = () => {
+    if (isConfirm) return 'confirmPassword';
+    else return 'password';
+  };
+
+  return (
+    <Input
+      containerStyle={[styles.container, containerStyle]}
+      inputContainerStyle={styles.border}
+      inputStyle={styles.text}
+      placeholder={i18n.t(variant())}
+      leftIcon={<Icon type="font-awesome-5" name="key" color={isGreen ? green : blue} />}
+    />
+  );
+};
 
 export default PasswordInput;
