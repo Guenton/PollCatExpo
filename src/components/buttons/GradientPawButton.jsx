@@ -9,10 +9,12 @@ import PawButton from './PawButton';
 
 import {
   setGradientPawButtonWidth,
-  setGradientPawButtonFabColor,
+  setGradientPawButtonColor,
+  setGradientPawButtonGradient,
 } from '../../store/actions/animation';
 
-import { green, blue } from '../../global/colors';
+import { green, blue, pink } from '../../global/colors';
+import I18n from 'i18n-js';
 
 const AnimatedGradientButton = animated(GradientButton);
 const AnimatedPawButton = animated(PawButton);
@@ -26,18 +28,36 @@ const styles = ScaledSheet.create({
 const GradientPawButton = ({
   style,
   variant,
-  isLoading,
   onPress,
+  isLoading,
   gradientPawButtonState,
   setGradientPawButtonWidth,
-  setGradientPawButtonFabColor,
+  setGradientPawButtonColor,
+  setGradientPawButtonGradient,
 }) => {
+  const labelText = () => {
+    if (variant === 'login') return I18n.t('login');
+    else if (variant === 'signup') return I18n.t('signUp');
+    else if (variant === 'request-reset') return I18n.t('requestReset');
+    else if (variant === 'confirm-reset') return I18n.t('confirmReset');
+    else return '';
+  };
+
   const animateButtonWidth = () => {
-    if (variant === 'login' && isLoading) return scale(250);
-    else if (variant === 'signup') return scale(250);
-    else if (variant === 'request-reset') return scale(250);
-    else if (variant === 'confirm-reset') return scale(250);
-    else return 0;
+    if (variant === 'login') return isLoading ? scale(150) : scale(200);
+    else if (variant === 'signup') return isLoading ? scale(150) : scale(250);
+    else if (variant === 'request-reset') return isLoading ? scale(150) : scale(250);
+    else if (variant === 'confirm-reset') return isLoading ? scale(150) : scale(250);
+    else return scale(200);
+  };
+
+  const animateColor = variant === 'login' ? green : blue;
+
+  const animateGradient = () => {
+    if (variant === 'signup') return green;
+    else if (variant === 'request-reset') return pink;
+    else if (variant === 'confirm-reset') return pink;
+    else return blue;
   };
 
   const resize = useSpring({
@@ -46,22 +66,42 @@ const GradientPawButton = ({
     onRest: () => setGradientPawButtonWidth(animateButtonWidth()),
   });
 
-  const colorizeFab = useSpring({
-    to: { color: variant === 'login' ? green : blue },
-    from: { color: gradientPawButtonState.fabColor },
+  const colorize = useSpring({
+    to: { color: animateColor },
+    from: { color: gradientPawButtonState.color },
     config: { duration: 750 },
-    onRest: () => setGradientPawButtonFabColor(variant === 'login' ? green : blue),
+    onRest: () => setGradientPawButtonColor(animateColor),
+  });
+
+  const gradientize = useSpring({
+    to: { color: animateGradient() },
+    from: { color: gradientPawButtonState.gradient },
+    config: { duration: 750 },
+    onRest: () => setGradientPawButtonGradient(animateGradient()),
   });
 
   return (
     <View style={[styles.container, style]}>
-      <AnimatedPawButton color={colorizeFab.color} onPress={() => onPress()} />
-      <AnimatedGradientButton style={resize} label="Sign Up" onPress={() => onPress()} />
+      <AnimatedPawButton color={colorize.color} onPress={() => onPress()} />
+      <AnimatedGradientButton
+        style={resize}
+        color={colorize.color}
+        gradient={gradientize.color}
+        label={labelText()}
+        onPress={() => onPress()}
+      />
     </View>
   );
 };
 
-const mapStateToProps = (state) => ({ gradientPawButtonState: state.animation.gradientPawButton });
-const mapDispatchToProps = { setGradientPawButtonWidth, setGradientPawButtonFabColor };
+const mapStateToProps = (state) => ({
+  isLoading: state.core.isLoading,
+  gradientPawButtonState: state.animation.gradientPawButton,
+});
+const mapDispatchToProps = {
+  setGradientPawButtonWidth,
+  setGradientPawButtonColor,
+  setGradientPawButtonGradient,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GradientPawButton);

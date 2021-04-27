@@ -4,7 +4,7 @@ import {
   SET_CURTAIN_HEIGHT,
   SET_CURTAIN_COLOR,
   SET_GRADIENT_PAW_BUTTON_WIDTH,
-  SET_GRADIENT_PAW_BUTTON_FAB_COLOR,
+  SET_GRADIENT_PAW_BUTTON_COLOR,
 } from '../actions/animation';
 
 const initialState = {
@@ -14,7 +14,8 @@ const initialState = {
   },
   gradientPawButton: {
     width: 0,
-    fabColor: white,
+    color: white,
+    gradient: white,
   },
 };
 
@@ -25,15 +26,9 @@ const animationReducer = (state = initialState, action) => {
     case SET_CURTAIN_COLOR:
       return { ...state, curtain: { ...state.curtain, color: action.color } };
     case SET_GRADIENT_PAW_BUTTON_WIDTH:
-      return {
-        ...state,
-        gradientPawButton: { ...state.gradientPawButton, width: action.width },
-      };
-    case SET_GRADIENT_PAW_BUTTON_FAB_COLOR:
-      return {
-        ...state,
-        gradientPawButton: { ...state.gradientPawButton, fabColor: action.color },
-      };
+      return { ...state, gradientPawButton: { ...state.gradientPawButton, width: action.width } };
+    case SET_GRADIENT_PAW_BUTTON_COLOR:
+      return { ...state, gradientPawButton: { ...state.gradientPawButton, color: action.color } };
     default:
       return state;
   }

@@ -12,5 +12,7 @@
   "signupFormSubHeader": "Signup to get started",
   "alreadySignedUp": "Already a Cat?",
   "login": "Log In",
-  "confirmPassword": "Confirm Password"
+  "confirmPassword": "Confirm Password",
+  "requestReset": "Request Reset",
+  "confirmReset": "Confirm Reset"
 }
