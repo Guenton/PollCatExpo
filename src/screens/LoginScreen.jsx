@@ -4,6 +4,7 @@ import { ScaledSheet, scale } from 'react-native-size-matters';
 
 import PollCatCurtain from '../components/containers/PollCatCurtain';
 import LoginForm from '../components/forms/LoginForm';
+import SignupForm from '../components/forms/SignupForm';
 import GuenTon from '../components/images/GuenTon';
 
 const styles = ScaledSheet.create({
@@ -21,13 +22,14 @@ const LoginScreen = () => {
       {view === 'login' && (
         <>
           <PollCatCurtain />
-          <LoginForm onSignup={() => setView('signup')} />
+          <LoginForm onGoSignUp={() => setView('signup')} />
         </>
       )}
 
       {view === 'signup' && (
         <>
           <PollCatCurtain color="green" height={scale(175)} />
+          <SignupForm onGoLogin={() => setView('login')} />
         </>
       )}
 

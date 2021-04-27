@@ -17,9 +17,9 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const LoginForm = ({ onGoSignUp }) => (
+const SignupForm = ({ onGoLogin }) => (
   <View style={styles.container}>
-    <FormHeader label={i18n.t('loginFormHeader')} subLabel={i18n.t('loginFormSubHeader')} />
+    <FormHeader label={i18n.t('signupFormHeader')} subLabel={i18n.t('signupFormSubHeader')} />
 
     <View style={styles.inputContainer}>
       <EmailInput containerStyle={styles.email} isGreen />
@@ -30,11 +30,11 @@ const LoginForm = ({ onGoSignUp }) => (
     <PawButton style={styles.paw} isGreen onPress={() => {}} />
 
     <FormFooter
-      label={i18n.t('noAccount')}
-      boldLabel={i18n.t('signUp')}
-      onPress={() => onGoSignUp()}
+      label={i18n.t('alreadySignedUp')}
+      boldLabel={i18n.t('login')}
+      onPress={() => onGoLogin()}
     />
   </View>
 );
 
-export default LoginForm;
+export default SignupForm;

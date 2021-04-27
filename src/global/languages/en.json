@@ -7,5 +7,9 @@
   "signUp": "Sign Up",
   "email": "Email",
   "password": "Password",
-  "forgotPassword": "Forgot password?"
+  "forgotPassword": "Forgot password?",
+  "signupFormHeader": "Create A Kitten Account",
+  "signupFormSubHeader": "Signup to get started",
+  "alreadySignedUp": "Already a Cat?",
+  "login": "Log In"
 }
