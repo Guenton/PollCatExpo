@@ -1,4 +1,4 @@
-import { START_LOADING, STOP_LOADING } from '../actions/core';
+import { SET_LOADING } from '../actions/core';
 
 const initialState = {
   isLoading: false,
@@ -6,10 +6,8 @@ const initialState = {
 
 const coreReducer = (state = initialState, action) => {
   switch (action.type) {
-    case START_LOADING:
-      return { ...state, isLoading: true };
-    case STOP_LOADING:
-      return { ...state, isLoading: false };
+    case SET_LOADING:
+      return { ...state, isLoading: action.bool };
     default:
       return state;
   }
