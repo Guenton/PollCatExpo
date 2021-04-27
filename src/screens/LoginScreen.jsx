@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet, scale } from 'react-native-size-matters';
 
-import Curtain from '../components/containers/Curtain';
+import PollCatCurtain from '../components/containers/PollCatCurtain';
 import LoginForm from '../components/forms/LoginForm';
 import GuenTon from '../components/images/GuenTon';
-import PollCatLogo from '../components/images/PollCatLogo';
 
 const styles = ScaledSheet.create({
   container: {
@@ -14,16 +13,27 @@ const styles = ScaledSheet.create({
   },
 });
 
-const LoginScreen = () => (
-  <View style={styles.container}>
-    <Curtain>
-      <PollCatLogo />
-    </Curtain>
+const LoginScreen = () => {
+  const [view, setView] = useState('login');
 
-    <LoginForm />
+  return (
+    <View style={styles.container}>
+      {view === 'login' && (
+        <>
+          <PollCatCurtain />
+          <LoginForm onSignup={() => setView('signup')} />
+        </>
+      )}
 
-    <GuenTon />
-  </View>
-);
+      {view === 'signup' && (
+        <>
+          <PollCatCurtain color="green" height={scale(175)} />
+        </>
+      )}
+
+      <GuenTon />
+    </View>
+  );
+};
 
 export default LoginScreen;

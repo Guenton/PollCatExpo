@@ -17,7 +17,7 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const LoginForm = () => (
+const LoginForm = ({ onSignup }) => (
   <View style={styles.container}>
     <FormHeader label={i18n.t('loginFormHeader')} subLabel={i18n.t('loginFormSubHeader')} />
 
@@ -29,7 +29,11 @@ const LoginForm = () => (
 
     <PawButton style={styles.paw} isGreen onPress={() => {}} />
 
-    <FormFooter label={i18n.t('noAccount')} boldLabel={i18n.t('signUp')} onPress={() => {}} />
+    <FormFooter
+      label={i18n.t('noAccount')}
+      boldLabel={i18n.t('signUp')}
+      onPress={() => onSignup()}
+    />
   </View>
 );
 
