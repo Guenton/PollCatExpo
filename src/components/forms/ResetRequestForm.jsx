@@ -5,7 +5,6 @@ import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
 import EmailInput from '../inputs/EmailInput';
-import PasswordInput from '../inputs/PasswordInput';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 

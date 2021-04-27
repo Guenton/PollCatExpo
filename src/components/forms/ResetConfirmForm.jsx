@@ -4,11 +4,10 @@ import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
-import EmailInput from '../inputs/EmailInput';
 import PasswordInput from '../inputs/PasswordInput';
-import ForgotPasswordButton from '../buttons/ForgotPasswordButton';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
+import ResetCodeInput from '../inputs/ResetCodeInput';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -17,24 +16,26 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const LoginForm = ({ onGoSignup, onGoReset }) => (
+const ResetConfirmFrom = ({ onGoReset }) => (
   <View style={styles.container}>
-    <FormHeader label={i18n.t('loginFormHeader')} subLabel={i18n.t('loginFormSubHeader')} />
+    <FormHeader
+      label={i18n.t('resetConfirmFormHeader')}
+      subLabel={i18n.t('resetConfirmFormSubHeader')}
+    />
 
     <View style={styles.inputContainer}>
-      <EmailInput containerStyle={styles.input} isGreen />
-      <PasswordInput isGreen />
-      <ForgotPasswordButton onPress={() => onGoReset()} />
+      <ResetCodeInput containerStyle={styles.input} />
+      <PasswordInput isNew />
     </View>
 
-    <GradientPawButton style={styles.paw} variant="login" onPress={() => {}} />
+    <GradientPawButton style={styles.paw} variant="reset-confirm" onPress={() => {}} />
 
     <FormFooter
-      label={i18n.t('noAccount')}
-      boldLabel={i18n.t('signUp')}
-      onPress={() => onGoSignup()}
+      label={i18n.t('noCodeReceived')}
+      boldLabel={i18n.t('requestAgain')}
+      onPress={() => onGoReset()}
     />
   </View>
 );
 
-export default LoginForm;
+export default ResetConfirmFrom;

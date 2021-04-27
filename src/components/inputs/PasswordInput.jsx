@@ -20,9 +20,10 @@ const styles = ScaledSheet.create({
   },
 });
 
-const PasswordInput = ({ containerStyle, isGreen, isConfirm }) => {
+const PasswordInput = ({ containerStyle, isGreen, isConfirm, isNew }) => {
   const variant = () => {
     if (isConfirm) return 'confirmPassword';
+    else if (isNew) return 'newPassword';
     else return 'password';
   };
 

@@ -4,6 +4,7 @@ import { ScaledSheet, scale } from 'react-native-size-matters';
 
 import PollCatCurtain from '../components/containers/PollCatCurtain';
 import LoginForm from '../components/forms/LoginForm';
+import ResetConfirmFrom from '../components/forms/ResetConfirmForm';
 import ResetRequestFrom from '../components/forms/ResetRequestForm';
 import SignupForm from '../components/forms/SignupForm';
 import GuenTon from '../components/images/GuenTon';
@@ -43,6 +44,13 @@ const LoginScreen = () => {
         <>
           <PollCatCurtain color={pinkShade} height={scale(250)} />
           <ResetRequestFrom onGoLogin={() => setView('login')} />
+        </>
+      )}
+
+      {view === 'reset-confirm' && (
+        <>
+          <PollCatCurtain color={pinkShade} height={scale(200)} />
+          <ResetConfirmFrom onGoReset={() => setView('reset-request')} />
         </>
       )}
 

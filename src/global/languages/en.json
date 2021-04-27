@@ -20,5 +20,9 @@
   "confirmPassword": "Confirm Password",
   "requestReset": "Request Reset",
   "confirmReset": "Confirm Reset",
-  "rememberYourPassword": "Remember your Password?"
+  "rememberYourPassword": "Remember your Password?",
+  "noCodeReceived": "No Code Received?",
+  "requestAgain": "Request Again",
+  "newPassword": "New Password",
+  "resetCode": "Reset Code"
 }
