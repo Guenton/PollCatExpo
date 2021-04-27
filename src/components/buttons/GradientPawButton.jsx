@@ -38,16 +38,16 @@ const GradientPawButton = ({
   const labelText = () => {
     if (variant === 'login') return I18n.t('login');
     else if (variant === 'signup') return I18n.t('signUp');
-    else if (variant === 'request-reset') return I18n.t('requestReset');
-    else if (variant === 'confirm-reset') return I18n.t('confirmReset');
+    else if (variant === 'reset-request') return I18n.t('requestReset');
+    else if (variant === 'reset-confirm') return I18n.t('confirmReset');
     else return '';
   };
 
   const animateButtonWidth = () => {
     if (variant === 'login') return isLoading ? scale(150) : scale(200);
     else if (variant === 'signup') return isLoading ? scale(150) : scale(250);
-    else if (variant === 'request-reset') return isLoading ? scale(150) : scale(250);
-    else if (variant === 'confirm-reset') return isLoading ? scale(150) : scale(250);
+    else if (variant === 'reset-request') return isLoading ? scale(150) : scale(250);
+    else if (variant === 'reset-confirm') return isLoading ? scale(150) : scale(250);
     else return scale(200);
   };
 
@@ -55,8 +55,8 @@ const GradientPawButton = ({
 
   const animateGradient = () => {
     if (variant === 'signup') return green;
-    else if (variant === 'request-reset') return pink;
-    else if (variant === 'confirm-reset') return pink;
+    else if (variant === 'reset-request') return pink;
+    else if (variant === 'reset-confirm') return pink;
     else return blue;
   };
 

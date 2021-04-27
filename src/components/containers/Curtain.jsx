@@ -6,7 +6,7 @@ import { useSpring, animated } from 'react-spring';
 
 import { setCurtainColor, setCurtainHeight } from '../../store/actions/animation';
 
-import { transparent, blueShade, greenShade, pinkShade } from '../../global/colors';
+import { transparent, blueShade, green, greenShade, pink, pinkShade } from '../../global/colors';
 
 const AnimatedView = animated(View);
 const bg = require('../../global/images/rectangle-bg.png');
@@ -33,17 +33,11 @@ const styles = ScaledSheet.create({
 });
 
 const Curtain = ({ children, color, height, curtainState, setCurtainColor, setCurtainHeight }) => {
-  const animateColor = () => {
-    if (color === 'green') return greenShade;
-    else if (color === 'pink') return pinkShade;
-    else return blueShade;
-  };
-
   const colorize = useSpring({
-    to: { ...styles.content, backgroundColor: animateColor() },
+    to: { ...styles.content, backgroundColor: color },
     from: { ...styles.content, backgroundColor: curtainState.color },
     config: { duration: 750 },
-    onRest: () => setCurtainColor(animateColor()),
+    onRest: () => setCurtainColor(color),
   });
 
   const resize = useSpring({

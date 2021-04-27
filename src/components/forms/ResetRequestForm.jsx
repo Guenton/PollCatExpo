@@ -6,35 +6,34 @@ import i18n from 'i18n-js';
 import FormHeader from '../labels/FormHeader';
 import EmailInput from '../inputs/EmailInput';
 import PasswordInput from '../inputs/PasswordInput';
-import ForgotPasswordButton from '../buttons/ForgotPasswordButton';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
   inputContainer: { width: '290@s', alignSelf: 'center' },
-  email: { marginBottom: '18@s' },
   paw: { alignSelf: 'center' },
 });
 
-const LoginForm = ({ onGoSignup, onGoReset }) => (
+const ResetRequestFrom = ({ onGoLogin }) => (
   <View style={styles.container}>
-    <FormHeader label={i18n.t('loginFormHeader')} subLabel={i18n.t('loginFormSubHeader')} />
+    <FormHeader
+      label={i18n.t('resetRequestFormHeader')}
+      subLabel={i18n.t('resetRequestFormSubHeader')}
+    />
 
     <View style={styles.inputContainer}>
-      <EmailInput containerStyle={styles.email} isGreen />
-      <PasswordInput isGreen />
-      <ForgotPasswordButton onPress={() => onGoReset()} />
+      <EmailInput />
     </View>
 
-    <GradientPawButton style={styles.paw} variant="login" onPress={() => {}} />
+    <GradientPawButton style={styles.paw} variant="reset-request" onPress={() => {}} />
 
     <FormFooter
-      label={i18n.t('noAccount')}
-      boldLabel={i18n.t('signUp')}
-      onPress={() => onGoSignup()}
+      label={i18n.t('rememberYourPassword')}
+      boldLabel={i18n.t('login')}
+      onPress={() => onGoLogin()}
     />
   </View>
 );
 
-export default LoginForm;
+export default ResetRequestFrom;
