@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Dimensions, StatusBar, ImageBackground, View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { useSpring, animated } from 'react-spring';
+
+import { setCurtainColor, setCurtainHeight } from '../../store/actions/animation';
 
 import { transparent, blueShade, greenShade, pinkShade } from '../../global/colors';
 
@@ -12,7 +15,6 @@ const width = Dimensions.get('window').width;
 const styles = ScaledSheet.create({
   container: {
     width,
-    height: '250@s',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
   },
@@ -25,28 +27,29 @@ const styles = ScaledSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: blueShade,
     justifyContent: 'center',
     alignItems: 'center',
   },
 });
 
-const Curtain = ({ children, color, height }) => {
+const Curtain = ({ children, color, height, curtainState, setCurtainColor, setCurtainHeight }) => {
   const animateColor = () => {
-    if (color === 'green') return { ...styles.content, backgroundColor: greenShade };
-    else if (color === 'pink') return { ...styles.content, backgroundColor: pinkShade };
-    else return styles.content;
+    if (color === 'green') return greenShade;
+    else if (color === 'pink') return pinkShade;
+    else return blueShade;
   };
 
   const colorize = useSpring({
-    to: animateColor(),
-    from: styles.content,
+    to: { ...styles.content, backgroundColor: animateColor() },
+    from: { ...styles.content, backgroundColor: curtainState.color },
     config: { duration: 750 },
+    onRest: () => setCurtainColor(animateColor()),
   });
 
   const resize = useSpring({
     to: { ...styles.container, height },
-    from: styles.container,
+    from: { ...styles.container, height: curtainState.height },
+    onRest: () => setCurtainHeight(height),
   });
 
   return (
@@ -62,4 +65,7 @@ const Curtain = ({ children, color, height }) => {
   );
 };
 
-export default Curtain;
+const mapStateToProps = (state) => ({ curtainState: state.animation.curtain });
+const mapDispatchToProps = { setCurtainColor, setCurtainHeight };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Curtain);
