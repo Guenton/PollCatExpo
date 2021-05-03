@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, View } from 'react-native';
-import { scale, ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet } from 'react-native-size-matters';
 
 const guenton = require('../../global/images/guenton.png');
 

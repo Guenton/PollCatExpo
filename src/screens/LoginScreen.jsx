@@ -19,7 +19,7 @@ const styles = ScaledSheet.create({
 });
 
 const LoginScreen = () => {
-  const [view, setView] = useState('login');
+  const [view, setView] = useState('reset-confirm');
 
   return (
     <View style={styles.container}>

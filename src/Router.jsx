@@ -13,10 +13,10 @@ i18n.translations = { en, es, nl, pap };
 i18n.locale = Localization.locale;
 i18n.fallbacks = true;
 
-const Main = () => {
+const Router = () => {
   const [screen, setScreen] = useState('login');
 
   return <>{screen === 'login' && <LoginScreen setRoute={(route) => setScreen(route)} />}</>;
 };
 
-export default Main;
+export default Router;

@@ -12,7 +12,7 @@ export const greenShade = '#03A64A99';
 export const yellow = '#F2E30F';
 export const yellowShade = '#F2E30F99';
 
-export default {
+const colors = {
   white,
   grey,
   black,
@@ -26,3 +26,5 @@ export default {
   yellow,
   yellowShade,
 };
+
+export default colors;
