@@ -15,7 +15,7 @@ i18n.locale = Localization.locale;
 i18n.fallbacks = true;
 
 const Router = () => {
-  const [screen, setScreen] = useState('login');
+  const [screen, setScreen] = useState('main');
 
   return (
     <>
