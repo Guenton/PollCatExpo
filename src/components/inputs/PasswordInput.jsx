@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, useEffect } from 'react';
 import { Icon, Input } from 'react-native-elements';
 import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
@@ -20,7 +20,26 @@ const styles = ScaledSheet.create({
   },
 });
 
-const PasswordInput = ({ containerStyle, isGreen, isConfirm, isNew }) => {
+const PasswordInput = ({
+  containerStyle,
+  isGreen,
+  isConfirm,
+  isNew,
+  isFocused,
+  isCleared,
+  onChange,
+  onBlur,
+}) => {
+  const ref = createRef();
+
+  useEffect(() => {
+    if (isFocused) ref.current.focus();
+  }, [isFocused]);
+
+  useEffect(() => {
+    if (isCleared) ref.current.clear();
+  }, [isCleared]);
+
   const variant = () => {
     if (isConfirm) return 'confirmPassword';
     else if (isNew) return 'newPassword';
@@ -29,11 +48,14 @@ const PasswordInput = ({ containerStyle, isGreen, isConfirm, isNew }) => {
 
   return (
     <Input
+      ref={ref}
       containerStyle={[styles.container, containerStyle]}
       inputContainerStyle={styles.border}
       inputStyle={styles.text}
       placeholder={i18n.t(variant())}
       leftIcon={<Icon type="font-awesome-5" name="key" color={isGreen ? green : blue} />}
+      onBlur={() => (onBlur ? onBlur() : {})}
+      onChangeText={(val) => (onChange ? onChange(val) : {})}
     />
   );
 };
