@@ -22,11 +22,10 @@ const styles = ScaledSheet.create({
 });
 
 const LoginScreen = () => {
-  const dispatch = useDispatch();
+  const [view, setView] = useState('login');
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
-
-  const [view, setView] = useState('login');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Keyboard } from 'react-native';
+import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
 
@@ -42,82 +42,39 @@ const SignupForm = ({ onGoLogin }) => {
   const password = useSelector((state) => state.auth.password);
   const passwordConfirm = useSelector((state) => state.auth.passwordConfirm);
 
-  const setInputFocus = (input = 'email') => {
-    switch (input) {
-      case 'email':
-        if (errEmail) emailRef.current.shake();
-        emailRef.current.focus();
-        break;
-      case 'password':
-        if (errEmail) setInputFocus('email');
-        else {
-          if (errPassword) passwordRef.current.shake();
-          passwordRef.current.focus();
-        }
-        break;
-      case 'passwordConfirm':
-        if (errEmail) setInputFocus('email');
-        else if (errPassword) setInputFocus('password');
-        else {
-          if (errPasswordConfirm) passwordConfirmRef.current.shake();
-          passwordConfirmRef.current.focus();
-        }
-        break;
-      default:
-        break;
-    }
-  };
-
   const errEmail = useSelector((state) => state.auth.errEmail);
   const errPassword = useSelector((state) => state.auth.errPassword);
   const errPasswordConfirm = useSelector((state) => state.auth.errPasswordConfirm);
 
+  const shakeOnError = () => {
+    if (errEmail) emailRef.current.shake();
+    if (errPassword) passwordRef.current.shake();
+    if (errPasswordConfirm) passwordConfirmRef.current.shake();
+  };
+
   const validateAndSetEmail = (val) => {
-    switch (true) {
-      case isEmpty(val):
-        dispatch(setErrEmail(t('errNotFilled')));
-        break;
-      case !isEmail(val):
-        dispatch(setErrEmail(t('errNotEmail')));
-        break;
-      case !val.endsWith('ibis-management.com'):
-        dispatch(setErrEmail(t('errNotIbisEmail')));
-      default:
-        dispatch(setErrEmail());
-        break;
-    }
+    if (isEmpty(val)) dispatch(setErrEmail(t('errNotFilled')));
+    else if (!isEmail(val)) dispatch(setErrEmail(t('errNotEmail')));
+    else if (!val.endsWith('ibis-management.com')) dispatch(setErrEmail(t('errNotIbisEmail')));
+    else dispatch(setErrEmail());
+
     dispatch(setEmail(val));
   };
 
   const validateAndSetPassword = (val) => {
-    switch (true) {
-      case isEmpty(val):
-        dispatch(setErrPassword(t('errNotFilled')));
-        break;
-      case val.length < 8:
-        dispatch(setErrPassword(t('errNotLongPassword')));
-        break;
-      case !isStrongPassword(val):
-        dispatch(setErrEmail(t('errNotStrongPassword')));
-      default:
-        dispatch(setErrPassword());
-        break;
-    }
+    if (isEmpty(val)) dispatch(setErrPassword(t('errNotFilled')));
+    else if (val.length < 8) dispatch(setErrPassword(t('errNotLongPassword')));
+    else if (!isStrongPassword(val)) dispatch(setErrEmail(t('errNotStrongPassword')));
+    else dispatch(setErrPassword());
+
     dispatch(setPassword(val));
   };
 
   const validateAndSetPasswordConfirm = (val) => {
-    switch (true) {
-      case isEmpty(val):
-        dispatch(setErrPasswordConfirm(t('errNotFilled')));
-        break;
-      case val !== password:
-        dispatch(setErrPasswordConfirm(t('errNotMatchingPassword')));
-        break;
-      default:
-        dispatch(setErrPasswordConfirm());
-        break;
-    }
+    if (isEmpty(val)) dispatch(setErrPasswordConfirm(t('errNotFilled')));
+    if (val !== password) dispatch(setErrPasswordConfirm(t('errNotMatchingPassword')));
+    else dispatch(setErrPasswordConfirm());
+
     dispatch(setPasswordConfirm(val));
   };
 
@@ -131,7 +88,7 @@ const SignupForm = ({ onGoLogin }) => {
           containerStyle={styles.input}
           value={email}
           errorMessage={errEmail}
-          onBlur={() => setInputFocus('password')}
+          onBlur={() => shakeOnError()}
           onChange={(val) => validateAndSetEmail(val)}
         />
         <PasswordInput
@@ -139,7 +96,7 @@ const SignupForm = ({ onGoLogin }) => {
           containerStyle={styles.input}
           value={password}
           errorMessage={errPassword}
-          onBlur={() => setInputFocus('passwordConfirm')}
+          onBlur={() => shakeOnError()}
           onChange={(val) => validateAndSetPassword(val)}
         />
         <PasswordInput
@@ -147,6 +104,7 @@ const SignupForm = ({ onGoLogin }) => {
           inputRef={passwordConfirmRef}
           value={passwordConfirm}
           errorMessage={errPasswordConfirm}
+          onBlur={() => shakeOnError()}
           onChange={(val) => validateAndSetPasswordConfirm(val)}
         />
       </View>

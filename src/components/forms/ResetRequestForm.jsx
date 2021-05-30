@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { View, Keyboard } from 'react-native';
+import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
 
