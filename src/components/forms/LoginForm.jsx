@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { View, Keyboard } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
@@ -18,17 +19,7 @@ const styles = ScaledSheet.create({
 });
 
 const LoginForm = ({ onGoSignup, onGoReset }) => {
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', () => setIsKeyboardOpen(true));
-    Keyboard.addListener('keyboardDidHide', () => setIsKeyboardOpen(false));
-    return () => {
-      Keyboard.removeListener('keyboardDidShow', () => setIsKeyboardOpen(true));
-      Keyboard.removeListener('keyboardDidHide', () => setIsKeyboardOpen(false));
-    };
-  }, []);
-
+  const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
   return (
     <View style={styles.container}>
       <FormHeader label={i18n.t('loginFormHeader')} subLabel={i18n.t('loginFormSubHeader')} />

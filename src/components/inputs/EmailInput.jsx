@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from 'react';
+import React from 'react';
 import { Icon, Input } from 'react-native-elements';
 import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
@@ -15,31 +15,39 @@ const styles = ScaledSheet.create({
     borderRadius: '10@s',
     paddingHorizontal: '10@s',
   },
+  error: {
+    marginTop: 0,
+    marginLeft: '10@s',
+  },
   text: {
     fontSize: '12@s',
   },
 });
 
-const EmailInput = ({ containerStyle, isGreen, isFocused, value, onChange, onBlur }) => {
-  const ref = createRef();
-
-  useEffect(() => {
-    if (isFocused) ref.current.focus();
-  }, [isFocused]);
-
-  return (
-    <Input
-      ref={ref}
-      value={value}
-      containerStyle={[styles.container, containerStyle]}
-      inputContainerStyle={styles.border}
-      inputStyle={styles.text}
-      placeholder={i18n.t('email')}
-      leftIcon={<Icon type="font-awesome-5" name="at" color={isGreen ? green : blue} />}
-      onBlur={() => (onBlur ? onBlur() : {})}
-      onChangeText={(val) => (onChange ? onChange(val) : {})}
-    />
-  );
-};
+const EmailInput = ({
+  inputRef,
+  containerStyle,
+  isGreen,
+  value,
+  errorMessage,
+  onFocus,
+  onBlur,
+  onChange,
+}) => (
+  <Input
+    ref={inputRef}
+    value={value}
+    errorMessage={errorMessage}
+    containerStyle={[styles.container, containerStyle]}
+    inputContainerStyle={styles.border}
+    errorStyle={styles.error}
+    inputStyle={styles.text}
+    placeholder={i18n.t('email')}
+    leftIcon={<Icon type="font-awesome-5" name="at" color={isGreen ? green : blue} />}
+    onFocus={() => (onFocus ? onFocus() : {})}
+    onBlur={() => (onBlur ? onBlur() : {})}
+    onChangeText={(val) => (onChange ? onChange(val) : {})}
+  />
+);
 
 export default EmailInput;

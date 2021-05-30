@@ -24,5 +24,11 @@
   "noCodeReceived": "No Code Received?",
   "requestAgain": "Request Again",
   "newPassword": "New Password",
-  "resetCode": "Reset Code"
+  "resetCode": "Reset Code",
+  "errNotFilled": "Must be Filled",
+  "errNotEmail": "Must be a valid Email",
+  "errNotIbisEmail": "Must be an IBIS Email",
+  "errNotLongPassword": "Password is too Short",
+  "errNotStrongPassword": "Password is not Strong Enough",
+  "errNotMatchingPassword": "Passwords do not Match"
 }

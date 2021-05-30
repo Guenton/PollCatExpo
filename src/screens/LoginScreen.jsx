@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Keyboard } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PollCatCurtain from '../components/containers/PollCatCurtain';
 import LoginForm from '../components/forms/LoginForm';
@@ -11,6 +12,8 @@ import GuenTon from '../components/images/GuenTon';
 
 import { blueShade, greenShade, pinkShade } from '../global/colors';
 
+import { setKeyboardOpen } from '../store/actions/core';
+
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
@@ -19,15 +22,18 @@ const styles = ScaledSheet.create({
 });
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
+
+  const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
+
   const [view, setView] = useState('login');
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', () => setIsKeyboardOpen(true));
-    Keyboard.addListener('keyboardDidHide', () => setIsKeyboardOpen(false));
+    Keyboard.addListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
+    Keyboard.addListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
     return () => {
-      Keyboard.removeListener('keyboardDidShow', () => setIsKeyboardOpen(true));
-      Keyboard.removeListener('keyboardDidHide', () => setIsKeyboardOpen(false));
+      Keyboard.removeListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
+      Keyboard.removeListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
     };
   }, []);
 
