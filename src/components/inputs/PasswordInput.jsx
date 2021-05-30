@@ -26,7 +26,7 @@ const PasswordInput = ({
   isConfirm,
   isNew,
   isFocused,
-  isCleared,
+  value,
   onChange,
   onBlur,
 }) => {
@@ -35,10 +35,6 @@ const PasswordInput = ({
   useEffect(() => {
     if (isFocused) ref.current.focus();
   }, [isFocused]);
-
-  useEffect(() => {
-    if (isCleared) ref.current.clear();
-  }, [isCleared]);
 
   const variant = () => {
     if (isConfirm) return 'confirmPassword';
@@ -49,6 +45,7 @@ const PasswordInput = ({
   return (
     <Input
       ref={ref}
+      value={value}
       containerStyle={[styles.container, containerStyle]}
       inputContainerStyle={styles.border}
       inputStyle={styles.text}

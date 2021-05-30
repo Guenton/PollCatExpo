@@ -1,5 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Keyboard } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
 
@@ -16,26 +16,43 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const ResetConfirmFrom = ({ onGoReset }) => (
-  <View style={styles.container}>
-    <FormHeader
-      label={i18n.t('resetConfirmFormHeader')}
-      subLabel={i18n.t('resetConfirmFormSubHeader')}
-    />
+const ResetConfirmFrom = ({ onGoReset }) => {
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
-    <View style={styles.inputContainer}>
-      <ResetCodeInput containerStyle={styles.input} />
-      <PasswordInput isNew />
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', () => setIsKeyboardOpen(true));
+    Keyboard.addListener('keyboardDidHide', () => setIsKeyboardOpen(false));
+    return () => {
+      Keyboard.removeListener('keyboardDidShow', () => setIsKeyboardOpen(true));
+      Keyboard.removeListener('keyboardDidHide', () => setIsKeyboardOpen(false));
+    };
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <FormHeader
+        label={i18n.t('resetConfirmFormHeader')}
+        subLabel={i18n.t('resetConfirmFormSubHeader')}
+      />
+
+      <View style={styles.inputContainer}>
+        <ResetCodeInput containerStyle={styles.input} />
+        <PasswordInput isNew />
+      </View>
+
+      {!isKeyboardOpen && (
+        <>
+          <GradientPawButton style={styles.paw} variant="reset-confirm" onPress={() => {}} />
+
+          <FormFooter
+            label={i18n.t('noCodeReceived')}
+            boldLabel={i18n.t('requestAgain')}
+            onPress={() => onGoReset()}
+          />
+        </>
+      )}
     </View>
-
-    <GradientPawButton style={styles.paw} variant="reset-confirm" onPress={() => {}} />
-
-    <FormFooter
-      label={i18n.t('noCodeReceived')}
-      boldLabel={i18n.t('requestAgain')}
-      onPress={() => onGoReset()}
-    />
-  </View>
-);
+  );
+};
 
 export default ResetConfirmFrom;

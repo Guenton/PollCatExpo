@@ -20,20 +20,17 @@ const styles = ScaledSheet.create({
   },
 });
 
-const ResetCodeInput = ({ containerStyle, isGreen, isFocused, isCleared, onChange, onBlur }) => {
+const ResetCodeInput = ({ containerStyle, isGreen, isFocused, value, onChange, onBlur }) => {
   const ref = createRef();
 
   useEffect(() => {
     if (isFocused) ref.current.focus();
   }, [isFocused]);
 
-  useEffect(() => {
-    if (isCleared) ref.current.clear();
-  }, [isCleared]);
-
   return (
     <Input
       ref={ref}
+      value={value}
       containerStyle={[styles.container, containerStyle]}
       inputContainerStyle={styles.border}
       inputStyle={styles.text}

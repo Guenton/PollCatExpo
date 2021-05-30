@@ -1,5 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Keyboard } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import i18n from 'i18n-js';
 
@@ -14,25 +14,42 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const ResetRequestFrom = ({ onGoLogin }) => (
-  <View style={styles.container}>
-    <FormHeader
-      label={i18n.t('resetRequestFormHeader')}
-      subLabel={i18n.t('resetRequestFormSubHeader')}
-    />
+const ResetRequestFrom = ({ onGoLogin }) => {
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
-    <View style={styles.inputContainer}>
-      <EmailInput />
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', () => setIsKeyboardOpen(true));
+    Keyboard.addListener('keyboardDidHide', () => setIsKeyboardOpen(false));
+    return () => {
+      Keyboard.removeListener('keyboardDidShow', () => setIsKeyboardOpen(true));
+      Keyboard.removeListener('keyboardDidHide', () => setIsKeyboardOpen(false));
+    };
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <FormHeader
+        label={i18n.t('resetRequestFormHeader')}
+        subLabel={i18n.t('resetRequestFormSubHeader')}
+      />
+
+      <View style={styles.inputContainer}>
+        <EmailInput />
+      </View>
+
+      {!isKeyboardOpen && (
+        <>
+          <GradientPawButton style={styles.paw} variant="reset-request" onPress={() => {}} />
+
+          <FormFooter
+            label={i18n.t('rememberYourPassword')}
+            boldLabel={i18n.t('login')}
+            onPress={() => onGoLogin()}
+          />
+        </>
+      )}
     </View>
-
-    <GradientPawButton style={styles.paw} variant="reset-request" onPress={() => {}} />
-
-    <FormFooter
-      label={i18n.t('rememberYourPassword')}
-      boldLabel={i18n.t('login')}
-      onPress={() => onGoLogin()}
-    />
-  </View>
-);
+  );
+};
 
 export default ResetRequestFrom;
