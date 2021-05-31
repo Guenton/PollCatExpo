@@ -2,6 +2,7 @@ import React, { createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
+import { isEmpty, isEmail, isStrongPassword } from 'validator';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
@@ -19,8 +20,6 @@ import {
   setErrPasswordConfirm,
 } from '../../store/actions/auth';
 
-import { isEmpty, isEmail, isStrongPassword } from 'validator';
-
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
   inputContainer: { width: '290@s', alignSelf: 'center' },
@@ -32,11 +31,11 @@ const SignupForm = ({ onGoLogin }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
+  const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
+
   const emailRef = createRef();
   const passwordRef = createRef();
   const passwordConfirmRef = createRef();
-
-  const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
 
   const email = useSelector((state) => state.auth.email);
   const password = useSelector((state) => state.auth.password);
@@ -72,10 +71,21 @@ const SignupForm = ({ onGoLogin }) => {
 
   const validateAndSetPasswordConfirm = (val) => {
     if (isEmpty(val)) dispatch(setErrPasswordConfirm(t('errNotFilled')));
-    if (val !== password) dispatch(setErrPasswordConfirm(t('errNotMatchingPassword')));
+    else if (val !== password) dispatch(setErrPasswordConfirm(t('errNotMatchingPassword')));
     else dispatch(setErrPasswordConfirm());
 
     dispatch(setPasswordConfirm(val));
+  };
+
+  const signupWithFirebase = () => {
+    validateAndSetEmail(email);
+    validateAndSetPassword(password);
+    validateAndSetPasswordConfirm(passwordConfirm);
+
+    if (errEmail || errPassword || errPasswordConfirm) return shakeOnError();
+    if (email && password && passwordConfirm) {
+      console.log('signupWithFirebase');
+    }
   };
 
   return (
@@ -111,7 +121,11 @@ const SignupForm = ({ onGoLogin }) => {
 
       {!isKeyboardOpen && (
         <>
-          <GradientPawButton style={styles.paw} variant="signup" onPress={() => {}} />
+          <GradientPawButton
+            style={styles.paw}
+            variant="signup"
+            onPress={() => signupWithFirebase()}
+          />
 
           <FormFooter
             label={t('alreadySignedUp')}
