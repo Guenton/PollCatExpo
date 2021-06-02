@@ -30,5 +30,7 @@
   "errNotIbisEmail": "Must be an IBIS Email",
   "errNotLongPassword": "Password is too Short",
   "errNotStrongPassword": "Password is not Strong Enough",
-  "errNotMatchingPassword": "Passwords do not Match"
+  "errNotMatchingPassword": "Passwords do not Match",
+  "hiName": "Hi %{name}!",
+  "notName": "Not %{name}?"
 }

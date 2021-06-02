@@ -4,6 +4,7 @@ import { ScaledSheet, scale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PollCatCurtain from '../components/containers/PollCatCurtain';
+import LoginBiometricForm from '../components/forms/LoginBiometricForm';
 import LoginForm from '../components/forms/LoginForm';
 import ResetConfirmFrom from '../components/forms/ResetConfirmForm';
 import ResetRequestFrom from '../components/forms/ResetRequestForm';
@@ -22,7 +23,7 @@ const styles = ScaledSheet.create({
 });
 
 const LoginScreen = ({ setRoute }) => {
-  const [view, setView] = useState('login');
+  const [view, setView] = useState('login-biometric');
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
   const dispatch = useDispatch();
@@ -38,6 +39,16 @@ const LoginScreen = ({ setRoute }) => {
 
   return (
     <View style={styles.container}>
+      {view === 'login-biometric' && (
+        <>
+          <PollCatCurtain color={blueShade} height={scale(300)} />
+          <LoginBiometricForm
+            onGoLogin={() => setView('login')}
+            onGoMain={() => setRoute('main')}
+          />
+        </>
+      )}
+
       {view === 'login' && (
         <>
           <PollCatCurtain color={blueShade} height={isKeyboardOpen ? scale(100) : scale(200)} />

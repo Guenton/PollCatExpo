@@ -62,7 +62,7 @@ const ResetConfirmFrom = ({ onGoReset, onGoLogin }) => {
     dispatch(setPassword(val));
   };
 
-  const confirmResetWithFirebase = () => {
+  const confirmResetWithFirebase = async () => {
     validateAndSetResetCode(resetCode);
     validateAndSetPassword(password);
 
@@ -98,7 +98,7 @@ const ResetConfirmFrom = ({ onGoReset, onGoLogin }) => {
           inputRef={passwordRef}
           value={password}
           errorMessage={errPassword}
-          onBlur={() => shakeOnError()}
+          onBlur={() => confirmResetWithFirebase()}
           onChange={(val) => validateAndSetPassword(val)}
         />
       </View>

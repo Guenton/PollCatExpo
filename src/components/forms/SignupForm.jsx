@@ -21,6 +21,7 @@ import {
   setErrPassword,
   setErrPasswordConfirm,
 } from '../../store/actions/auth';
+import { setFirstName, setLastName } from '../../store/actions/user';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -93,6 +94,13 @@ const SignupForm = ({ onGoLogin, onGoMain }) => {
         if (canStore) await SecureStore.setItemAsync('email', email);
         if (canStore) await SecureStore.setItemAsync('password', password);
 
+        const firstName = email.split('.')[0];
+        const lastName = email.split('.')[1].split('@')[0];
+        dispatch(setFirstName(firstName));
+        dispatch(setLastName(lastName));
+
+        dispatch(setPassword());
+        dispatch(setPasswordConfirm());
         onGoMain();
       } catch (err) {
         console.error(err);
@@ -128,7 +136,7 @@ const SignupForm = ({ onGoLogin, onGoMain }) => {
           inputRef={passwordConfirmRef}
           value={passwordConfirm}
           errorMessage={errPasswordConfirm}
-          onBlur={() => shakeOnError()}
+          onBlur={() => signupWithFirebase()}
           onChange={(val) => validateAndSetPasswordConfirm(val)}
         />
       </View>

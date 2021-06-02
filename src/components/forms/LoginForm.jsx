@@ -15,6 +15,7 @@ import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 
 import { setEmail, setPassword, setErrEmail, setErrPassword } from '../../store/actions/auth';
+import { setFirstName, setLastName } from '../../store/actions/user';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -59,7 +60,7 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
     dispatch(setPassword(val));
   };
 
-  const loginWithFirebase = () => {
+  const loginWithFirebase = async () => {
     validateAndSetEmail(email);
     validateAndSetPassword(password);
 
@@ -72,6 +73,12 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
         if (canStore) await SecureStore.setItemAsync('email', email);
         if (canStore) await SecureStore.setItemAsync('password', password);
 
+        const firstName = email.split('.')[0];
+        const lastName = email.split('.')[1].split('@')[0];
+        dispatch(setFirstName(firstName));
+        dispatch(setLastName(lastName));
+
+        dispatch(setPassword());
         onGoMain();
       } catch (err) {
         console.error(err);
@@ -100,7 +107,7 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
           inputRef={passwordRef}
           value={password}
           errorMessage={errPassword}
-          onBlur={() => shakeOnError()}
+          onBlur={() => loginWithFirebase()}
           onChange={(val) => validateAndSetPassword(val)}
         />
         <ForgotPasswordButton onPress={() => onGoReset()} />

@@ -1,0 +1,19 @@
+import { SET_FIRST_NAME, SET_LAST_NAME } from '../actions/user';
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+};
+
+const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_FIRST_NAME:
+      return { ...state, firstName: action.input };
+    case SET_LAST_NAME:
+      return { ...state, lastName: action.input };
+    default:
+      return state;
+  }
+};
+
+export default userReducer;

@@ -43,7 +43,7 @@ const ResetRequestFrom = ({ onGoLogin, onGoConfirm }) => {
     dispatch(setEmail(val));
   };
 
-  const requestResetWithFirebase = () => {
+  const requestResetWithFirebase = async () => {
     validateAndSetEmail(email);
 
     if (errEmail) return shakeOnError();
@@ -51,7 +51,7 @@ const ResetRequestFrom = ({ onGoLogin, onGoConfirm }) => {
       try {
         await firebase.auth().sendPasswordResetEmail(email);
 
-        onGoConfirm();
+        onGoLogin();
       } catch (err) {
         console.error(err);
         console.log(err.code);
@@ -69,7 +69,7 @@ const ResetRequestFrom = ({ onGoLogin, onGoConfirm }) => {
           inputRef={emailRef}
           value={email}
           errorMessage={errEmail}
-          onBlur={() => shakeOnError()}
+          onBlur={() => requestResetWithFirebase()}
           onChange={(val) => validateAndSetEmail(val)}
         />
       </View>
