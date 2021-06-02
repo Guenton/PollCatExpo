@@ -21,7 +21,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const LoginScreen = () => {
+const LoginScreen = ({ setRoute }) => {
   const [view, setView] = useState('login');
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
@@ -44,6 +44,7 @@ const LoginScreen = () => {
           <LoginForm
             onGoSignup={() => setView('signup')}
             onGoReset={() => setView('reset-request')}
+            onGoMain={() => setRoute('main')}
           />
         </>
       )}
@@ -51,21 +52,27 @@ const LoginScreen = () => {
       {view === 'signup' && (
         <>
           <PollCatCurtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(150)} />
-          <SignupForm onGoLogin={() => setView('login')} />
+          <SignupForm onGoLogin={() => setView('login')} onGoMain={() => setRoute('main')} />
         </>
       )}
 
       {view === 'reset-request' && (
         <>
           <PollCatCurtain color={pinkShade} height={isKeyboardOpen ? scale(100) : scale(250)} />
-          <ResetRequestFrom onGoLogin={() => setView('login')} />
+          <ResetRequestFrom
+            onGoLogin={() => setView('login')}
+            onGoConfirm={() => setView('reset-confirm')}
+          />
         </>
       )}
 
       {view === 'reset-confirm' && (
         <>
           <PollCatCurtain color={pinkShade} height={isKeyboardOpen ? scale(100) : scale(200)} />
-          <ResetConfirmFrom onGoReset={() => setView('reset-request')} />
+          <ResetConfirmFrom
+            onGoReset={() => setView('reset-request')}
+            onGoLogin={() => setView('login')}
+          />
         </>
       )}
 

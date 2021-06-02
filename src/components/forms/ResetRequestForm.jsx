@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty, isEmail } from 'validator';
+import firebase from 'firebase';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
@@ -18,7 +19,7 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const ResetRequestFrom = ({ onGoLogin }) => {
+const ResetRequestFrom = ({ onGoLogin, onGoConfirm }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -47,7 +48,15 @@ const ResetRequestFrom = ({ onGoLogin }) => {
 
     if (errEmail) return shakeOnError();
     if (email) {
-      console.log('requestResetWithFirebase');
+      try {
+        await firebase.auth().sendPasswordResetEmail(email);
+
+        onGoConfirm();
+      } catch (err) {
+        console.error(err);
+        console.log(err.code);
+        console.log(err.message);
+      }
     }
   };
 

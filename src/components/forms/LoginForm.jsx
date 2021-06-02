@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty, isEmail } from 'validator';
+import * as SecureStore from 'expo-secure-store';
+import firebase from 'firebase';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
@@ -21,7 +23,7 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const LoginForm = ({ onGoSignup, onGoReset }) => {
+const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -63,7 +65,19 @@ const LoginForm = ({ onGoSignup, onGoReset }) => {
 
     if (errEmail || errPassword) return shakeOnError();
     if (email && password) {
-      console.log('loginWithFirebase');
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+
+        const canStore = await SecureStore.isAvailableAsync();
+        if (canStore) await SecureStore.setItemAsync('email', email);
+        if (canStore) await SecureStore.setItemAsync('password', password);
+
+        onGoMain();
+      } catch (err) {
+        console.error(err);
+        console.log(err.code);
+        console.log(err.message);
+      }
     }
   };
 
