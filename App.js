@@ -1,8 +1,13 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import Router from './src/Router';
 import store from './src/store';
+import Router from './src/Router';
+
+import { initLanguages, initFirebase } from './src/config';
+
+initLanguages();
+initFirebase();
 
 const App = () => (
   <SafeAreaProvider>

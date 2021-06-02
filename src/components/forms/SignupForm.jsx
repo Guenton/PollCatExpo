@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty, isEmail, isStrongPassword } from 'validator';
 import i18n from 'i18n-js';
+import firebase from 'firebase';
 
 import FormHeader from '../labels/FormHeader';
 import EmailInput from '../inputs/EmailInput';
@@ -63,7 +64,7 @@ const SignupForm = ({ onGoLogin }) => {
   const validateAndSetPassword = (val) => {
     if (isEmpty(val)) dispatch(setErrPassword(t('errNotFilled')));
     else if (val.length < 8) dispatch(setErrPassword(t('errNotLongPassword')));
-    else if (!isStrongPassword(val)) dispatch(setErrEmail(t('errNotStrongPassword')));
+    else if (!isStrongPassword(val)) dispatch(setErrPassword(t('errNotStrongPassword')));
     else dispatch(setErrPassword());
 
     dispatch(setPassword(val));
@@ -77,14 +78,21 @@ const SignupForm = ({ onGoLogin }) => {
     dispatch(setPasswordConfirm(val));
   };
 
-  const signupWithFirebase = () => {
+  const signupWithFirebase = async () => {
     validateAndSetEmail(email);
     validateAndSetPassword(password);
     validateAndSetPasswordConfirm(passwordConfirm);
 
     if (errEmail || errPassword || errPasswordConfirm) return shakeOnError();
     if (email && password && passwordConfirm) {
-      console.log('signupWithFirebase');
+      try {
+        const test = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        console.log(test);
+      } catch (err) {
+        console.error(err);
+        console.log(err.code);
+        console.log(err.message);
+      }
     }
   };
 

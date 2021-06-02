@@ -51,6 +51,10 @@ const PasswordInput = ({
       inputContainerStyle={styles.border}
       errorStyle={styles.error}
       inputStyle={styles.text}
+      autoCapitalize="none"
+      autoCompleteType="password"
+      textContentType={isNew ? 'newPassword' : 'password'}
+      secureTextEntry
       placeholder={i18n.t(variant())}
       leftIcon={<Icon type="font-awesome-5" name="key" color={isGreen ? green : blue} />}
       onFocus={() => (onFocus ? onFocus() : {})}

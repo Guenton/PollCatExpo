@@ -55,7 +55,7 @@ const ResetConfirmFrom = ({ onGoReset }) => {
   const validateAndSetPassword = (val) => {
     if (isEmpty(val)) dispatch(setErrPassword(t('errNotFilled')));
     else if (val.length < 8) dispatch(setErrPassword(t('errNotLongPassword')));
-    else if (!isStrongPassword(val)) dispatch(setErrEmail(t('errNotStrongPassword')));
+    else if (!isStrongPassword(val)) dispatch(setErrPassword(t('errNotStrongPassword')));
     else dispatch(setErrPassword());
 
     dispatch(setPassword(val));

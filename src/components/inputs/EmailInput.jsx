@@ -42,6 +42,10 @@ const EmailInput = ({
     inputContainerStyle={styles.border}
     errorStyle={styles.error}
     inputStyle={styles.text}
+    autoCapitalize="none"
+    autoCompleteType="email"
+    keyboardType="email-address"
+    textContentType="emailAddress"
     placeholder={i18n.t('email')}
     leftIcon={<Icon type="font-awesome-5" name="at" color={isGreen ? green : blue} />}
     onFocus={() => (onFocus ? onFocus() : {})}

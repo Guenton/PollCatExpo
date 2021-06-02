@@ -42,6 +42,7 @@ const ResetCodeInput = ({
     inputContainerStyle={styles.border}
     errorStyle={styles.error}
     inputStyle={styles.text}
+    autoCapitalize="none"
     placeholder={i18n.t('resetCode')}
     leftIcon={<Icon type="font-awesome-5" name="unlock-alt" color={isGreen ? green : blue} />}
     onFocus={() => (onFocus ? onFocus() : {})}
