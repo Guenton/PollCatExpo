@@ -10,6 +10,7 @@ import i18n from 'i18n-js';
 import FormHeader from '../labels/FormHeader';
 import FormFooter from '../labels/FormFooter';
 
+import { setLoading } from '../../store/actions/core';
 import { setEmail } from '../../store/actions/auth';
 import { setFirstName, setLastName } from '../../store/actions/user';
 import PawButton from '../buttons/PawButton';
@@ -65,14 +66,18 @@ const LoginBiometricForm = ({ onGoLogin, onGoMain }) => {
 
   const loginBiometricWithFirebase = async () => {
     try {
+      dispatch(setLoading());
       const { success } = await LocalAuthentication.authenticateAsync();
 
       if (success) {
         const storedPassword = await SecureStore.getItemAsync('password');
         await firebase.auth().signInWithEmailAndPassword(email, storedPassword);
+
+        dispatch(setLoading(false));
         onGoMain();
       }
     } catch (err) {
+      dispatch(setLoading(false));
       console.error(err);
       console.log(err.code);
       console.log(err.message);

@@ -10,6 +10,7 @@ import ResetConfirmFrom from '../components/forms/ResetConfirmForm';
 import ResetRequestFrom from '../components/forms/ResetRequestForm';
 import SignupForm from '../components/forms/SignupForm';
 import GuenTon from '../components/images/GuenTon';
+import LoadingBar from '../components/images/LoadingBar';
 
 import { blueShade, greenShade, pinkShade } from '../global/colors';
 
@@ -87,6 +88,7 @@ const LoginScreen = ({ setRoute }) => {
         </>
       )}
 
+      <LoadingBar />
       <GuenTon />
     </View>
   );

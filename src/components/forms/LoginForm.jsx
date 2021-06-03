@@ -14,6 +14,7 @@ import ForgotPasswordButton from '../buttons/ForgotPasswordButton';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 
+import { setLoading } from '../../store/actions/core';
 import { setEmail, setPassword, setErrEmail, setErrPassword } from '../../store/actions/auth';
 import { setFirstName, setLastName } from '../../store/actions/user';
 
@@ -67,6 +68,7 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
     if (errEmail || errPassword) return shakeOnError();
     if (email && password) {
       try {
+        dispatch(setLoading());
         await firebase.auth().signInWithEmailAndPassword(email, password);
 
         const canStore = await SecureStore.isAvailableAsync();
@@ -77,10 +79,12 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
         const lastName = email.split('.')[1].split('@')[0];
         dispatch(setFirstName(firstName));
         dispatch(setLastName(lastName));
-
         dispatch(setPassword());
+
+        dispatch(setLoading(false));
         onGoMain();
       } catch (err) {
+        dispatch(setLoading(false));
         console.error(err);
         console.log(err.code);
         console.log(err.message);

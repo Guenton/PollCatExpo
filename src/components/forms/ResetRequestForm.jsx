@@ -11,6 +11,7 @@ import EmailInput from '../inputs/EmailInput';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 
+import { setLoading } from '../../store/actions/core';
 import { setEmail, setErrEmail } from '../../store/actions/auth';
 
 const styles = ScaledSheet.create({
@@ -49,10 +50,13 @@ const ResetRequestFrom = ({ onGoLogin, onGoConfirm }) => {
     if (errEmail) return shakeOnError();
     if (email) {
       try {
+        dispatch(setLoading());
         await firebase.auth().sendPasswordResetEmail(email);
 
+        dispatch(setLoading(false));
         onGoLogin();
       } catch (err) {
+        dispatch(setLoading(false));
         console.error(err);
         console.log(err.code);
         console.log(err.message);

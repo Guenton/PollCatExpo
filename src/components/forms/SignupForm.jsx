@@ -13,6 +13,7 @@ import PasswordInput from '../inputs/PasswordInput';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 
+import { setLoading } from '../../store/actions/core';
 import {
   setEmail,
   setPassword,

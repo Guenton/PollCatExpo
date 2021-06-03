@@ -12,6 +12,7 @@ import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 import ResetCodeInput from '../inputs/ResetCodeInput';
 
+import { setLoading } from '../../store/actions/core';
 import {
   setResetCode,
   setPassword,
@@ -69,10 +70,13 @@ const ResetConfirmFrom = ({ onGoReset, onGoLogin }) => {
     if (errResetCode || errPassword) return shakeOnError();
     if (resetCode && password) {
       try {
+        dispatch(setLoading());
         await firebase.auth().confirmPasswordReset(resetCode, password);
 
+        dispatch(setLoading(false));
         onGoLogin();
       } catch (err) {
+        dispatch(setLoading(false));
         console.error(err);
         console.log(err.code);
         console.log(err.message);

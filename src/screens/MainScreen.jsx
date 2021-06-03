@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Dimensions, Keyboard } from 'react-native';
 import { View } from 'react-native';
-import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { ScaledSheet, scale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+
 import MainCurtain from '../components/containers/MainCurtain';
-
 import NavBar from '../components/containers/NavBar';
+import LoadingBar from '../components/images/LoadingBar';
 
-import { blueShade, greenShade, pinkShade } from '../global/colors';
+import { blueShade, pinkShade, greenShade } from '../global/colors';
 
-const curtainHeight = Dimensions.get('window').height - 55;
+import { setKeyboardOpen } from '../store/actions/core';
+
+const curtainHeight = Dimensions.get('window').height - scale(55);
 
 const styles = ScaledSheet.create({
   container: {
@@ -20,14 +24,43 @@ const styles = ScaledSheet.create({
 const MainScreen = () => {
   const [view, setView] = useState('main');
 
+  const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
+    Keyboard.addListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
+    return () => {
+      Keyboard.removeListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
+      Keyboard.removeListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       {view === 'main' && (
         <>
-          <MainCurtain color={blueShade} height={curtainHeight} />
+          <MainCurtain view={view} color={blueShade} height={curtainHeight} />
         </>
       )}
 
+      {view === 'rank' && (
+        <>
+          <MainCurtain view={view} color={pinkShade} height={curtainHeight} />
+        </>
+      )}
+
+      {view === 'setup' && (
+        <>
+          <MainCurtain
+            view={view}
+            color={greenShade}
+            height={isKeyboardOpen ? scale(100) : scale(150)}
+          />
+        </>
+      )}
+
+      <LoadingBar />
       <NavBar
         view={view}
         onGoMain={() => setView('main')}
