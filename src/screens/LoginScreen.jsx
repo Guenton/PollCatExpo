@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Keyboard } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
+import AlertBox from '../components/containers/AlertBox';
 
 import PollCatCurtain from '../components/containers/PollCatCurtain';
 import LoginBiometricForm from '../components/forms/LoginBiometricForm';
@@ -88,6 +89,7 @@ const LoginScreen = ({ setRoute }) => {
         </>
       )}
 
+      <AlertBox severity="info" />
       <LoadingBar />
       <GuenTon />
     </View>

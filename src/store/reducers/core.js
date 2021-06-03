@@ -1,8 +1,12 @@
-import { SET_LOADING, SET_KEYBOARD_OPEN } from '../actions/core';
+import { SET_LOADING, SET_KEYBOARD_OPEN, SET_ALERT } from '../actions/core';
 
 const initialState = {
   isLoading: false,
   isKeyboardOpen: false,
+  alert: {
+    text: '',
+    severity: 'error',
+  },
 };
 
 const coreReducer = (state = initialState, action) => {
@@ -11,6 +15,8 @@ const coreReducer = (state = initialState, action) => {
       return { ...state, isLoading: action.bool };
     case SET_KEYBOARD_OPEN:
       return { ...state, isKeyboardOpen: action.bool };
+    case SET_ALERT:
+      return { ...state, alert: { text: action.text, severity: action.severity } };
     default:
       return state;
   }
