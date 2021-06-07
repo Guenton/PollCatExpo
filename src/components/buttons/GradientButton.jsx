@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const styles = ScaledSheet.create({
   container: {
     alignSelf: 'center',
-    borderRadius: '25@s',
+    borderRadius: '21@s',
     height: '42@s',
     marginLeft: '-50@s',
     backgroundColor: 'red',
@@ -15,7 +15,7 @@ const styles = ScaledSheet.create({
   },
   button: {
     height: '42@s',
-    borderRadius: '25@s',
+    borderRadius: '21@s',
   },
 });
 

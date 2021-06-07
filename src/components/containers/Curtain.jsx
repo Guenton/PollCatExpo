@@ -1,20 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Dimensions, StatusBar, ImageBackground, View } from 'react-native';
+import { Dimensions, StatusBar, ImageBackground, View, Platform } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { useSpring, animated } from 'react-spring';
 
 import { setCurtainColor, setCurtainHeight } from '../../store/actions/animation';
 
-import { transparent, blueShade, green, greenShade, pink, pinkShade } from '../../global/colors';
+import { transparent } from '../../global/colors';
 
 const AnimatedView = animated(View);
 const bg = require('../../global/images/rectangle-bg.png');
 
+const isIos = Platform.OS === 'ios' ? true : false;
 const width = Dimensions.get('window').width;
 const styles = ScaledSheet.create({
   container: {
     width,
+    marginTop: isIos ? '-40@s' : '0@s',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
   },
