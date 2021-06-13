@@ -32,5 +32,8 @@
   "errNotStrongPassword": "Password is not Strong Enough",
   "errNotMatchingPassword": "Passwords do not Match",
   "hiName": "Hi %{name}!",
-  "notName": "Not %{name}?"
+  "notName": "Not %{name}?",
+  "setupHeader": "Setup",
+  "rankHeader": "Previous Polls",
+  "noPollHeader": "There are no Open Polls at the moment"
 }

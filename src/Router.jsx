@@ -5,7 +5,7 @@ import LoginScreen from './screens/LoginScreen';
 import MainScreen from './screens/MainScreen';
 
 const Router = () => {
-  const [screen, setScreen] = useState('login');
+  const [screen, setScreen] = useState('main');
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
