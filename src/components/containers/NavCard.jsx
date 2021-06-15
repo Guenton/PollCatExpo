@@ -1,9 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
-import { Divider } from 'react-native-elements';
+import { Pressable, View } from 'react-native';
+import { ScaledSheet, scale } from 'react-native-size-matters';
+import { Icon } from 'react-native-elements';
 
-import { grey, white } from '../../global/colors';
+import { white, grey, blue } from '../../global/colors';
+import NavCardHeader from '../labels/NavCardHeader';
 
 const styles = ScaledSheet.create({
   container: {
@@ -33,25 +34,28 @@ const styles = ScaledSheet.create({
     width: '1@s',
     backgroundColor: grey,
   },
-  leftBox: {
+  pressable: {
     flex: 1,
     height: '75@s',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  rightBox: {
-    flex: 1,
-    height: '75@s',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 });
 
 const NavCard = () => (
   <View style={styles.container}>
-    <View style={styles.leftBox}></View>
+    <Pressable style={styles.pressable}>
+      <Icon type="font-awesome-5" name="user-alt" size={scale(26)} color={blue} />
+      <NavCardHeader label="User" />
+    </Pressable>
+
     <View style={styles.divider}></View>
-    <View style={styles.rightBox}></View>
+
+    <Pressable style={styles.pressable}>
+      <Icon type="font-awesome-5" name="toolbox" size={scale(26)} color={grey} />
+      <NavCardHeader label="Admin" />
+    </Pressable>
   </View>
 );
 
