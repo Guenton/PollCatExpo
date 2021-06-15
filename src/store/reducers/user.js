@@ -1,8 +1,9 @@
-import { SET_FIRST_NAME, SET_LAST_NAME } from '../actions/user';
+import { SET_FIRST_NAME, SET_LAST_NAME, SET_AVATAR_URI } from '../actions/user';
 
 const initialState = {
   firstName: '',
   lastName: '',
+  avatarUri: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -11,6 +12,8 @@ const userReducer = (state = initialState, action) => {
       return { ...state, firstName: action.input };
     case SET_LAST_NAME:
       return { ...state, lastName: action.input };
+    case SET_AVATAR_URI:
+      return { ...state, avatarUri: action.input };
     default:
       return state;
   }

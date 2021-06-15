@@ -11,6 +11,7 @@
     "babel-plugin-inline-dotenv": "^1.6.0",
     "expo": "~41.0.1",
     "expo-firebase-analytics": "~4.0.2",
+    "expo-image-picker": "~10.1.4",
     "expo-linear-gradient": "~9.1.0",
     "expo-local-authentication": "~11.0.2",
     "expo-localization": "~10.1.0",

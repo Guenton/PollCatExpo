@@ -8,10 +8,10 @@ import NavCardHeader from '../labels/NavCardHeader';
 
 const styles = ScaledSheet.create({
   container: {
-    height: '90@s',
+    height: '85@s',
     width: '290@s',
     alignSelf: 'center',
-    marginTop: '-40@s',
+    marginTop: '-30@s',
     borderRadius: '25@s',
 
     shadowColor: '#000',
@@ -30,7 +30,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
   },
   divider: {
-    height: '60@s',
+    height: '50@s',
     width: '1@s',
     backgroundColor: grey,
   },

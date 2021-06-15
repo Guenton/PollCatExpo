@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MainCurtain from '../components/containers/MainCurtain';
 import NavBar from '../components/containers/NavBar';
 import NavCard from '../components/containers/NavCard';
+import UserForm from '../components/forms/UserForm';
 import LoadingBar from '../components/images/LoadingBar';
 
 import { blueShade, pinkShade, greenShade } from '../global/colors';
@@ -22,7 +23,7 @@ const styles = ScaledSheet.create({
   },
   setupHeader: {
     justifyContent: 'flex-start',
-  }
+  },
 });
 
 const MainScreen = () => {
@@ -55,25 +56,31 @@ const MainScreen = () => {
       )}
 
       {view === 'setup' && (
-        <View style={styles.setupHeader}>
-          <MainCurtain
-            view={view}
-            color={greenShade}
-            height={isKeyboardOpen ? scale(100) : scale(150)}
-          />
-          <NavCard />
-        </View>
-      )}
-
-      {view === 'create' || view === 'edit' || view === 'delete' && (
         <>
-          <MainCurtain
-            view={view}
-            color={greenShade}
-            height={isKeyboardOpen ? scale(100) : scale(200)}
-          />
+          <View style={styles.setupHeader}>
+            <MainCurtain
+              view={view}
+              color={greenShade}
+              height={isKeyboardOpen ? scale(100) : scale(150)}
+            />
+            <NavCard />
+          </View>
+
+          <UserForm />
         </>
       )}
+
+      {view === 'create' ||
+        view === 'edit' ||
+        (view === 'delete' && (
+          <>
+            <MainCurtain
+              view={view}
+              color={greenShade}
+              height={isKeyboardOpen ? scale(100) : scale(200)}
+            />
+          </>
+        ))}
 
       <LoadingBar />
       <NavBar

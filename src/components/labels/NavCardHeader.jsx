@@ -6,7 +6,7 @@ import { grey } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   text: {
-    fontSize: '20@s',
+    fontSize: '18@s',
     color: grey,
   },
 });
