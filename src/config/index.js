@@ -6,7 +6,7 @@ import nl from '../global/languages/nl';
 import pap from '../global/languages/pap';
 
 import firebase from 'firebase';
-// import 'firebase/auth';
+//import 'firebase/auth';
 //import "firebase/database";
 //import "firebase/firestore";
 //import "firebase/functions";
@@ -18,9 +18,19 @@ export const initLanguages = () => {
   i18n.fallbacks = true;
 };
 
-export const initFirebase = () => {
-  // Clear residual apps before re-initializing
-  if (firebase.apps.length > 0) firebase.apps.forEach((app) => app.delete());
+export const initFirebase = async () => {
+  // Clear Residual Firebase Apps
+  if (firebase.apps.length > 0) {
+    await Promise.all(
+      firebase.apps.map(async (app) => {
+        try {
+          await app.delete();
+        } catch (err) {
+          console.error(err);
+        }
+      }),
+    );
+  }
 
   firebase.initializeApp({
     apiKey: process.env.FB_API_KEY,
