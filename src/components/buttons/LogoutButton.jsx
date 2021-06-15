@@ -39,7 +39,7 @@ const LogoutButton = ({ style, onPress }) => {
         <Icon type="font-awesome-5" name="user-lock" size={scale(22)} color={blue} />
         <FormText label={t('logout')} containerStyle={styles.label} />
       </View>
-      <Icon type="font-awesome-5" name="sign-out-alt" size={scale(18)} color={green} />
+      <Icon type="font-awesome-5" name="sign-out-alt" size={scale(20)} color={green} />
     </Pressable>
   );
 };

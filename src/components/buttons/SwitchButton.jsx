@@ -10,7 +10,7 @@ import { greyShade, blue, green } from '../../global/colors';
 const styles = ScaledSheet.create({
   container: {
     flexDirection: 'row',
-    height: '55@s',
+    height: '60@s',
     width: '300@s',
     padding: '14@s',
     borderRadius: '10@s',
