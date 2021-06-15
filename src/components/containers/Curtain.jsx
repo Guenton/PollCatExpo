@@ -19,6 +19,16 @@ const styles = ScaledSheet.create({
     marginTop: isIos ? '-40@s' : '-1@s',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
   },
   image: {
     flex: 1,

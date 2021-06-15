@@ -14,13 +14,13 @@ const styles = ScaledSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
 
-    zIndex: 4,
-    elevation: 4,
+    elevation: 9,
+    zIndex: 9,
   },
   button: {
     height: '42@s',
