@@ -35,5 +35,9 @@
   "notName": "Not %{name}?",
   "setupHeader": "Setup",
   "rankHeader": "Previous Polls",
-  "noPollHeader": "There are no Open Polls at the moment"
+  "noPollHeader": "There are no Open Polls at the moment",
+  "user": "User",
+  "admin": "Admin",
+  "changeImage": "Change Image",
+  "logout": "Logout"
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Keyboard } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
-import AlertBox from '../components/containers/AlertBox';
 
 import PollCatCurtain from '../components/containers/PollCatCurtain';
 import LoginBiometricForm from '../components/forms/LoginBiometricForm';
@@ -12,6 +11,7 @@ import ResetRequestFrom from '../components/forms/ResetRequestForm';
 import SignupForm from '../components/forms/SignupForm';
 import GuenTon from '../components/images/GuenTon';
 import LoadingBar from '../components/images/LoadingBar';
+import AlertBox from '../components/containers/AlertBox';
 
 import { blueShade, greenShade, pinkShade } from '../global/colors';
 

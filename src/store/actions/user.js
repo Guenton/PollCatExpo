@@ -1,6 +1,7 @@
 export const SET_FIRST_NAME = 'SET_FIRST_NAME';
 export const SET_LAST_NAME = 'SET_LAST_NAME';
 export const SET_AVATAR_URI = 'SET_AVATAR_URI';
+export const TOGGLE_NOTIFICATIONS = 'TOGGLE_NOTIFICATIONS';
 
 export const setFirstName = (input = '') => ({
   type: SET_FIRST_NAME,
@@ -13,4 +14,7 @@ export const setLastName = (input = '') => ({
 export const setAvatarUri = (input = '') => ({
   type: SET_AVATAR_URI,
   input,
+});
+export const toggleNotifications = () => ({
+  type: TOGGLE_NOTIFICATIONS,
 });

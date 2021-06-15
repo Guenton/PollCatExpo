@@ -11,7 +11,7 @@ const styles = ScaledSheet.create({
     height: '85@s',
     width: '290@s',
     alignSelf: 'center',
-    marginTop: '-30@s',
+    marginTop: '-35@s',
     borderRadius: '25@s',
 
     shadowColor: '#000',

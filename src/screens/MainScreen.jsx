@@ -26,7 +26,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const MainScreen = () => {
+const MainScreen = ({ setRoute }) => {
   const [view, setView] = useState('main');
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
@@ -66,7 +66,7 @@ const MainScreen = () => {
             <NavCard />
           </View>
 
-          <UserForm />
+          <UserForm onGoLogin={() => setRoute('login')} />
         </>
       )}
 
