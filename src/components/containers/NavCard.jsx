@@ -7,34 +7,41 @@ import { grey, white } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   container: {
-    height: '100@s',
-    width: '300@s',
+    height: '90@s',
+    width: '290@s',
     alignSelf: 'center',
-    marginTop: '-50@s',
+    marginTop: '-40@s',
     borderRadius: '25@s',
-    elevation: 5,
-    zIndex: 5,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.36,
+    shadowRadius: 6.68,
+
+    elevation: 11,
+
     backgroundColor: white,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   divider: {
-    height: '75@s',
+    height: '60@s',
     width: '1@s',
     backgroundColor: grey,
   },
   leftBox: {
     flex: 1,
     height: '75@s',
-    backgroundColor: '#444',
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
   rightBox: {
     flex: 1,
     height: '75@s',
-    backgroundColor: '#444',
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
