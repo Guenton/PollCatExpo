@@ -10,6 +10,15 @@ const styles = ScaledSheet.create({
     height: '42@s',
     marginLeft: '-50@s',
     backgroundColor: 'red',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
     zIndex: 4,
     elevation: 4,
   },

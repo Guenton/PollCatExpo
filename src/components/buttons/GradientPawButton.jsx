@@ -1,8 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
 import { useSpring, animated } from 'react-spring';
+import i18n from 'i18n-js';
 
 import GradientButton from './GradientButton';
 import PawButton from './PawButton';
@@ -14,7 +15,6 @@ import {
 } from '../../store/actions/animation';
 
 import { green, blue, pink } from '../../global/colors';
-import I18n from 'i18n-js';
 
 const AnimatedGradientButton = animated(GradientButton);
 const AnimatedPawButton = animated(PawButton);
@@ -25,21 +25,18 @@ const styles = ScaledSheet.create({
   },
 });
 
-const GradientPawButton = ({
-  style,
-  variant,
-  onPress,
-  isLoading,
-  gradientPawButtonState,
-  setGradientPawButtonWidth,
-  setGradientPawButtonColor,
-  setGradientPawButtonGradient,
-}) => {
+const GradientPawButton = ({ style, variant, onPress }) => {
+  const { t } = i18n;
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector((state) => state.core.isLoading);
+  const gradientPawButtonState = useSelector((state) => state.animation.gradientPawButton);
+
   const labelText = () => {
-    if (variant === 'login') return I18n.t('login');
-    else if (variant === 'signup') return I18n.t('signUp');
-    else if (variant === 'reset-request') return I18n.t('requestReset');
-    else if (variant === 'reset-confirm') return I18n.t('confirmReset');
+    if (variant === 'login') return t('login');
+    else if (variant === 'signup') return t('signUp');
+    else if (variant === 'reset-request') return t('requestReset');
+    else if (variant === 'reset-confirm') return t('confirmReset');
     else return '';
   };
 
@@ -63,21 +60,21 @@ const GradientPawButton = ({
   const resize = useSpring({
     to: { width: animateButtonWidth() },
     from: { width: gradientPawButtonState.width },
-    onRest: () => setGradientPawButtonWidth(animateButtonWidth()),
+    onRest: () => dispatch(setGradientPawButtonWidth(animateButtonWidth())),
   });
 
   const colorize = useSpring({
     to: { color: animateColor },
     from: { color: gradientPawButtonState.color },
     config: { duration: 750 },
-    onRest: () => setGradientPawButtonColor(animateColor),
+    onRest: () => dispatch(setGradientPawButtonColor(animateColor)),
   });
 
   const gradientize = useSpring({
     to: { color: animateGradient() },
     from: { color: gradientPawButtonState.gradient },
     config: { duration: 750 },
-    onRest: () => setGradientPawButtonGradient(animateGradient()),
+    onRest: () => dispatch(setGradientPawButtonGradient(animateGradient())),
   });
 
   return (
@@ -94,14 +91,4 @@ const GradientPawButton = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  isLoading: state.core.isLoading,
-  gradientPawButtonState: state.animation.gradientPawButton,
-});
-const mapDispatchToProps = {
-  setGradientPawButtonWidth,
-  setGradientPawButtonColor,
-  setGradientPawButtonGradient,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GradientPawButton);
+export default GradientPawButton;

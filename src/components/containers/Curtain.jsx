@@ -16,7 +16,7 @@ const width = Dimensions.get('window').width;
 const styles = ScaledSheet.create({
   container: {
     width,
-    marginTop: isIos ? '-40@s' : '0@s',
+    marginTop: isIos ? '-40@s' : '-1@s',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
   },

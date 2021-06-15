@@ -6,6 +6,13 @@ import { green } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   container: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
     zIndex: 5,
     elevation: 5,
   },
