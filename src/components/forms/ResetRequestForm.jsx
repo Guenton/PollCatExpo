@@ -20,7 +20,7 @@ const styles = ScaledSheet.create({
   paw: { alignSelf: 'center' },
 });
 
-const ResetRequestFrom = ({ onGoLogin, onGoConfirm }) => {
+const ResetRequestFrom = ({ onGoLogin }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
