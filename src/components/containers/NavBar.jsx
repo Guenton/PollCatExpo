@@ -1,10 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { ScaledSheet, scale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { ScaledSheet } from 'react-native-size-matters';
 
 import NavBarButton from '../buttons/NavBarButton';
 
 import { grey, blue, pink, green } from '../../global/colors';
+
+import { setRoute } from '../../store/actions/core';
 
 const styles = ScaledSheet.create({
   container: {
@@ -15,12 +18,44 @@ const styles = ScaledSheet.create({
   },
 });
 
-const NavBar = ({ view, onGoMain, onGoRank, onGoSetup }) => (
-  <View style={styles.container}>
-    <NavBarButton name="poll-h" color={view === 'main' ? blue : grey} onPress={onGoMain} />
-    <NavBarButton name="flag-checkered" color={view === 'rank' ? pink : grey} onPress={onGoRank} />
-    <NavBarButton name="user-shield" color={view === 'setup' ? green : grey} onPress={onGoSetup} />
-  </View>
-);
+const NavBar = () => {
+  const dispatch = useDispatch();
+  const route = useSelector((state) => state.core.route);
+
+  const highlightMainRouteWhenActive = () => {
+    if (route === 'main') return blue;
+    else return grey;
+  };
+
+  const highlightRankRouteWhenActive = () => {
+    if (route === 'rank') return pink;
+    else return grey;
+  };
+
+  const highlightSetupRouteWhenActive = () => {
+    if (route === 'setup-user') return green;
+    else return grey;
+  };
+
+  return (
+    <View style={styles.container}>
+      <NavBarButton
+        name="poll-h"
+        color={highlightMainRouteWhenActive()}
+        onPress={() => dispatch(setRoute('main'))}
+      />
+      <NavBarButton
+        name="flag-checkered"
+        color={highlightRankRouteWhenActive()}
+        onPress={() => dispatch(setRoute('rank'))}
+      />
+      <NavBarButton
+        name="user-shield"
+        color={highlightSetupRouteWhenActive()}
+        onPress={() => dispatch(setRoute('setup-user'))}
+      />
+    </View>
+  );
+};
 
 export default NavBar;

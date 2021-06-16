@@ -2,12 +2,16 @@ import React, { useEffect } from 'react';
 import { SafeAreaView, Keyboard } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { setKeyboardOpen } from './store/actions/core';
+
 import LoginBiometricScreen from './screens/LoginBiometricScreen';
 import LoginPasswordScreen from './screens/LoginPasswordScreen';
 import LoginResetScreen from './screens/LoginResetScreen';
 import LoginSignupScreen from './screens/LoginSignupScreen';
 
 import MainScreen from './screens/MainScreen';
+
+import SetupUserScreen from './screens/SetupUserScreen';
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -31,6 +35,8 @@ const Router = () => {
       {route === 'login-reset' && <LoginResetScreen />}
 
       {route === 'main' && <MainScreen />}
+
+      {route === 'setup-user' && <SetupUserScreen />}
     </SafeAreaView>
   );
 };
