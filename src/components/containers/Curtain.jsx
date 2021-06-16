@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, StatusBar, ImageBackground, View, Platform } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { useSpring, animated } from 'react-spring';
@@ -8,15 +8,15 @@ import { setCurtainColor, setCurtainHeight } from '../../store/actions/animation
 
 import { transparent } from '../../global/colors';
 
-const AnimatedView = animated(View);
-const bg = require('../../global/images/rectangle-bg.png');
+const backgroundImage = require('../../global/images/rectangle-bg.png');
 
-const isIos = Platform.OS === 'ios' ? true : false;
-const width = Dimensions.get('window').width;
+const isIosDevice = Platform.OS === 'ios' ? true : false;
+const deviceWindowWidth = Dimensions.get('window').width;
+
 const styles = ScaledSheet.create({
   container: {
-    width,
-    marginTop: isIos ? '-40@s' : '-1@s',
+    width: deviceWindowWidth,
+    marginTop: isIosDevice ? '-40@s' : '-1@s',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
 
@@ -32,7 +32,7 @@ const styles = ScaledSheet.create({
   },
   image: {
     flex: 1,
-    width,
+    width: deviceWindowWidth,
     overflow: 'hidden',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
@@ -44,34 +44,36 @@ const styles = ScaledSheet.create({
   },
 });
 
-const Curtain = ({ children, color, height, curtainState, setCurtainColor, setCurtainHeight }) => {
-  const colorize = useSpring({
+const AnimatedView = animated(View);
+
+const Curtain = ({ children, color, height }) => {
+  const dispatch = useDispatch();
+  const curtain = useSelector((state) => state.animation.curtain);
+
+  const transitionBackgroundColor = useSpring({
     to: { ...styles.content, backgroundColor: color },
-    from: { ...styles.content, backgroundColor: curtainState.color },
+    from: { ...styles.content, backgroundColor: curtain.color },
     config: { duration: 750 },
-    onRest: () => setCurtainColor(color),
+    onRest: () => dispatch(setCurtainColor(color)),
   });
 
-  const resize = useSpring({
+  const transitionCurtainHeight = useSpring({
     to: { ...styles.container, height },
-    from: { ...styles.container, height: curtainState.height },
-    onRest: () => setCurtainHeight(height),
+    from: { ...styles.container, height: curtain.height },
+    onRest: () => dispatch(setCurtainHeight(height)),
   });
 
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={transparent} animated translucent />
 
-      <AnimatedView style={resize}>
-        <ImageBackground style={styles.image} source={bg} resizeMode="cover">
-          <AnimatedView style={colorize}>{children}</AnimatedView>
+      <AnimatedView style={transitionCurtainHeight}>
+        <ImageBackground style={styles.image} source={backgroundImage} resizeMode="cover">
+          <AnimatedView style={transitionBackgroundColor}>{children}</AnimatedView>
         </ImageBackground>
       </AnimatedView>
     </>
   );
 };
 
-const mapStateToProps = (state) => ({ curtainState: state.animation.curtain });
-const mapDispatchToProps = { setCurtainColor, setCurtainHeight };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Curtain);
+export default Curtain;
