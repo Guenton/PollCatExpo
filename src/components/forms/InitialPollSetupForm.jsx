@@ -12,11 +12,12 @@ import CancelButton from '../buttons/CancelButton';
 import EditButton from '../buttons/EditButton';
 
 import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
+import DropdownButton from '../buttons/DropdownButton';
+import FormOptionSelector from '../labels/FormOptionSelector';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
-  inputContainer: { width: '290@s' },
-  input: { marginBottom: '18@s' },
+  inputContainer: { width: '310@s' },
   buttonContainer: {
     width: '290@s',
     paddingHorizontal: '10@s',
@@ -25,7 +26,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const InitialPollSetupForm = ({ onGoSignup, onGoReset, onGoMain }) => {
+const InitialPollSetupForm = ({ onGoAdmin }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -62,9 +63,18 @@ const InitialPollSetupForm = ({ onGoSignup, onGoReset, onGoMain }) => {
         />
       </View>
 
+      <View>
+        <FormOptionSelector
+          label={t('responseOptions')}
+          boldLabel={t('notSelected')}
+          onPress={() => {}}
+        />
+        <DropdownButton icon="list" label={t('responseOptions')} onPress={() => {}} />
+      </View>
+
       {!isKeyboardOpen && (
         <View style={styles.buttonContainer}>
-          <CancelButton onPress={() => {}} />
+          <CancelButton onPress={() => onGoAdmin()} />
           <EditButton onPress={() => {}} />
         </View>
       )}
