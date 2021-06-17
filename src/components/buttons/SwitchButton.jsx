@@ -32,7 +32,7 @@ const styles = ScaledSheet.create({
 const SwitchButton = ({ style, onPress, icon, label, isOn }) => (
   <Pressable style={[styles.container, style]} onPress={() => onPress()}>
     <View style={styles.leftBox}>
-      <Icon type="font-awesome-5" name={icon} size={scale(22)} color={blue} solid />
+      <Icon type="font-awesome-5" name={icon} size={scale(23)} color={blue} solid />
       <FormText label={label} containerStyle={styles.label} />
     </View>
     <Switch value={isOn} color={green} />

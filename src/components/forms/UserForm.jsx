@@ -11,10 +11,15 @@ import SwitchButton from '../buttons/SwitchButton';
 
 import { toggleNotifications } from '../../store/actions/user';
 import { setLoading, toggleDark } from '../../store/actions/core';
+import { ScrollView } from 'react-native';
 
 const styles = ScaledSheet.create({
   container: {
-    flex: 1,
+    marginTop: '-50@s',
+  },
+  content: {
+    paddingTop: '50@s',
+    height: '475@s',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
@@ -39,8 +44,10 @@ const UserForm = ({ onGoLogin }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <AvatarSelect />
+
+      <LogoutButton onPress={() => firebaseSignOut()} />
 
       <SwitchButton
         label={t('notifications')}
@@ -55,9 +62,7 @@ const UserForm = ({ onGoLogin }) => {
         isOn={isDark}
         onPress={() => dispatch(toggleDark())}
       />
-
-      <LogoutButton onPress={() => firebaseSignOut()} />
-    </View>
+    </ScrollView>
   );
 };
 

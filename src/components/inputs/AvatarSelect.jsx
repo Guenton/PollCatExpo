@@ -13,8 +13,8 @@ import { grey, white } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   container: {
-    height: '90@s',
-    width: '90@s',
+    height: '100@s',
+    width: '175@s',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -49,7 +49,7 @@ const AvatarSelect = () => {
         <Icon
           type="font-awesome-5"
           name="user-alt"
-          size={scale(30)}
+          size={scale(33)}
           color={grey}
           reverseColor={white}
           reverse

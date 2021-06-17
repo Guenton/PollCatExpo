@@ -6,7 +6,7 @@ import { black } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   text: {
-    fontSize: '13@s',
+    fontSize: '14@s',
     fontWeight: 'bold',
     color: black,
   },

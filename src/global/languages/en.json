@@ -45,5 +45,9 @@
   "selectedPoll": "Selected Poll:",
   "noSelectedPoll": "No Poll Selected",
   "openSelectedPoll": "Open Selected Poll",
-  "closeSelectedPoll": "Close Selected Poll"
+  "closeSelectedPoll": "Close Selected Poll",
+  "createPoll": "Create Poll",
+  "createUser": "Create User",
+  "editPoll": "Edit Poll",
+  "editUser": "Edit User"
 }

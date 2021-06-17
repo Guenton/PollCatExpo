@@ -36,10 +36,10 @@ const LogoutButton = ({ style, onPress }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={() => onPress()}>
       <View style={styles.leftBox}>
-        <Icon type="font-awesome-5" name="user-lock" size={scale(22)} color={blue} />
+        <Icon type="font-awesome-5" name="user-lock" size={scale(23)} color={blue} solid />
         <FormText label={t('logout')} containerStyle={styles.label} />
       </View>
-      <Icon type="font-awesome-5" name="sign-out-alt" size={scale(20)} color={green} />
+      <Icon type="font-awesome-5" name="sign-out-alt" size={scale(20)} color={green} solid />
     </Pressable>
   );
 };

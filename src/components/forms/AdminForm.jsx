@@ -7,14 +7,19 @@ import I18n from 'i18n-js';
 
 import FormOptionSelector from '../labels/FormOptionSelector';
 import SwitchButton from '../buttons/SwitchButton';
-import LogoutButton from '../buttons/LogoutButton';
+import DoubleButton from '../buttons/DoubleButton';
 
 import { setLoading } from '../../store/actions/core';
 import { setPollOpen } from '../../store/actions/poll';
+import { ScrollView } from 'react-native';
 
 const styles = ScaledSheet.create({
   container: {
-    flex: 1,
+    marginTop: '-50@s',
+  },
+  content: {
+    paddingTop: '50@s',
+    height: '475@s',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
@@ -23,14 +28,23 @@ const styles = ScaledSheet.create({
   },
 });
 
-const AdminForm = ({ onGoLogin }) => {
+const AdminForm = () => {
   const { t } = I18n;
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.poll.isOpen);
   const selectedPoll = useSelector((state) => state.poll.selectedPoll);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <DoubleButton
+        iconLeft="bell"
+        labelLeft={t('createPoll')}
+        onPressLeft={() => {}}
+        iconRight="edit"
+        labelRight={t('editPoll')}
+        onPressRight={() => {}}
+      />
+
       <View>
         <FormOptionSelector
           label={t('selectedPoll')}
@@ -38,15 +52,22 @@ const AdminForm = ({ onGoLogin }) => {
           onPress={() => {}}
         />
         <SwitchButton
-          label={isOpen ? t('closeSelectedPoll') : t('openSelectedPoll')}
           icon="play-circle"
+          label={isOpen ? t('closeSelectedPoll') : t('openSelectedPoll')}
           isOn={isOpen}
           onPress={() => dispatch(setPollOpen(!isOpen))}
         />
       </View>
 
-      <LogoutButton onPress={() => {}} />
-    </View>
+      <DoubleButton
+        iconLeft="user-plus"
+        labelLeft={t('createUser')}
+        onPressLeft={() => {}}
+        iconRight="user-edit"
+        labelRight={t('editUser')}
+        onPressRight={() => {}}
+      />
+    </ScrollView>
   );
 };
 

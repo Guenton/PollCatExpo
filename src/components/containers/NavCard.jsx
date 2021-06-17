@@ -37,6 +37,7 @@ const styles = ScaledSheet.create({
     shadowOpacity: 0.36,
     shadowRadius: 6.68,
     elevation: 11,
+    zIndex: 11,
   },
   divider: {
     backgroundColor: grey,
@@ -45,7 +46,7 @@ const styles = ScaledSheet.create({
   },
   underscore: {
     backgroundColor: blue,
-    height: '2@s',
+    height: '1@s',
     width: '45@s',
     bottom: '29@s',
     left: '77@s',
