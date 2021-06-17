@@ -20,7 +20,7 @@ const styles = ScaledSheet.create({
     marginLeft: '10@s',
   },
   text: {
-    fontSize: '12@s',
+    fontSize: '14@s',
   },
 });
 

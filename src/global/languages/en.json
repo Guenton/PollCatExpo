@@ -52,5 +52,9 @@
   "editUser": "Edit User",
   "pollTitle": "Poll Title",
   "errNotLongTitle": "Title is too Short",
-  "initialSetup": "Initial Setup"
+  "initialSetup": "Initial Setup",
+  "cancel": "Cancel",
+  "edit": "Edit",
+  "delete": "Delete",
+  "confirm": "Confirm"
 }

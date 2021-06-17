@@ -2,29 +2,27 @@ import React, { createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
-import { isEmpty, isEmail } from 'validator';
-import * as SecureStore from 'expo-secure-store';
+import { isEmpty } from 'validator';
 import firebase from 'firebase';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
-import EmailInput from '../inputs/EmailInput';
-import PasswordInput from '../inputs/PasswordInput';
-import ForgotPasswordButton from '../buttons/ForgotPasswordButton';
-import GradientPawButton from '../buttons/GradientPawButton';
-import FormFooter from '../labels/FormFooter';
-
-import { setLoading } from '../../store/actions/core';
-import { setEmail, setPassword, setErrEmail, setErrPassword } from '../../store/actions/auth';
-import { setFirstName, setLastName } from '../../store/actions/user';
 import PollTitleInput from '../inputs/PollTitleInput';
+import CancelButton from '../buttons/CancelButton';
+import EditButton from '../buttons/EditButton';
+
 import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
 
 const styles = ScaledSheet.create({
-  container: { flex: 1, justifyContent: 'space-evenly' },
-  inputContainer: { width: '290@s', alignSelf: 'center' },
+  container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
+  inputContainer: { width: '290@s' },
   input: { marginBottom: '18@s' },
-  paw: { alignSelf: 'center' },
+  buttonContainer: {
+    width: '290@s',
+    paddingHorizontal: '10@s',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 
 const InitialPollSetupForm = ({ onGoSignup, onGoReset, onGoMain }) => {
@@ -64,7 +62,12 @@ const InitialPollSetupForm = ({ onGoSignup, onGoReset, onGoMain }) => {
         />
       </View>
 
-      {!isKeyboardOpen && <></>}
+      {!isKeyboardOpen && (
+        <View style={styles.buttonContainer}>
+          <CancelButton onPress={() => {}} />
+          <EditButton onPress={() => {}} />
+        </View>
+      )}
     </View>
   );
 };
