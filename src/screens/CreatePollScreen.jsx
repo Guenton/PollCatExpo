@@ -13,7 +13,7 @@ import Header from '../components/labels/Header';
 
 import { greenShade } from '../global/colors';
 import { setRoute } from '../store/actions/core';
-import AdminForm from '../components/forms/AdminForm';
+import InitialPollSetupForm from '../components/forms/InitialPollSetupForm';
 
 const styles = ScaledSheet.create({
   container: {
@@ -25,7 +25,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const SetupAdminScreen = () => {
+const CreatePollScreen = () => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -34,18 +34,12 @@ const SetupAdminScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.setupHeader}>
-        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(150)}>
-          <Header label={t('setupHeader')} />
+        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(250)}>
+          <Header label={t('createPoll')} />
         </Curtain>
-        <NavCard />
       </View>
 
-      <AdminForm
-        onGoCreatePoll={() => dispatch(setRoute('setup-create-poll'))}
-        onGoEditPoll={() => dispatch(setRoute('setup-edit-poll'))}
-        onGoCreateUser={() => dispatch(setRoute('setup-create-user'))}
-        onGoEditUser={() => dispatch(setRoute('setup-edit-user'))}
-      />
+      <InitialPollSetupForm />
 
       <LoadingBar />
       <NavBar />
@@ -53,4 +47,4 @@ const SetupAdminScreen = () => {
   );
 };
 
-export default SetupAdminScreen;
+export default CreatePollScreen;

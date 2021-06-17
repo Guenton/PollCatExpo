@@ -13,6 +13,7 @@ import MainScreen from './screens/MainScreen';
 
 import SetupUserScreen from './screens/SetupUserScreen';
 import SetupAdminScreen from './screens/SetupAdminScreen';
+import CreatePollScreen from './screens/CreatePollScreen';
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const Router = () => {
 
       {route === 'setup-user' && <SetupUserScreen />}
       {route === 'setup-admin' && <SetupAdminScreen />}
+      {route === 'setup-create-poll' && <CreatePollScreen />}
     </SafeAreaView>
   );
 };

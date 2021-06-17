@@ -49,5 +49,8 @@
   "createPoll": "Create Poll",
   "createUser": "Create User",
   "editPoll": "Edit Poll",
-  "editUser": "Edit User"
+  "editUser": "Edit User",
+  "pollTitle": "Poll Title",
+  "errNotLongTitle": "Title is too Short",
+  "initialSetup": "Initial Setup"
 }

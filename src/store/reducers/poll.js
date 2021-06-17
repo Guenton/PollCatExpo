@@ -1,10 +1,17 @@
-import { SET_POLL_OPEN, SET_SELECTED_POLL, SET_POLL_ID, SET_POLL_TITLE } from '../actions/poll';
+import {
+  SET_POLL_OPEN,
+  SET_SELECTED_POLL,
+  SET_POLL_ID,
+  SET_POLL_TITLE,
+  SET_ERR_POLL_TITLE,
+} from '../actions/poll';
 
 const initialState = {
   isOpen: false,
   selectedPoll: '',
   id: null,
-  title: '',
+  pollTitle: '',
+  errPollTitle: '',
 };
 
 const coreReducer = (state = initialState, action) => {
@@ -16,7 +23,9 @@ const coreReducer = (state = initialState, action) => {
     case SET_POLL_ID:
       return { ...state, id: action.input };
     case SET_POLL_TITLE:
-      return { ...state, title: action.input };
+      return { ...state, pollTitle: action.input };
+    case SET_ERR_POLL_TITLE:
+      return { ...state, errPollTitle: action.err };
     default:
       return state;
   }
