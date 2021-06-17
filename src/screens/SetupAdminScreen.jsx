@@ -13,6 +13,7 @@ import Header from '../components/labels/Header';
 
 import { greenShade } from '../global/colors';
 import { setRoute } from '../store/actions/core';
+import AdminForm from '../components/forms/AdminForm';
 
 const styles = ScaledSheet.create({
   container: {
@@ -38,6 +39,8 @@ const SetupAdminScreen = () => {
         </Curtain>
         <NavCard />
       </View>
+
+      <AdminForm />
 
       <LoadingBar />
       <NavBar />

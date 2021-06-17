@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScaledSheet } from 'react-native-size-matters';
 import firebase from 'firebase';
+import I18n from 'i18n-js';
 
 import AvatarSelect from '../inputs/AvatarSelect';
 import LogoutButton from '../buttons/LogoutButton';
@@ -20,6 +21,7 @@ const styles = ScaledSheet.create({
 });
 
 const UserForm = ({ onGoLogin }) => {
+  const { t } = I18n;
   const dispatch = useDispatch();
   const notifications = useSelector((state) => state.user.notifications);
   const isDark = useSelector((state) => state.core.isDark);
@@ -41,14 +43,14 @@ const UserForm = ({ onGoLogin }) => {
       <AvatarSelect />
 
       <SwitchButton
-        label="Notifications"
+        label={t('notifications')}
         icon="bell"
         isOn={notifications}
         onPress={() => dispatch(toggleNotifications())}
       />
 
       <SwitchButton
-        label="Dark Mode"
+        label={t('darkMode')}
         icon="moon"
         isOn={isDark}
         onPress={() => dispatch(toggleDark())}

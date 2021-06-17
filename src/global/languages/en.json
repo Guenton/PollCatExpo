@@ -39,5 +39,11 @@
   "user": "User",
   "admin": "Admin",
   "changeImage": "Change Image",
-  "logout": "Logout"
+  "logout": "Logout",
+  "notifications": "Notifications",
+  "darkMode": "Dark Mode",
+  "selectedPoll": "Selected Poll:",
+  "noSelectedPoll": "No Poll Selected",
+  "openSelectedPoll": "Open Selected Poll",
+  "closeSelectedPoll": "Close Selected Poll"
 }

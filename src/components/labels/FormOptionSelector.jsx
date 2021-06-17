@@ -9,15 +9,16 @@ import SubHeader from './SubHeader';
 const styles = ScaledSheet.create({
   container: {
     flexDirection: 'row',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     alignItems: 'center',
+    marginBottom: '4@s',
   },
   spacing: {
     marginRight: '5@s',
   },
 });
 
-const FormFooter = ({ label, boldLabel, onPress }) => (
+const FormOptionSelector = ({ label, boldLabel, onPress }) => (
   <View style={styles.container}>
     <SubHeader label={label} containerStyle={styles.spacing} />
 
@@ -27,4 +28,4 @@ const FormFooter = ({ label, boldLabel, onPress }) => (
   </View>
 );
 
-export default FormFooter;
+export default FormOptionSelector;
