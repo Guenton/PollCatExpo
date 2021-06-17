@@ -12,6 +12,7 @@ import LoginSignupScreen from './screens/LoginSignupScreen';
 import MainScreen from './screens/MainScreen';
 
 import SetupUserScreen from './screens/SetupUserScreen';
+import SetupAdminScreen from './screens/SetupAdminScreen';
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Router = () => {
       {route === 'main' && <MainScreen />}
 
       {route === 'setup-user' && <SetupUserScreen />}
+      {route === 'setup-admin' && <SetupAdminScreen />}
     </SafeAreaView>
   );
 };
