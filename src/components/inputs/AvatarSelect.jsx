@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Image, Pressable } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
-import { Avatar, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 
 import SubHeader from '../labels/SubHeader';

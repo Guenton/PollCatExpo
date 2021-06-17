@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 
-const guenton = require('../../global/images/guenton.png');
+const guentonImage = require('../../global/images/guenton.png');
 
 const styles = ScaledSheet.create({
   container: {
@@ -17,7 +17,7 @@ const styles = ScaledSheet.create({
 
 const GuenTon = ({ containerStyle, style }) => (
   <View style={[styles.container, containerStyle]}>
-    <Image style={[styles.image, style]} source={guenton} />
+    <Image style={[styles.image, style]} source={guentonImage} />
   </View>
 );
 

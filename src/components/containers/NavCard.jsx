@@ -19,12 +19,16 @@ import {
 
 const styles = ScaledSheet.create({
   container: {
+    backgroundColor: white,
     height: '85@s',
     width: '290@s',
     alignSelf: 'center',
     marginTop: '-35@s',
     borderRadius: '25@s',
-
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // Shadows
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -32,18 +36,12 @@ const styles = ScaledSheet.create({
     },
     shadowOpacity: 0.36,
     shadowRadius: 6.68,
-
     elevation: 11,
-
-    backgroundColor: white,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   divider: {
+    backgroundColor: grey,
     height: '50@s',
     width: '1@s',
-    backgroundColor: grey,
   },
   underscore: {
     backgroundColor: blue,

@@ -9,7 +9,7 @@ import LogoutButton from '../buttons/LogoutButton';
 import SwitchButton from '../buttons/SwitchButton';
 
 import { toggleNotifications } from '../../store/actions/user';
-import { toggleDark } from '../../store/actions/core';
+import { setLoading, toggleDark } from '../../store/actions/core';
 
 const styles = ScaledSheet.create({
   container: {
@@ -26,9 +26,12 @@ const UserForm = ({ onGoLogin }) => {
 
   const firebaseSignOut = async () => {
     try {
+      dispatch(setLoading());
       await firebase.auth().signOut();
+      dispatch(setLoading(false));
       onGoLogin();
     } catch (err) {
+      dispatch(setLoading(false));
       console.error(err);
     }
   };

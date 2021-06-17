@@ -9,7 +9,6 @@ import { setCurtainColor, setCurtainHeight } from '../../store/actions/animation
 import { transparent } from '../../global/colors';
 
 const backgroundImage = require('../../global/images/rectangle-bg.png');
-
 const isIosDevice = Platform.OS === 'ios' ? true : false;
 const deviceWindowWidth = Dimensions.get('window').width;
 
@@ -19,7 +18,7 @@ const styles = ScaledSheet.create({
     marginTop: isIosDevice ? '-40@s' : '-1@s',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
-
+    // Shadows
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -27,7 +26,6 @@ const styles = ScaledSheet.create({
     },
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
-
     elevation: 10,
   },
   image: {

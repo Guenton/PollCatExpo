@@ -89,6 +89,7 @@ const SignupForm = ({ onGoLogin, onGoMain }) => {
     if (errEmail || errPassword || errPasswordConfirm) return shakeOnError();
     if (email && password && passwordConfirm) {
       try {
+        dispatch(setLoading());
         await firebase.auth().createUserWithEmailAndPassword(email, password);
 
         const canStore = await SecureStore.isAvailableAsync();
@@ -102,8 +103,10 @@ const SignupForm = ({ onGoLogin, onGoMain }) => {
 
         dispatch(setPassword());
         dispatch(setPasswordConfirm());
+        dispatch(setLoading(false));
         onGoMain();
       } catch (err) {
+        dispatch(setLoading(false));
         console.error(err);
         console.log(err.code);
         console.log(err.message);

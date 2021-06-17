@@ -57,20 +57,20 @@ const GradientPawButton = ({ style, variant, onPress }) => {
     else return blue;
   };
 
-  const resize = useSpring({
+  const transitionWidth = useSpring({
     to: { width: animateButtonWidth() },
     from: { width: gradientPawButtonState.width },
     onRest: () => dispatch(setGradientPawButtonWidth(animateButtonWidth())),
   });
 
-  const colorize = useSpring({
+  const transitionColor = useSpring({
     to: { color: animateColor },
     from: { color: gradientPawButtonState.color },
     config: { duration: 750 },
     onRest: () => dispatch(setGradientPawButtonColor(animateColor)),
   });
 
-  const gradientize = useSpring({
+  const transitionGradient = useSpring({
     to: { color: animateGradient() },
     from: { color: gradientPawButtonState.gradient },
     config: { duration: 750 },
@@ -79,11 +79,11 @@ const GradientPawButton = ({ style, variant, onPress }) => {
 
   return (
     <View style={[styles.container, style]}>
-      <AnimatedPawButton color={colorize.color} onPress={() => onPress()} />
+      <AnimatedPawButton color={transitionColor.color} onPress={() => onPress()} />
       <AnimatedGradientButton
-        style={resize}
-        color={colorize.color}
-        gradient={gradientize.color}
+        style={transitionWidth}
+        color={transitionColor.color}
+        gradient={transitionGradient.color}
         label={labelText()}
         onPress={() => onPress()}
       />

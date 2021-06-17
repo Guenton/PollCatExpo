@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import BoldText from './BoldText';
 
-import Header from './Header';
 import SubHeader from './SubHeader';
 
 const styles = ScaledSheet.create({

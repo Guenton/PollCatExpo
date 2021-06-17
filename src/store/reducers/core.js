@@ -22,7 +22,7 @@ const coreReducer = (state = initialState, action) => {
     case SET_KEYBOARD_OPEN:
       return { ...state, isKeyboardOpen: action.bool };
     case SET_ALERT:
-      return { ...state, alert: { text: action.text, severity: action.severity } };
+      return { ...state, alert: { ...state.alert, text: action.text, severity: action.severity } };
     default:
       return state;
   }
