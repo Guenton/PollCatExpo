@@ -1,3 +1,4 @@
+import { LogBox } from 'react-native';
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import en from '../global/languages/en';
@@ -6,11 +7,8 @@ import nl from '../global/languages/nl';
 import pap from '../global/languages/pap';
 
 import firebase from 'firebase';
-//import 'firebase/auth';
-//import "firebase/database";
-//import "firebase/firestore";
-//import "firebase/functions";
-//import "firebase/storage";
+
+export const initFirebaseTimeoutErrorBypass = () => LogBox.ignoreLogs(['Setting a timer']);
 
 export const initLanguages = () => {
   i18n.translations = { en, es, nl, pap };

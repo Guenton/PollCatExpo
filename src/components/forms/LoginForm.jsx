@@ -16,7 +16,7 @@ import FormFooter from '../labels/FormFooter';
 
 import { setLoading } from '../../store/actions/core';
 import { setEmail, setPassword, setErrEmail, setErrPassword } from '../../store/actions/auth';
-import { setFirstName, setLastName } from '../../store/actions/user';
+import { setFirstName, setLastName, setUserId } from '../../store/actions/user';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -75,8 +75,18 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
         if (canStore) await SecureStore.setItemAsync('email', email);
         if (canStore) await SecureStore.setItemAsync('password', password);
 
+        const userId = firebase.auth().currentUser.uid;
         const firstName = email.split('.')[0];
         const lastName = email.split('.')[1].split('@')[0];
+
+        await firebase.database().ref(`users/${userId}`).set({
+          userId,
+          firstName,
+          lastName,
+          email,
+        });
+
+        dispatch(setUserId(userId));
         dispatch(setFirstName(firstName));
         dispatch(setLastName(lastName));
         dispatch(setPassword());

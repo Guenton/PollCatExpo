@@ -21,6 +21,7 @@ const styles = ScaledSheet.create({
   },
   text: {
     fontSize: '14@s',
+    marginLeft: '5@s',
   },
 });
 

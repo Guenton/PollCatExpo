@@ -50,13 +50,17 @@
   "createUser": "Create User",
   "editPoll": "Edit Poll",
   "editUser": "Edit User",
+  "pollSetup": "Poll Setup",
+  "userSetup": "User Setup",
+  "userSelection": "User Selection",
+  "selectUser": "Select User",
   "pollTitle": "Poll Title",
   "errNotLongTitle": "Title is too Short",
-  "initialSetup": "Initial Setup",
   "cancel": "Cancel",
   "edit": "Edit",
   "delete": "Delete",
   "confirm": "Confirm",
   "responseOptions": "Response Options",
-  "notSelected": "Not Selected"
+  "notSelected": "Not Selected",
+  "userRights": "User Rights:"
 }

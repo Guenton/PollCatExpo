@@ -20,6 +20,8 @@ const styles = ScaledSheet.create({
 
 const NavBar = () => {
   const dispatch = useDispatch();
+
+  const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
   const route = useSelector((state) => state.core.route);
 
   const highlightMainRouteWhenActive = () => {
@@ -38,23 +40,27 @@ const NavBar = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <NavBarButton
-        name="poll-h"
-        color={highlightMainRouteWhenActive()}
-        onPress={() => dispatch(setRoute('main'))}
-      />
-      <NavBarButton
-        name="flag-checkered"
-        color={highlightRankRouteWhenActive()}
-        onPress={() => dispatch(setRoute('rank'))}
-      />
-      <NavBarButton
-        name="user-shield"
-        color={highlightSetupRouteWhenActive()}
-        onPress={() => dispatch(setRoute('setup-user'))}
-      />
-    </View>
+    <>
+      {!isKeyboardOpen && (
+        <View style={styles.container}>
+          <NavBarButton
+            name="poll-h"
+            color={highlightMainRouteWhenActive()}
+            onPress={() => dispatch(setRoute('main'))}
+          />
+          <NavBarButton
+            name="flag-checkered"
+            color={highlightRankRouteWhenActive()}
+            onPress={() => dispatch(setRoute('rank'))}
+          />
+          <NavBarButton
+            name="user-shield"
+            color={highlightSetupRouteWhenActive()}
+            onPress={() => dispatch(setRoute('setup-user'))}
+          />
+        </View>
+      )}
+    </>
   );
 };
 

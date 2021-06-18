@@ -8,7 +8,7 @@ import Curtain from '../components/containers/Curtain';
 import NavBar from '../components/containers/NavBar';
 import LoadingBar from '../components/images/LoadingBar';
 import Header from '../components/labels/Header';
-import CreatePollForm from '../components/forms/CreatePollForm';
+import CreateUserForm from '../components/forms/CreateUserForm';
 
 import { greenShade } from '../global/colors';
 import { setRoute } from '../store/actions/core';
@@ -23,7 +23,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const CreatePollScreen = () => {
+const CreateUserScreen = () => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -33,11 +33,11 @@ const CreatePollScreen = () => {
     <View style={styles.container}>
       <View style={styles.setupHeader}>
         <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(200)}>
-          <Header label={t('createPoll')} />
+          <Header label={t('createUser')} />
         </Curtain>
       </View>
 
-      <CreatePollForm onGoAdmin={() => dispatch(setRoute('setup-admin'))} />
+      <CreateUserForm onGoAdmin={() => dispatch(setRoute('setup-admin'))} />
 
       <LoadingBar />
       <NavBar />
@@ -45,4 +45,4 @@ const CreatePollScreen = () => {
   );
 };
 
-export default CreatePollScreen;
+export default CreateUserScreen;

@@ -10,10 +10,10 @@ import FormHeader from '../labels/FormHeader';
 import PollTitleInput from '../inputs/PollTitleInput';
 import CancelButton from '../buttons/CancelButton';
 import EditButton from '../buttons/EditButton';
-
-import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
 import DropdownButton from '../buttons/DropdownButton';
 import FormOptionSelector from '../labels/FormOptionSelector';
+
+import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -26,7 +26,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const InitialPollSetupForm = ({ onGoAdmin }) => {
+const CreatePollForm = ({ onGoAdmin }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -50,7 +50,7 @@ const InitialPollSetupForm = ({ onGoAdmin }) => {
 
   return (
     <View style={styles.container}>
-      <FormHeader label={t('initialSetup')} />
+      <FormHeader label={t('pollSetup')} />
 
       <View style={styles.inputContainer}>
         <PollTitleInput
@@ -82,4 +82,4 @@ const InitialPollSetupForm = ({ onGoAdmin }) => {
   );
 };
 
-export default InitialPollSetupForm;
+export default CreatePollForm;
