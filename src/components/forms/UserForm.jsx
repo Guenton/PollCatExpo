@@ -15,10 +15,10 @@ import { ScrollView } from 'react-native';
 
 const styles = ScaledSheet.create({
   container: {
-    marginTop: '-50@s',
+    marginTop: '-20@s',
   },
   content: {
-    paddingTop: '50@s',
+    paddingTop: '20@s',
     height: '475@s',
     justifyContent: 'space-evenly',
     alignItems: 'center',
