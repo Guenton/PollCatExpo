@@ -28,7 +28,7 @@ const styles = ScaledSheet.create({
 const UserForm = ({ onGoLogin }) => {
   const { t } = I18n;
   const dispatch = useDispatch();
-  const notifications = useSelector((state) => state.user.notifications);
+  const isNotifications = useSelector((state) => state.user.isNotifications);
   const isDark = useSelector((state) => state.core.isDark);
 
   const firebaseSignOut = async () => {
@@ -52,7 +52,7 @@ const UserForm = ({ onGoLogin }) => {
       <SwitchButton
         label={t('notifications')}
         icon="bell"
-        isOn={notifications}
+        isOn={isNotifications}
         onPress={() => dispatch(toggleNotifications())}
       />
 

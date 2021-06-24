@@ -9,7 +9,7 @@ import i18n from 'i18n-js';
 import FormHeader from '../labels/FormHeader';
 import EmailInput from '../inputs/EmailInput';
 import FormOptionSelector from '../labels/FormOptionSelector';
-import DropdownButton from '../buttons/DropdownButton';
+// import DropdownButton from '../buttons/DropdownButton';
 import CancelButton from '../buttons/CancelButton';
 import ConfirmButton from '../buttons/ConfirmButton';
 
@@ -100,7 +100,7 @@ const CreateUserForm = ({ onGoAdmin }) => {
           boldLabel={t('notSelected')}
           onPress={() => {}}
         />
-        <DropdownButton icon="user-shield" label={t('userRights')} onPress={() => {}} />
+        {/* <DropdownButton icon="user-shield" label={t('userRights')} onPress={() => {}} /> */}
       </View>
 
       {!isKeyboardOpen && (

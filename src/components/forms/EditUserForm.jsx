@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty, isEmail } from 'validator';
 import firebase from 'firebase';
@@ -8,18 +8,27 @@ import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
 import FormOptionSelector from '../labels/FormOptionSelector';
-import DropdownButton from '../buttons/DropdownButton';
+import UserSelectionDropdown from '../buttons/UserSelectionDropdown';
 import CancelButton from '../buttons/CancelButton';
 import ConfirmButton from '../buttons/ConfirmButton';
 
 import { setErrUserEmail, setUserEmail } from '../../store/actions/poll';
 import DeleteFab from '../buttons/DeleteFab';
-import { setUserArray } from '../../store/actions/user';
+import { setAllUsersObject, setSelectedUserObject } from '../../store/actions/user';
 import { BottomSheet } from 'react-native-elements';
 
 const styles = ScaledSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
-  inputContainer: { width: '310@s' },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: '25@s',
+  },
+  content: {
+    height: '250@s',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   buttonContainer: {
     width: '290@s',
     paddingHorizontal: '10@s',
@@ -37,9 +46,8 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
 
-  const userEmail = useSelector((state) => state.user.userEmail);
-  const errUserEmail = useSelector((state) => state.user.errUserEmail);
-  const userArray = useSelector((state) => state.user.userArray);
+  const allUsersObject = useSelector((state) => state.user.allUsersObject);
+  const selectedUserObject = useSelector((state) => state.user.selectedUserObject);
 
   const validateAndSetUserEmail = (val) => {
     if (isEmpty(val)) dispatch(setErrUserEmail(t('errNotFilled')));
@@ -53,30 +61,20 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
     .database()
     .ref('users')
     .once('value', (snapshot) => {
-      let userArray = [];
-      snapshot.forEach((item) => userArray.push(item));
-      dispatch(setUserArray(userArray));
+      dispatch(setAllUsersObject(snapshot.val()));
     });
 
   return (
     <View style={styles.container}>
-      <FormHeader label={t('editUser')} />
-
-      <View>
-        <FormOptionSelector
-          label={t('userSelection')}
-          boldLabel={t('notSelected')}
-          onPress={() => {}}
+      <ScrollView contentContainerStyle={styles.content}>
+        <FormHeader label={t('userSelection')} />
+        <UserSelectionDropdown
+          users={allUsersObject}
+          onSelect={(user) => setSelectedUserObject(user)}
         />
-        <DropdownButton
-          icon="user"
-          label={t('userSelection')}
-          items={userArray}
-          onSelect={(val) => console.log(val)}
-        />
-      </View>
 
-      <DeleteFab onPress={() => onGoDeleteUser()} />
+        <DeleteFab onPress={() => onGoDeleteUser()} />
+      </ScrollView>
 
       {!isKeyboardOpen && (
         <View style={styles.buttonContainer}>
@@ -84,8 +82,6 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
           <ConfirmButton onPress={() => {}} />
         </View>
       )}
-
-      <BottomSheet isVisible={isBottomSheetVisible} />
     </View>
   );
 };

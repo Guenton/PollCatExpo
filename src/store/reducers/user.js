@@ -3,7 +3,8 @@ import {
   SET_FIRST_NAME,
   SET_LAST_NAME,
   SET_AVATAR_URI,
-  SET_USER_ARRAY,
+  SET_ALL_USERS_OBJECT,
+  SET_SELECTED_USER_OBJECT,
   TOGGLE_NOTIFICATIONS,
 } from '../actions/user';
 
@@ -12,8 +13,9 @@ const initialState = {
   firstName: '',
   lastName: '',
   avatarUri: '',
-  userArray: [],
-  notifications: false,
+  allUsersObject: {},
+  selectedUserObject: {},
+  isNotifications: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -26,10 +28,12 @@ const userReducer = (state = initialState, action) => {
       return { ...state, lastName: action.input };
     case SET_AVATAR_URI:
       return { ...state, avatarUri: action.input };
-    case SET_USER_ARRAY:
-      return { ...state, userArray: action.array };
+    case SET_ALL_USERS_OBJECT:
+      return { ...state, allUsersObject: action.object };
+    case SET_SELECTED_USER_OBJECT:
+      return { ...state, selectedUserObject: action.object };
     case TOGGLE_NOTIFICATIONS:
-      return { ...state, notifications: !state.notifications };
+      return { ...state, isNotifications: !state.isNotifications };
     default:
       return state;
   }

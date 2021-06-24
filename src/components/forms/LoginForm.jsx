@@ -6,6 +6,7 @@ import { isEmpty, isEmail } from 'validator';
 import * as SecureStore from 'expo-secure-store';
 import firebase from 'firebase';
 import i18n from 'i18n-js';
+import _ from 'lodash';
 
 import FormHeader from '../labels/FormHeader';
 import EmailInput from '../inputs/EmailInput';
@@ -76,8 +77,8 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
         if (canStore) await SecureStore.setItemAsync('password', password);
 
         const userId = firebase.auth().currentUser.uid;
-        const firstName = email.split('.')[0];
-        const lastName = email.split('.')[1].split('@')[0];
+        const firstName = _.capitalize(email.split('.')[0]);
+        const lastName = _.capitalize(email.split('.')[1].split('@')[0]);
 
         await firebase.database().ref(`users/${userId}`).set({
           userId,

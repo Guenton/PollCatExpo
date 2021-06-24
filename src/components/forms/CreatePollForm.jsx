@@ -10,7 +10,7 @@ import FormHeader from '../labels/FormHeader';
 import PollTitleInput from '../inputs/PollTitleInput';
 import CancelButton from '../buttons/CancelButton';
 import EditButton from '../buttons/EditButton';
-import DropdownButton from '../buttons/DropdownButton';
+// import DropdownButton from '../buttons/DropdownButton';
 import FormOptionSelector from '../labels/FormOptionSelector';
 
 import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
@@ -69,7 +69,7 @@ const CreatePollForm = ({ onGoAdmin }) => {
           boldLabel={t('notSelected')}
           onPress={() => {}}
         />
-        <DropdownButton icon="list" label={t('responseOptions')} onPress={() => {}} />
+        {/* <DropdownButton icon="list" label={t('responseOptions')} onPress={() => {}} /> */}
       </View>
 
       {!isKeyboardOpen && (
