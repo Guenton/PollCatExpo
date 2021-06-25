@@ -32,7 +32,7 @@ const styles = ScaledSheet.create({
     marginHorizontal: '14@s',
   },
   label: {
-    marginLeft: '14@s',
+    marginLeft: '10@s',
   },
 });
 

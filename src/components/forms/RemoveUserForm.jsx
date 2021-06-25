@@ -9,13 +9,13 @@ import FormHeader from '../labels/FormHeader';
 import UserSelectionDropdown from '../buttons/UserSelectionDropdown';
 import ButtonContainer from '../containers/ButtonContainer';
 import CancelButton from '../buttons/CancelButton';
-import ConfirmButton from '../buttons/ConfirmButton';
+import DeleteButton from '../buttons/DeleteButton';
 import DeleteFab from '../buttons/DeleteFab';
 import AlertBox from '../containers/AlertBox';
 
 import { setAllUsersObject, setSelectedUserObject } from '../../store/actions/user';
 import { setAlert } from '../../store/actions/core';
-import RightsSelectionDropdown from '../buttons/RightsSelectionDropdown';
+import FormOptionSelector from '../labels/FormOptionSelector';
 
 const styles = ScaledSheet.create({
   container: {
@@ -24,21 +24,19 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-between',
     marginVertical: '20@s',
   },
-  header: {
-    marginBottom: '15@s',
-  },
   content: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '15@s',
   },
   centerContent: {
     flex: 1,
     justifyContent: 'center',
-    marginBottom: '15@s',
   },
 });
 
-const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
+const RemoveUserForm = ({ onGoAdmin, onGoConfirm }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -53,8 +51,13 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
   const checkIfCanDelete = () => {
     if (selectedUserObject.firstName) {
       dispatch(setAlert());
-      onGoDeleteUser();
+      onGoConfirm();
     } else dispatch(setAlert(t('errUserNotSelected'), 'info'));
+  };
+
+  const clearSelectedUserAndReturn = () => {
+    dispatch(setSelectedUserObject());
+    onGoAdmin();
   };
 
   firebase
@@ -66,30 +69,29 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <FormHeader label={t('userSelection')} />
-      </View>
+      <FormHeader label={t('userSelection')} />
 
       <View style={styles.content}>
+        <FormOptionSelector
+          label={t('selectedUser')}
+          boldLabel={selectedUser() ? selectedUser() : t('noSelectedUser')}
+          onPress={() => {}}
+        />
         <UserSelectionDropdown
           users={allUsersObject}
           selectedUser={selectedUser()}
           onSelect={(user) => dispatch(setSelectedUserObject(user))}
         />
-
-        <View style={styles.centerContent}>
-          <RightsSelectionDropdown onSelect={(val) => console.log(val)} />
-        </View>
       </View>
 
       <AlertBox />
 
       <ButtonContainer>
-        <CancelButton onPress={() => onGoAdmin()} />
-        <ConfirmButton onPress={() => {}} />
+        <CancelButton onPress={() => clearSelectedUserAndReturn()} />
+        <DeleteButton onPress={() => checkIfCanDelete()} />
       </ButtonContainer>
     </View>
   );
 };
 
-export default EditUserForm;
+export default RemoveUserForm;

@@ -2,13 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
-import i18n from 'i18n-js';
+import I18n from 'i18n-js';
 
 import Curtain from '../components/containers/Curtain';
 import NavBar from '../components/containers/NavBar';
 import LoadingBar from '../components/images/LoadingBar';
 import Header from '../components/labels/Header';
-import EditUserForm from '../components/forms/EditUserForm';
+import RemoveUserConfirmForm from '../components/forms/RemoveUserConfirmForm';
 
 import { greenShade } from '../global/colors';
 import { setRoute } from '../store/actions/core';
@@ -23,8 +23,8 @@ const styles = ScaledSheet.create({
   },
 });
 
-const EditUserScreen = () => {
-  const { t } = i18n;
+const RemoveUserConfirmScreen = () => {
+  const { t } = I18n;
   const dispatch = useDispatch();
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
@@ -33,11 +33,11 @@ const EditUserScreen = () => {
     <View style={styles.container}>
       <View style={styles.setupHeader}>
         <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(200)}>
-          <Header label={t('editUser')} />
+          <Header label={t('confirmUserRemoval')} />
         </Curtain>
       </View>
 
-      <EditUserForm onGoAdmin={() => dispatch(setRoute('setup-admin'))} />
+      <RemoveUserConfirmForm onGoBack={() => dispatch(setRoute('setup-remove-user'))} />
 
       <LoadingBar />
       <NavBar />
@@ -45,4 +45,4 @@ const EditUserScreen = () => {
   );
 };
 
-export default EditUserScreen;
+export default RemoveUserConfirmScreen;

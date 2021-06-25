@@ -7,6 +7,7 @@ const styles = ScaledSheet.create({
   container: {
     width: '290@s',
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: '10@s',
   },

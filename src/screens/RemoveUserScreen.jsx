@@ -8,7 +8,7 @@ import Curtain from '../components/containers/Curtain';
 import NavBar from '../components/containers/NavBar';
 import LoadingBar from '../components/images/LoadingBar';
 import Header from '../components/labels/Header';
-import CreateUserForm from '../components/forms/CreateUserForm';
+import RemoveUserForm from '../components/forms/RemoveUserForm';
 
 import { greenShade } from '../global/colors';
 import { setRoute } from '../store/actions/core';
@@ -23,7 +23,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const CreateUserScreen = () => {
+const RemoveUserScreen = () => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -33,11 +33,14 @@ const CreateUserScreen = () => {
     <View style={styles.container}>
       <View style={styles.setupHeader}>
         <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(200)}>
-          <Header label={t('createUser')} />
+          <Header label={t('removeUser')} />
         </Curtain>
       </View>
 
-      <CreateUserForm onGoAdmin={() => dispatch(setRoute('setup-admin'))} />
+      <RemoveUserForm
+        onGoAdmin={() => dispatch(setRoute('setup-admin'))}
+        onGoConfirm={() => dispatch(setRoute('setup-remove-user-confirm'))}
+      />
 
       <LoadingBar />
       <NavBar />
@@ -45,4 +48,4 @@ const CreateUserScreen = () => {
   );
 };
 
-export default CreateUserScreen;
+export default RemoveUserScreen;

@@ -43,8 +43,8 @@ const SetupAdminScreen = () => {
       <AdminForm
         onGoCreatePoll={() => dispatch(setRoute('setup-create-poll'))}
         onGoEditPoll={() => dispatch(setRoute('setup-edit-poll'))}
-        onGoCreateUser={() => dispatch(setRoute('setup-create-user'))}
         onGoEditUser={() => dispatch(setRoute('setup-edit-user'))}
+        onGoRemoveUser={() => dispatch(setRoute('setup-remove-user'))}
       />
 
       <LoadingBar />

@@ -51,19 +51,27 @@ const UserSelectionDropdown = ({ users, selectedUser, onSelect }) => {
     setUserList(array);
   }, [users]);
 
+  const selectLabel = () => {
+    if (selectedUser) return selectedUser;
+    else if (userList.length === 0) return t('noStoredUsers');
+    else return t('selectUser');
+  };
+
   const selectItemAndCloseList = (item) => {
     onSelect(item);
-    setIsBottomSheetVisible(!isBottomSheetVisible);
+    setIsBottomSheetVisible(false);
+  };
+
+  const openBottomSheet = () => {
+    if (userList.length > 0) setIsBottomSheetVisible(true);
   };
 
   return (
     <>
-      <Pressable
-        style={styles.container}
-        onPress={() => setIsBottomSheetVisible(!isBottomSheetVisible)}>
+      <Pressable style={styles.container} onPress={() => openBottomSheet()}>
         <View style={styles.leftBox}>
           <Icon type="font-awesome-5" name="user" size={scale(23)} color={blue} solid />
-          <FormText label={selectedUser || t('selectUser')} containerStyle={styles.label} />
+          <FormText label={selectLabel()} containerStyle={styles.label} />
         </View>
         <Icon type="font-awesome-5" name="chevron-down" size={scale(20)} color={green} solid />
       </Pressable>

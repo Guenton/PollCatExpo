@@ -28,7 +28,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const AdminForm = ({ onGoCreatePoll, onGoEditPoll, onGoCreateUser, onGoEditUser }) => {
+const AdminForm = ({ onGoCreatePoll, onGoEditPoll, onGoEditUser, onGoRemoveUser }) => {
   const { t } = I18n;
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.poll.isOpen);
@@ -60,12 +60,12 @@ const AdminForm = ({ onGoCreatePoll, onGoEditPoll, onGoCreateUser, onGoEditUser 
       </View>
 
       <DoubleButton
-        iconLeft="user-plus"
-        labelLeft={t('createUser')}
-        onPressLeft={() => onGoCreateUser()}
-        iconRight="user-edit"
-        labelRight={t('editUser')}
-        onPressRight={() => onGoEditUser()}
+        iconLeft="user-edit"
+        labelLeft={t('editUser')}
+        onPressLeft={() => onGoEditUser()}
+        iconRight="user-slash"
+        labelRight={t('removeUser')}
+        onPressRight={() => onGoRemoveUser()}
       />
     </ScrollView>
   );
