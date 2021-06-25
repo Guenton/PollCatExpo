@@ -7,7 +7,6 @@ import firebase from 'firebase';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
-import FormOptionSelector from '../labels/FormOptionSelector';
 import UserSelectionDropdown from '../buttons/UserSelectionDropdown';
 import CancelButton from '../buttons/CancelButton';
 import ConfirmButton from '../buttons/ConfirmButton';
@@ -15,19 +14,28 @@ import ConfirmButton from '../buttons/ConfirmButton';
 import { setErrUserEmail, setUserEmail } from '../../store/actions/poll';
 import DeleteFab from '../buttons/DeleteFab';
 import { setAllUsersObject, setSelectedUserObject } from '../../store/actions/user';
-import { BottomSheet } from 'react-native-elements';
+import AlertBox from '../containers/AlertBox';
+import { setAlert } from '../../store/actions/core';
+import ButtonContainer from '../containers/ButtonContainer';
 
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginVertical: '25@s',
+    marginVertical: '20@s',
+  },
+  header: {
+    marginBottom: '15@s',
   },
   content: {
-    height: '250@s',
-    justifyContent: 'space-between',
+    flex: 1,
     alignItems: 'center',
+  },
+  centerContent: {
+    flex: 1,
+    justifyContent: 'center',
+    marginBottom: '15@s',
   },
   buttonContainer: {
     width: '290@s',
@@ -41,20 +49,20 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
-  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
-  const [bottomList, setBottomList] = useState([]);
-
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
-
   const allUsersObject = useSelector((state) => state.user.allUsersObject);
   const selectedUserObject = useSelector((state) => state.user.selectedUserObject);
 
-  const validateAndSetUserEmail = (val) => {
-    if (isEmpty(val)) dispatch(setErrUserEmail(t('errNotFilled')));
-    else if (!isEmail(val)) dispatch(setErrUserEmail(t('errNotEmail')));
-    else dispatch(setErrUserEmail());
+  const selectedUser = () => {
+    if (!selectedUserObject.firstName) return '';
+    else return `${selectedUserObject.firstName} ${selectedUserObject.lastName}`;
+  };
 
-    dispatch(setUserEmail(val));
+  const checkIfCanDelete = () => {
+    if (selectedUserObject.firstName) {
+      dispatch(setAlert());
+      onGoDeleteUser();
+    } else dispatch(setAlert(t('errUserNotSelected'), 'info'));
   };
 
   firebase
@@ -66,22 +74,28 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <View style={styles.header}>
         <FormHeader label={t('userSelection')} />
+      </View>
+
+      <View style={styles.content}>
         <UserSelectionDropdown
           users={allUsersObject}
-          onSelect={(user) => setSelectedUserObject(user)}
+          selectedUser={selectedUser()}
+          onSelect={(user) => dispatch(setSelectedUserObject(user))}
         />
 
-        <DeleteFab onPress={() => onGoDeleteUser()} />
-      </ScrollView>
-
-      {!isKeyboardOpen && (
-        <View style={styles.buttonContainer}>
-          <CancelButton onPress={() => onGoAdmin()} />
-          <ConfirmButton onPress={() => {}} />
+        <View style={styles.centerContent}>
+          <DeleteFab onPress={() => checkIfCanDelete()} />
         </View>
-      )}
+      </View>
+
+      <AlertBox />
+
+      <ButtonContainer>
+        <CancelButton onPress={() => onGoAdmin()} />
+        <ConfirmButton onPress={() => {}} />
+      </ButtonContainer>
     </View>
   );
 };

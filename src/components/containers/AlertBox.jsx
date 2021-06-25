@@ -6,7 +6,8 @@ import { ScaledSheet, scale } from 'react-native-size-matters';
 
 import { setAlert } from '../../store/actions/core';
 
-import { info, success, error, blue, green, pink } from '../../global/colors';
+import { info, success, error, blue, green, pink, grey } from '../../global/colors';
+import { animated, useTransition } from 'react-spring';
 
 const styles = ScaledSheet.create({
   container: {
@@ -27,16 +28,18 @@ const styles = ScaledSheet.create({
   },
 });
 
+const AnimatedView = animated(View);
+
 const AlertBox = () => {
   const dispatch = useDispatch();
   const severity = useSelector((state) => state.core.alert.severity);
   const text = useSelector((state) => state.core.alert.text);
 
   const backgroundColor = () => {
-    if (severity === 'info') return { backgroundColor: info };
-    else if (severity === 'success') return { backgroundColor: success };
-    else if (severity === 'error') return { backgroundColor: error };
-    else return { backgroundColor: error };
+    if (severity === 'info') return info;
+    else if (severity === 'success') return success;
+    else if (severity === 'error') return error;
+    else return error;
   };
 
   const color = () => {
@@ -53,10 +56,22 @@ const AlertBox = () => {
     else return 'exclamation-circle';
   };
 
-  return (
+  const transitionHeightAndOpacity = useTransition(!!text, {
+    enter: {
+      ...styles.container,
+      height: scale(55),
+      opacity: 1,
+      backgroundColor: backgroundColor(),
+    },
+    leave: { ...styles.container, height: 0, opacity: 0, backgroundColor: grey },
+    from: { ...styles.container, height: 0, opacity: 0, backgroundColor: grey },
+    reverse: !!text,
+  });
+
+  return transitionHeightAndOpacity((style, item) => (
     <>
-      {!!text && (
-        <View style={[styles.container, backgroundColor()]}>
+      {item && (
+        <AnimatedView style={style}>
           <Icon
             containerStyle={styles.leftIcon}
             name={iconName()}
@@ -73,10 +88,10 @@ const AlertBox = () => {
             size={scale(18)}
             onPress={() => dispatch(setAlert())}
           />
-        </View>
+        </AnimatedView>
       )}
     </>
-  );
+  ));
 };
 
 export default AlertBox;

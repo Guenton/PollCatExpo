@@ -62,5 +62,6 @@
   "confirm": "Confirm",
   "responseOptions": "Response Options",
   "notSelected": "Not Selected",
-  "userRights": "User Rights:"
+  "userRights": "User Rights:",
+  "errUserNotSelected": "No User was Selected"
 }

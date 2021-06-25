@@ -37,7 +37,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const UserSelectionDropdown = ({ users, onSelect }) => {
+const UserSelectionDropdown = ({ users, selectedUser, onSelect }) => {
   const { t } = I18n;
 
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
@@ -63,7 +63,7 @@ const UserSelectionDropdown = ({ users, onSelect }) => {
         onPress={() => setIsBottomSheetVisible(!isBottomSheetVisible)}>
         <View style={styles.leftBox}>
           <Icon type="font-awesome-5" name="user" size={scale(23)} color={blue} solid />
-          <FormText label={t('selectUser')} containerStyle={styles.label} />
+          <FormText label={selectedUser || t('selectUser')} containerStyle={styles.label} />
         </View>
         <Icon type="font-awesome-5" name="chevron-down" size={scale(20)} color={green} solid />
       </Pressable>
