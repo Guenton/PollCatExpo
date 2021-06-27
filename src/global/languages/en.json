@@ -76,5 +76,6 @@
   "confirm": "Confirm",
   "responseOptions": "Response Options",
   "notSelected": "Not Selected",
-  "errUserNotSelected": "No User was Selected"
+  "errUserNotSelected": "No User was Selected",
+  "updatedRights": "App rights for %{name} have been updated."
 }

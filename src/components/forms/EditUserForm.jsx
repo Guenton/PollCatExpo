@@ -14,8 +14,9 @@ import DeleteFab from '../buttons/DeleteFab';
 import AlertBox from '../containers/AlertBox';
 
 import { setAllUsersObject, setSelectedUserObject } from '../../store/actions/user';
-import { setAlert } from '../../store/actions/core';
+import { setAlert, setLoading } from '../../store/actions/core';
 import RightsSelectionDropdown from '../buttons/RightsSelectionDropdown';
+import FormOptionSelector from '../labels/FormOptionSelector';
 
 const styles = ScaledSheet.create({
   container: {
@@ -38,23 +39,44 @@ const styles = ScaledSheet.create({
   },
 });
 
-const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
+const EditUserForm = ({ onGoAdmin }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
   const allUsersObject = useSelector((state) => state.user.allUsersObject);
   const selectedUserObject = useSelector((state) => state.user.selectedUserObject);
+  const selectedUserId = selectedUserObject.userId ? selectedUserObject.userId : '';
 
   const selectedUser = () => {
     if (!selectedUserObject.firstName) return '';
     else return `${selectedUserObject.firstName} ${selectedUserObject.lastName}`;
   };
 
-  const checkIfCanDelete = () => {
-    if (selectedUserObject.firstName) {
-      dispatch(setAlert());
-      onGoDeleteUser();
-    } else dispatch(setAlert(t('errUserNotSelected'), 'info'));
+  const selectedUserRights = () => {
+    if (!selectedUser()) return t('selectUser');
+    else if (!selectedUserObject.rights) return t('userAppRights');
+    else if (selectedUserObject.rights === 'poller') return t('pollerAppRights');
+    else if (selectedUserObject.rights === 'admin') return t('adminAppRights');
+    else return t('userAppRights');
+  };
+
+  const updateUserRightsAsync = async (rights = 'user') => {
+    try {
+      dispatch(setLoading());
+      if (!selectedUserId) throw t('errUserNotSelected');
+
+      await firebase.database().ref(`users/${selectedUserId}`).update({ rights });
+
+      dispatch(setSelectedUserObject());
+      dispatch(setLoading(false));
+
+      dispatch(setAlert(t('updatedRights', { name: selectedUser() })));
+    } catch (err) {
+      dispatch(setLoading(false));
+      console.error(err);
+      console.log(err.code);
+      console.log(err.message);
+    }
   };
 
   firebase
@@ -76,9 +98,13 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
           selectedUser={selectedUser()}
           onSelect={(user) => dispatch(setSelectedUserObject(user))}
         />
+        <FormOptionSelector label={t('userRights') + ':'} boldLabel={selectedUserRights()} />
 
         <View style={styles.centerContent}>
-          <RightsSelectionDropdown onSelect={(val) => console.log(val)} />
+          <RightsSelectionDropdown
+            disabled={!selectedUser()}
+            onSelect={(rights) => updateUserRightsAsync(rights)}
+          />
         </View>
       </View>
 
@@ -86,7 +112,7 @@ const EditUserForm = ({ onGoAdmin, onGoDeleteUser }) => {
 
       <ButtonContainer>
         <CancelButton onPress={() => onGoAdmin()} />
-        <ConfirmButton onPress={() => {}} />
+        <ConfirmButton onPress={() => onGoAdmin()} />
       </ButtonContainer>
     </View>
   );

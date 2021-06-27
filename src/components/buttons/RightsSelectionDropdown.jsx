@@ -6,7 +6,7 @@ import I18n from 'i18n-js';
 
 import FormText from '../labels/FormText';
 
-import { greyShade, blue, green } from '../../global/colors';
+import { greyShade, blue, green, pink, grey } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   container: {
@@ -37,24 +37,41 @@ const styles = ScaledSheet.create({
   },
 });
 
-const RightsSelectionDropdown = ({ onSelect }) => {
+const RightsSelectionDropdown = ({ disabled, onSelect }) => {
   const { t } = I18n;
 
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
+  const openBottomSheetIfNotDisabled = () => {
+    if (disabled) return null;
+    else return setIsBottomSheetVisible(true);
+  };
+
   const selectRightsAndCloseList = (selection) => {
-    onSelect(selection);
     setIsBottomSheetVisible(false);
+    onSelect(selection);
   };
 
   return (
     <>
-      <Pressable style={styles.container} onPress={() => setIsBottomSheetVisible(true)}>
+      <Pressable style={styles.container} onPress={() => openBottomSheetIfNotDisabled()}>
         <View style={styles.leftBox}>
-          <Icon type="font-awesome-5" name="user-shield" size={scale(23)} color={blue} solid />
+          <Icon
+            type="font-awesome-5"
+            name="user-shield"
+            size={scale(23)}
+            color={disabled ? grey : blue}
+            solid
+          />
           <FormText label={t('userRights')} containerStyle={styles.label} />
         </View>
-        <Icon type="font-awesome-5" name="chevron-down" size={scale(20)} color={green} solid />
+        <Icon
+          type="font-awesome-5"
+          name="chevron-down"
+          size={scale(20)}
+          color={disabled ? grey : green}
+          solid
+        />
       </Pressable>
 
       <BottomSheet isVisible={isBottomSheetVisible}>
@@ -62,7 +79,7 @@ const RightsSelectionDropdown = ({ onSelect }) => {
           containerStyle={styles.bottomListItem}
           onPress={() => selectRightsAndCloseList('admin')}
           bottomDivider>
-          <Icon type="font-awesome-5" name="user-shield" size={scale(20)} color={blue} solid />
+          <Icon type="font-awesome-5" name="user-shield" size={scale(20)} color={pink} solid />
           <ListItem.Content>
             <ListItem.Title>{t('admin')}</ListItem.Title>
             <ListItem.Subtitle>{t('adminAppRights')}</ListItem.Subtitle>
@@ -74,7 +91,7 @@ const RightsSelectionDropdown = ({ onSelect }) => {
           containerStyle={styles.bottomListItem}
           onPress={() => selectRightsAndCloseList('poll')}
           bottomDivider>
-          <Icon type="font-awesome-5" name="user-check" size={scale(20)} color={blue} solid />
+          <Icon type="font-awesome-5" name="user-check" size={scale(20)} color={green} solid />
           <ListItem.Content>
             <ListItem.Title>{t('poller')}</ListItem.Title>
             <ListItem.Subtitle>{t('pollerAppRights')}</ListItem.Subtitle>

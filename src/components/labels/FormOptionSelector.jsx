@@ -22,7 +22,7 @@ const FormOptionSelector = ({ label, boldLabel, onPress }) => (
   <View style={styles.container}>
     <SubHeader label={label} containerStyle={styles.spacing} />
 
-    <Pressable onPress={() => onPress()}>
+    <Pressable onPress={() => (onPress ? onPress() : {})}>
       <BoldText label={boldLabel} />
     </Pressable>
   </View>

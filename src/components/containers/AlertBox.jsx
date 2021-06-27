@@ -11,6 +11,7 @@ import { animated, useTransition } from 'react-spring';
 
 const styles = ScaledSheet.create({
   container: {
+    flexDirection: 'row',
     height: '55@s',
     width: '300@s',
     alignSelf: 'center',
@@ -19,6 +20,9 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '5@s',
+  },
+  textArea: {
+    flex: 1,
   },
   leftIcon: {
     paddingHorizontal: '5@s',
@@ -79,7 +83,9 @@ const AlertBox = () => {
             color={color()}
             size={scale(24)}
           />
-          <Text style={{ color: color() }}>{text}</Text>
+          <View style={styles.textArea}>
+            <Text style={{ color: color() }}>{text}</Text>
+          </View>
           <Icon
             containerStyle={styles.rightIcon}
             name="times"
