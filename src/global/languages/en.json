@@ -63,6 +63,7 @@
   "confirmUserRemoval": "Confirm User Removal",
   "msgUserSureRemoval": "Are you sure you wish to Remove this user?",
   "msgPermanentAction": "*This Action is Permanent",
+  "enterTitleForPoll": "Please enter a Title for your Poll",
   "pollTitle": "Poll Title",
   "poller": "Poller",
   "pollerAppRights": "This user can handle Polls",

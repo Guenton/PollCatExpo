@@ -10,8 +10,9 @@ import LoadingBar from '../components/images/LoadingBar';
 import Header from '../components/labels/Header';
 import CreatePollForm from '../components/forms/CreatePollForm';
 
-import { greenShade } from '../global/colors';
 import { setRoute } from '../store/actions/core';
+
+import { greenShade } from '../global/colors';
 
 const styles = ScaledSheet.create({
   container: {
@@ -32,7 +33,7 @@ const CreatePollScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.setupHeader}>
-        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(200)}>
+        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(250)}>
           <Header label={t('createPoll')} />
         </Curtain>
       </View>

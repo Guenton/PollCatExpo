@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty } from 'validator';
 import firebase from 'firebase';
@@ -9,15 +9,16 @@ import i18n from 'i18n-js';
 import FormHeader from '../labels/FormHeader';
 import PollTitleInput from '../inputs/PollTitleInput';
 import CancelButton from '../buttons/CancelButton';
-import EditButton from '../buttons/EditButton';
-// import DropdownButton from '../buttons/DropdownButton';
-import FormOptionSelector from '../labels/FormOptionSelector';
+import ConfirmButton from '../buttons/ConfirmButton';
 
 import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
+import SubHeader from '../labels/SubHeader';
+import { setLoading } from '../../store/actions/core';
+import { green } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
-  inputContainer: { width: '310@s' },
+  inputContainer: { width: '310@s', marginBottom: '15@s' },
   buttonContainer: {
     width: '290@s',
     paddingHorizontal: '10@s',
@@ -31,6 +32,7 @@ const CreatePollForm = ({ onGoAdmin }) => {
   const dispatch = useDispatch();
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
+  const isLoading = useSelector((state) => state.core.isLoading);
 
   const pollTitleRef = createRef();
   const pollTitle = useSelector((state) => state.poll.pollTitle);
@@ -48,9 +50,28 @@ const CreatePollForm = ({ onGoAdmin }) => {
     dispatch(setPollTitle(val));
   };
 
+  const createPollAsync = async () => {
+    validateAndSetPollTitle(pollTitle);
+    if (errPollTitle) return shakeOnError();
+
+    try {
+      const { key } = await firebase.database().ref('polls/').push({ title: pollTitle });
+
+      dispatch(setLoading(false));
+    } catch (err) {
+      dispatch(setLoading(false));
+      console.error(err);
+      console.log(err.code);
+      console.log(err.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <FormHeader label={t('pollSetup')} />
+      <View>
+        <FormHeader label={t('pollSetup')} />
+        <SubHeader label={t('enterTitleForPoll')} />
+      </View>
 
       <View style={styles.inputContainer}>
         <PollTitleInput
@@ -63,19 +84,12 @@ const CreatePollForm = ({ onGoAdmin }) => {
         />
       </View>
 
-      <View>
-        <FormOptionSelector
-          label={t('responseOptions')}
-          boldLabel={t('notSelected')}
-          onPress={() => {}}
-        />
-        {/* <DropdownButton icon="list" label={t('responseOptions')} onPress={() => {}} /> */}
-      </View>
+      <ActivityIndicator animating={isLoading} color={green} />
 
       {!isKeyboardOpen && (
         <View style={styles.buttonContainer}>
           <CancelButton onPress={() => onGoAdmin()} />
-          <EditButton onPress={() => {}} />
+          <ConfirmButton onPress={() => createPollAsync()} />
         </View>
       )}
     </View>
