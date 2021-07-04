@@ -6,6 +6,8 @@ import {
   SET_ERR_POLL_TITLE,
   SET_USER_EMAIL,
   SET_ERR_USER_EMAIL,
+  SET_ALL_POLLS_OBJECT,
+  SET_SELECTED_POLL_OBJECT,
 } from '../actions/poll';
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
   errPollTitle: '',
   userEmail: '',
   errUserEmail: '',
+  allPollsObject: {},
+  selectedPollObject: {},
 };
 
 const coreReducer = (state = initialState, action) => {
@@ -34,6 +38,10 @@ const coreReducer = (state = initialState, action) => {
       return { ...state, userEmail: action.input };
     case SET_ERR_USER_EMAIL:
       return { ...state, errUserEmail: action.err };
+    case SET_ALL_POLLS_OBJECT:
+      return { ...state, allPollsObject: action.object };
+    case SET_SELECTED_POLL_OBJECT:
+      return { ...state, selectedPollObject: action.object };
     default:
       return state;
   }

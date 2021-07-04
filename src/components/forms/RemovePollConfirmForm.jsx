@@ -9,13 +9,12 @@ import FormHeader from '../labels/FormHeader';
 import ButtonContainer from '../containers/ButtonContainer';
 import CancelButton from '../buttons/CancelButton';
 import DeleteButton from '../buttons/DeleteButton';
-import DeleteFab from '../buttons/DeleteFab';
+import SubHeader from '../labels/SubHeader';
+import FormOptionSelector from '../labels/FormOptionSelector';
 import AlertBox from '../containers/AlertBox';
 
-import { setSelectedUserObject } from '../../store/actions/user';
 import { setAlert, setLoading } from '../../store/actions/core';
-import FormOptionSelector from '../labels/FormOptionSelector';
-import SubHeader from '../labels/SubHeader';
+import { setSelectedPollObject } from '../../store/actions/poll';
 
 const styles = ScaledSheet.create({
   container: {
@@ -40,27 +39,23 @@ const styles = ScaledSheet.create({
   },
 });
 
-const RemoveUserConfirmForm = ({ onGoBack }) => {
+const RemovePollConfirmForm = ({ onGoBack }) => {
   const { t } = I18n;
   const dispatch = useDispatch();
 
-  const selectedUserObject = useSelector((state) => state.user.selectedUserObject);
+  const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
 
-  const selectedUserId = selectedUserObject.userId ? selectedUserObject.userId : '';
+  const selectedPollId = selectedPollObject.pollId ? selectedPollObject.pollId : '';
+  const selectedPoll = selectedPollObject.title ? selectedPollObject.title : '';
 
-  const selectedUser = () => {
-    if (!selectedUserObject.firstName) return '';
-    else return `${selectedUserObject.firstName} ${selectedUserObject.lastName}`;
-  };
-
-  const removeUserAndReturn = async () => {
+  const removePollAndReturn = async () => {
     try {
       dispatch(setLoading());
-      if (!selectedUserId) throw t('errUserNotSelected');
+      if (!selectedPollId) throw t('errPollNotSelected');
 
-      await firebase.database().ref(`users/${selectedUserId}`).remove();
+      await firebase.database().ref(`polls/${selectedPollId}`).remove();
 
-      dispatch(setSelectedUserObject());
+      dispatch(setSelectedPollObject());
       dispatch(setLoading(false));
 
       onGoBack();
@@ -74,17 +69,17 @@ const RemoveUserConfirmForm = ({ onGoBack }) => {
 
   return (
     <View style={styles.container}>
-      <FormHeader label={t('removeUser')} />
+      <FormHeader label={t('removePoll')} />
 
       <View style={styles.warning}>
-        <SubHeader label={t('msgUserSureRemoval')} />
+        <SubHeader label={t('msgPollSureRemoval')} />
         <SubHeader label={t('msgPermanentAction')} />
       </View>
 
       <View style={styles.content}>
         <FormOptionSelector
-          label={t('selectedUser')}
-          boldLabel={selectedUser() || t('noSelectedUser')}
+          label={t('selectedPoll')}
+          boldLabel={selectedPoll || t('noSelectedUser')}
         />
       </View>
 
@@ -92,10 +87,10 @@ const RemoveUserConfirmForm = ({ onGoBack }) => {
 
       <ButtonContainer>
         <CancelButton onPress={() => onGoBack()} />
-        <DeleteButton onPress={() => removeUserAndReturn()} />
+        <DeleteButton onPress={() => removePollAndReturn()} />
       </ButtonContainer>
     </View>
   );
 };
 
-export default RemoveUserConfirmForm;
+export default RemovePollConfirmForm;

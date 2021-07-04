@@ -31,8 +31,9 @@ const styles = ScaledSheet.create({
 const AdminForm = ({ onGoCreatePoll, onGoEditPoll, onGoEditUser, onGoRemoveUser }) => {
   const { t } = I18n;
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.poll.isOpen);
-  const selectedPoll = useSelector((state) => state.poll.selectedPoll);
+  const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
+  const selectedPoll = selectedPollObject.title ? selectedPollObject.title : '';
+  const isOpen = selectedPollObject.isOpen;
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>

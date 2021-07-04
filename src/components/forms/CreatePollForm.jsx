@@ -10,10 +10,12 @@ import FormHeader from '../labels/FormHeader';
 import PollTitleInput from '../inputs/PollTitleInput';
 import CancelButton from '../buttons/CancelButton';
 import ConfirmButton from '../buttons/ConfirmButton';
+import SubHeader from '../labels/SubHeader';
+import AlertBox from '../containers/AlertBox';
 
 import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
-import SubHeader from '../labels/SubHeader';
-import { setLoading } from '../../store/actions/core';
+import { setAlert, setLoading } from '../../store/actions/core';
+
 import { green } from '../../global/colors';
 
 const styles = ScaledSheet.create({
@@ -55,8 +57,14 @@ const CreatePollForm = ({ onGoAdmin }) => {
     if (errPollTitle) return shakeOnError();
 
     try {
-      const { key } = await firebase.database().ref('polls/').push({ title: pollTitle });
+      const { key } = await firebase
+        .database()
+        .ref('polls/')
+        .push({ title: pollTitle, isOpen: false });
 
+      await firebase.database().ref(`polls/${key}`).update({ pollId: key });
+
+      dispatch(setAlert(t('createdPoll', { title: pollTitle }), 'info'));
       dispatch(setLoading(false));
     } catch (err) {
       dispatch(setLoading(false));
@@ -85,6 +93,7 @@ const CreatePollForm = ({ onGoAdmin }) => {
       </View>
 
       <ActivityIndicator animating={isLoading} color={green} />
+      <AlertBox />
 
       {!isKeyboardOpen && (
         <View style={styles.buttonContainer}>

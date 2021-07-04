@@ -46,7 +46,7 @@
   "selectedUser": "Selected User:",
   "noSelectedPoll": "No Poll Selected",
   "noSelectedUser": "No User Selected",
-  "noStoredPoll": "No Polls Stored",
+  "noStoredPolls": "No Polls Stored",
   "noStoredUsers": "No Users Stored",
   "openSelectedPoll": "Open Selected Poll",
   "closeSelectedPoll": "Close Selected Poll",
@@ -59,9 +59,13 @@
   "pollSetup": "Poll Setup",
   "userSetup": "User Setup",
   "userSelection": "User Selection",
+  "pollSelection": "Poll Selection",
   "selectUser": "Select User",
+  "selectPoll": "Select Poll",
   "confirmUserRemoval": "Confirm User Removal",
-  "msgUserSureRemoval": "Are you sure you wish to Remove this user?",
+  "confirmPollRemoval": "Confirm Poll Removal",
+  "msgUserSureRemoval": "Are you sure you wish to Remove this User?",
+  "msgPollSureRemoval": "Are you sure you wish to Remove this Poll?",
   "msgPermanentAction": "*This Action is Permanent",
   "enterTitleForPoll": "Please enter a Title for your Poll",
   "pollTitle": "Poll Title",
@@ -78,5 +82,7 @@
   "responseOptions": "Response Options",
   "notSelected": "Not Selected",
   "errUserNotSelected": "No User was Selected",
-  "updatedRights": "App rights for %{name} have been updated."
+  "errPollNotSelected": "No Poll was Selected",
+  "updatedRights": "App rights for %{name} have been updated.",
+  "createdPoll": "Poll titled %{title} has been created"
 }
