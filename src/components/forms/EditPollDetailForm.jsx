@@ -29,7 +29,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
+const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -104,7 +104,7 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
 
       {!isKeyboardOpen && (
         <View style={styles.buttonContainer}>
-          <CancelButton onPress={() => onGoAdmin()} />
+          <CancelButton onPress={() => onGoBack()} />
           <ConfirmButton disabled={isConfirmDisabled()} onPress={() => createPollAsync()} />
         </View>
       )}
@@ -112,4 +112,4 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
   );
 };
 
-export default CreatePollForm;
+export default EditPollDetailForm;

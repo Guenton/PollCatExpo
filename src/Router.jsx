@@ -16,6 +16,7 @@ import SetupAdminScreen from './screens/SetupAdminScreen';
 
 import CreatePollScreen from './screens/CreatePollScreen';
 import EditPollScreen from './screens/EditPollScreen';
+import EditPollDetailScreen from './screens/EditPollDetailScreen';
 import RemovePollConfirmScreen from './screens/RemovePollConfirmScreen';
 import EditUserScreen from './screens/EditUserScreen';
 import RemoveUserScreen from './screens/RemoveUserScreen';
@@ -49,6 +50,7 @@ const Router = () => {
 
       {route === 'setup-create-poll' && <CreatePollScreen />}
       {route === 'setup-edit-poll' && <EditPollScreen />}
+      {route === 'setup-edit-poll-detail' && <EditPollDetailScreen />}
       {route === 'setup-remove-poll-confirm' && <RemovePollConfirmScreen />}
       {route === 'setup-edit-user' && <EditUserScreen />}
       {route === 'setup-remove-user' && <RemoveUserScreen />}

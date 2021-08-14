@@ -39,6 +39,7 @@ const EditPollScreen = () => {
 
       <EditPollForm
         onGoAdmin={() => dispatch(setRoute('setup-admin'))}
+        onGoEdit={() => dispatch(setRoute('setup-edit-poll-detail'))}
         onGoRemove={() => dispatch(setRoute('setup-remove-poll-confirm'))}
       />
 
