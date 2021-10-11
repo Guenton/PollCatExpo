@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, ActivityIndicator } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
@@ -13,10 +13,17 @@ import ConfirmButton from '../buttons/ConfirmButton';
 import SubHeader from '../labels/SubHeader';
 import AlertBox from '../containers/AlertBox';
 
-import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
+import {
+  setDefaultResponseOption,
+  setErrPollTitle,
+  setPollTitle,
+  setResponseOptions,
+} from '../../store/actions/poll';
 import { setAlert, setLoading } from '../../store/actions/core';
 
 import { green } from '../../global/colors';
+import FormOptionSelector from '../labels/FormOptionSelector';
+import ResponseOptionSelectionDropdown from '../buttons/ResponseOptionSelectionDropdown';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -39,6 +46,23 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
   const pollTitleRef = createRef();
   const pollTitle = useSelector((state) => state.poll.pollTitle);
   const errPollTitle = useSelector((state) => state.auth.errPollTitle);
+  const responseOptions = useSelector((state) => state.poll.responseOptions);
+  const defaultResponseOption = useSelector((state) => state.poll.defaultResponseOption);
+
+  useEffect(() => {
+    firebase
+      .database()
+      .ref('response-options')
+      .get()
+      .then((snapshot) => {
+        const array = [];
+        for (const key in snapshot.val()) {
+          array.push(`${snapshot.val()[key].label}`);
+        }
+        dispatch(setResponseOptions(array));
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const shakeOnError = () => {
     if (errPollTitle) pollTitleRef.current.shake();
@@ -66,7 +90,7 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
       const { key } = await firebase
         .database()
         .ref('polls/')
-        .push({ title: pollTitle, isOpen: false });
+        .push({ title: pollTitle, defaultResponseOption, isOpen: false });
 
       await firebase.database().ref(`polls/${key}`).update({ pollId: key });
 
@@ -96,6 +120,19 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
           errorMessage={errPollTitle}
           onBlur={() => shakeOnError()}
           onChange={(val) => validateAndSetPollTitle(val)}
+        />
+      </View>
+
+      <View>
+        <FormOptionSelector
+          label={t('selectedOption')}
+          boldLabel={defaultResponseOption || t('noSelectedOption')}
+          onPress={() => {}}
+        />
+        <ResponseOptionSelectionDropdown
+          options={responseOptions}
+          selectedOption={defaultResponseOption}
+          onSelect={(val) => dispatch(setDefaultResponseOption(val))}
         />
       </View>
 

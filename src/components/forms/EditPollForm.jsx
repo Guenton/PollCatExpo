@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
@@ -55,12 +55,14 @@ const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
     dispatch(setPollTitle(poll.title));
   };
 
-  firebase
-    .database()
-    .ref('polls')
-    .once('value', (snapshot) => {
-      dispatch(setAllPollsObject(snapshot.val()));
-    });
+  useEffect(() => {
+    firebase
+      .database()
+      .ref('polls')
+      .once('value', (snapshot) => {
+        dispatch(setAllPollsObject(snapshot.val()));
+      });
+  }, []);
 
   return (
     <View style={styles.container}>

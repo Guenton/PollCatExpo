@@ -12,11 +12,18 @@ import CancelButton from '../buttons/CancelButton';
 import SubHeader from '../labels/SubHeader';
 import AlertBox from '../containers/AlertBox';
 
-import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
+import {
+  setDefaultResponseOption,
+  setErrPollTitle,
+  setPollTitle,
+  setResponseOptions,
+} from '../../store/actions/poll';
 import { setAlert, setLoading } from '../../store/actions/core';
 
 import { green } from '../../global/colors';
 import EditButton from '../buttons/EditButton';
+import FormOptionSelector from '../labels/FormOptionSelector';
+import ResponseOptionSelectionDropdown from '../buttons/ResponseOptionSelectionDropdown';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -41,10 +48,25 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
   const errPollTitle = useSelector((state) => state.auth.errPollTitle);
 
   const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
+  const responseOptions = useSelector((state) => state.poll.responseOptions);
+  const defaultResponseOption = useSelector((state) => state.poll.defaultResponseOption);
 
   const [isExistingPoll, setIsExistingPoll] = useState(false);
 
   useEffect(() => {
+    firebase
+      .database()
+      .ref('response-options')
+      .get()
+      .then((snapshot) => {
+        const array = [];
+        for (const key in snapshot.val()) {
+          array.push(`${snapshot.val()[key].label}`);
+        }
+        dispatch(setResponseOptions(array));
+      })
+      .catch((err) => console.error(err));
+
     if (selectedPollObject) {
       firebase
         .database()
@@ -52,6 +74,10 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
         .get()
         .then((snapshot) => setIsExistingPoll(snapshot.exists()))
         .catch((err) => console.error(err));
+
+      if (selectedPollObject.defaultResponseOption) {
+        dispatch(setDefaultResponseOption(selectedPollObject.defaultResponseOption));
+      }
     }
   }, [selectedPollObject]);
 
@@ -139,6 +165,19 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
           errorMessage={errPollTitle}
           onBlur={() => shakeOnError()}
           onChange={(val) => validateAndSetPollTitle(val)}
+        />
+      </View>
+
+      <View>
+        <FormOptionSelector
+          label={t('selectedOption')}
+          boldLabel={defaultResponseOption || t('noSelectedOption')}
+          onPress={() => {}}
+        />
+        <ResponseOptionSelectionDropdown
+          options={responseOptions}
+          selectedOption={defaultResponseOption}
+          onSelect={(val) => dispatch(setDefaultResponseOption(val))}
         />
       </View>
 

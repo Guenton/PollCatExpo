@@ -33,7 +33,7 @@ const CreatePollScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.setupHeader}>
-        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(250)}>
+        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(200)}>
           <Header label={t('createPoll')} />
         </Curtain>
       </View>
