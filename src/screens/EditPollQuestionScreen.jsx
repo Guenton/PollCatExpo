@@ -8,7 +8,7 @@ import Curtain from '../components/containers/Curtain';
 import NavBar from '../components/containers/NavBar';
 import LoadingBar from '../components/images/LoadingBar';
 import Header from '../components/labels/Header';
-import CreatePollForm from '../components/forms/CreatePollForm';
+import EditPollQuestionForm from '../components/forms/EditPollQuestionForm';
 
 import { setRoute } from '../store/actions/core';
 
@@ -24,7 +24,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const CreatePollScreen = () => {
+const EditPollQuestionScreen = () => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -33,14 +33,14 @@ const CreatePollScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.setupHeader}>
-        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(250)}>
-          <Header label={t('createPoll')} />
+        <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(150)}>
+          <Header label={t('editPoll')} />
         </Curtain>
       </View>
 
-      <CreatePollForm
-        onGoAdmin={() => dispatch(setRoute('setup-admin'))}
-        onGoEdit={() => dispatch(setRoute('setup-edit-poll-question'))}
+      <EditPollQuestionForm
+        onGoBack={() => dispatch(setRoute('setup-admin'))}
+        onGoEdit={() => dispatch(setRoute('setup-edit-poll-detail'))}
       />
 
       <LoadingBar />
@@ -49,4 +49,4 @@ const CreatePollScreen = () => {
   );
 };
 
-export default CreatePollScreen;
+export default EditPollQuestionScreen;

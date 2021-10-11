@@ -40,7 +40,7 @@ const EditPollDetailScreen = () => {
 
       <EditPollDetailForm
         onGoBack={() => dispatch(setRoute('setup-admin'))}
-        onGoEdit={() => dispatch(setRoute('setup-edit-poll-detail'))}
+        onGoEdit={() => dispatch(setRoute('setup-edit-poll-question'))}
       />
 
       <LoadingBar />

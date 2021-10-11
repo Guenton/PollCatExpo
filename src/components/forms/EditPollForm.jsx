@@ -14,7 +14,7 @@ import AlertBox from '../containers/AlertBox';
 
 import FormOptionSelector from '../labels/FormOptionSelector';
 import PollSelectionDropdown from '../buttons/PollSelectionDropdown';
-import { setAllPollsObject, setSelectedPollObject } from '../../store/actions/poll';
+import { setAllPollsObject, setPollTitle, setSelectedPollObject } from '../../store/actions/poll';
 
 const styles = ScaledSheet.create({
   container: {
@@ -50,6 +50,11 @@ const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
     onGoAdmin();
   };
 
+  const setSelectedPollObjectAndTitle = (poll) => {
+    dispatch(setSelectedPollObject(poll));
+    dispatch(setPollTitle(poll.title));
+  };
+
   firebase
     .database()
     .ref('polls')
@@ -67,7 +72,7 @@ const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
         <PollSelectionDropdown
           polls={allPollsObject}
           selectedPoll={selectedPoll}
-          onSelect={(poll) => dispatch(setSelectedPollObject(poll))}
+          onSelect={(poll) => setSelectedPollObjectAndTitle(poll)}
         />
         <FormOptionSelector
           label={t('selectedPoll')}

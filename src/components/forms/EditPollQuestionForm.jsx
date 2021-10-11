@@ -9,6 +9,7 @@ import i18n from 'i18n-js';
 import FormHeader from '../labels/FormHeader';
 import PollTitleInput from '../inputs/PollTitleInput';
 import CancelButton from '../buttons/CancelButton';
+import ConfirmButton from '../buttons/ConfirmButton';
 import SubHeader from '../labels/SubHeader';
 import AlertBox from '../containers/AlertBox';
 
@@ -16,7 +17,7 @@ import { setErrPollTitle, setPollTitle } from '../../store/actions/poll';
 import { setAlert, setLoading } from '../../store/actions/core';
 
 import { green } from '../../global/colors';
-import EditButton from '../buttons/EditButton';
+import PollQuestionInput from '../inputs/PollQuestionInput';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -29,7 +30,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
+const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -41,19 +42,6 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
   const errPollTitle = useSelector((state) => state.auth.errPollTitle);
 
   const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
-
-  const [isExistingPoll, setIsExistingPoll] = useState(false);
-
-  useEffect(() => {
-    if (selectedPollObject) {
-      firebase
-        .database()
-        .ref(`polls/${selectedPollObject.pollId}`)
-        .get()
-        .then((snapshot) => setIsExistingPoll(snapshot.exists()))
-        .catch((err) => console.error(err));
-    }
-  }, [selectedPollObject]);
 
   const shakeOnError = () => {
     if (errPollTitle) pollTitleRef.current.shake();
@@ -126,13 +114,10 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <FormHeader label={t('pollSetup')} />
-        <SubHeader label={t('enterTitleForPoll')} />
-      </View>
+      <FormHeader label={t('questionNumber', { number: 1 })} />
 
       <View style={styles.inputContainer}>
-        <PollTitleInput
+        <PollQuestionInput
           inputRef={pollTitleRef}
           containerStyle={styles.input}
           value={pollTitle}
@@ -148,11 +133,11 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
       {!isKeyboardOpen && (
         <View style={styles.buttonContainer}>
           <CancelButton onPress={() => onGoBack()} />
-          <EditButton disabled={isConfirmDisabled()} onPress={() => createOrUpdatePoll()} />
+          <ConfirmButton disabled={isConfirmDisabled()} onPress={() => createOrUpdatePoll()} />
         </View>
       )}
     </View>
   );
 };
 
-export default EditPollDetailForm;
+export default EditPollQuestionForm;

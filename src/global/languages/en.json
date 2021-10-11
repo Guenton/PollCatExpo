@@ -84,5 +84,8 @@
   "errUserNotSelected": "No User was Selected",
   "errPollNotSelected": "No Poll was Selected",
   "updatedRights": "App rights for %{name} have been updated.",
-  "createdPoll": "Poll titled %{title} has been created"
+  "createdPoll": "Poll titled %{title} has been created",
+  "updatedPoll": "Poll titled %{title} has been updated",
+  "questionNumber": "Question %{number}",
+  "question": "Question"
 }

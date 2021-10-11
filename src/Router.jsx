@@ -21,6 +21,7 @@ import RemovePollConfirmScreen from './screens/RemovePollConfirmScreen';
 import EditUserScreen from './screens/EditUserScreen';
 import RemoveUserScreen from './screens/RemoveUserScreen';
 import RemoveUserConfirmScreen from './screens/RemoveUserConfirmScreen';
+import EditPollQuestionScreen from './screens/EditPollQuestionScreen';
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,11 @@ const Router = () => {
   const route = useSelector((state) => state.core.route);
 
   useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
-    Keyboard.addListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
+    const kbShow = Keyboard.addListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
+    const kbHide = Keyboard.addListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
     return () => {
-      Keyboard.removeListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
-      Keyboard.removeListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
+      kbShow.remove();
+      kbHide.remove();
     };
   }, []);
 
@@ -51,6 +52,7 @@ const Router = () => {
       {route === 'setup-create-poll' && <CreatePollScreen />}
       {route === 'setup-edit-poll' && <EditPollScreen />}
       {route === 'setup-edit-poll-detail' && <EditPollDetailScreen />}
+      {route === 'setup-edit-poll-question' && <EditPollQuestionScreen />}
       {route === 'setup-remove-poll-confirm' && <RemovePollConfirmScreen />}
       {route === 'setup-edit-user' && <EditUserScreen />}
       {route === 'setup-remove-user' && <RemoveUserScreen />}
