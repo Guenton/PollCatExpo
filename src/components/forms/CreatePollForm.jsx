@@ -24,6 +24,7 @@ import { setAlert, setLoading } from '../../store/actions/core';
 import { green } from '../../global/colors';
 import FormOptionSelector from '../labels/FormOptionSelector';
 import ResponseOptionSelectionDropdown from '../buttons/ResponseOptionSelectionDropdown';
+import delay from 'delay';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -97,6 +98,9 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
       dispatch(setAlert(t('createdPoll', { title: pollTitle }), 'info'));
       dispatch(setLoading(false));
       onGoEdit();
+
+      await delay(5000);
+      dispatch(setAlert());
     } catch (err) {
       dispatch(setLoading(false));
       console.error(err);
@@ -125,7 +129,7 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
 
       <View>
         <FormOptionSelector
-          label={t('selectedOption')}
+          label={t('defaultResponseOption')}
           boldLabel={defaultResponseOption || t('noSelectedOption')}
           onPress={() => {}}
         />

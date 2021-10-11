@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
 import { BottomSheet, Icon, ListItem } from 'react-native-elements';
@@ -41,15 +41,6 @@ const ResponseOptionSelectionDropdown = ({ options, selectedOption, onSelect }) 
   const { t } = I18n;
 
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
-  const [optionList, setOptionList] = useState([]);
-
-  // useEffect(() => {
-  //   let array = [];
-  //   for (let pollId in options) {
-  //     array.push(options[pollId]);
-  //   }
-  //   setOptionList(array);
-  // }, [options]);
 
   const selectLabel = () => {
     if (selectedOption) return selectedOption;

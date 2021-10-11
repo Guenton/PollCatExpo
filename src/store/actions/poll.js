@@ -10,6 +10,8 @@ export const SET_SELECTED_POLL_OBJECT = 'SET_SELECTED_POLL_OBJECT';
 export const SET_RESPONSE_OPTIONS = 'SET_RESPONSE_OPTIONS';
 export const SET_DEFAULT_RESPONSE_OPTION = 'SET_DEFAULT_RESPONSE_OPTION';
 
+export const SET_CURRENT_POLL_QUESTION = 'SET_CURRENT_POLL_QUESTION';
+
 export const setPollOpen = (bool = true) => ({ type: SET_POLL_OPEN, bool });
 export const setSelectedPoll = (input = '') => ({ type: SET_SELECTED_POLL, input });
 export const setPollId = (input = null) => ({ type: SET_POLL_ID, input });
@@ -23,4 +25,17 @@ export const setResponseOptions = (array = []) => ({ type: SET_RESPONSE_OPTIONS,
 export const setDefaultResponseOption = (input = '') => ({
   type: SET_DEFAULT_RESPONSE_OPTION,
   input,
+});
+
+export const setCurrentPollQuestion = (
+  object = {
+    number: 1,
+    question: '',
+    responseOption: '',
+    responses: [],
+    answer: '',
+  },
+) => ({
+  type: SET_CURRENT_POLL_QUESTION,
+  object,
 });

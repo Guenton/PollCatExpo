@@ -10,6 +10,7 @@ import {
   SET_SELECTED_POLL_OBJECT,
   SET_RESPONSE_OPTIONS,
   SET_DEFAULT_RESPONSE_OPTION,
+  SET_CURRENT_POLL_QUESTION,
 } from '../actions/poll';
 
 const initialState = {
@@ -25,10 +26,11 @@ const initialState = {
   responseOptions: [],
   defaultResponseOption: '',
   currentPollQuestion: {
-    number: null,
+    number: 1,
     question: '',
     responseOption: '',
     responses: [],
+    answer: '',
   },
 };
 
@@ -56,6 +58,8 @@ const coreReducer = (state = initialState, action) => {
       return { ...state, responseOptions: action.array };
     case SET_DEFAULT_RESPONSE_OPTION:
       return { ...state, defaultResponseOption: action.input };
+    case SET_CURRENT_POLL_QUESTION:
+      return { ...state, currentPollQuestion: action.object };
     default:
       return state;
   }

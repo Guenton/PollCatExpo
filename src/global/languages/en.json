@@ -90,5 +90,6 @@
   "createdPoll": "Poll titled %{title} has been created",
   "updatedPoll": "Poll titled %{title} has been updated",
   "questionNumber": "Question %{number}",
-  "question": "Question"
+  "question": "Question",
+  "defaultResponseOption": "Default Response Option:"
 }

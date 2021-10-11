@@ -42,6 +42,7 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   const errPollTitle = useSelector((state) => state.auth.errPollTitle);
 
   const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
+  const currentPollQuestion = useSelector((state) => state.poll.currentPollQuestion);
 
   const shakeOnError = () => {
     if (errPollTitle) pollTitleRef.current.shake();
@@ -97,7 +98,7 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
       const { key } = await firebase
         .database()
         .ref('polls/')
-        .push({ title: pollTitle, isOpen: false, questions: ['question1', 'question2'] });
+        .push({ title: pollTitle, isOpen: false });
 
       await firebase.database().ref(`polls/${key}`).update({ pollId: key });
 
@@ -114,13 +115,13 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
 
   return (
     <View style={styles.container}>
-      <FormHeader label={t('questionNumber', { number: 1 })} />
+      <FormHeader label={t('questionNumber', { number: currentPollQuestion.number })} />
 
       <View style={styles.inputContainer}>
         <PollQuestionInput
           inputRef={pollTitleRef}
           containerStyle={styles.input}
-          value={pollTitle}
+          value={currentPollQuestion.question}
           errorMessage={errPollTitle}
           onBlur={() => shakeOnError()}
           onChange={(val) => validateAndSetPollTitle(val)}

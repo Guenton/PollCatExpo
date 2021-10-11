@@ -5,6 +5,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty } from 'validator';
 import firebase from 'firebase';
 import i18n from 'i18n-js';
+import delay from 'delay';
 
 import FormHeader from '../labels/FormHeader';
 import PollTitleInput from '../inputs/PollTitleInput';
@@ -112,11 +113,12 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
     firebase
       .database()
       .ref(`polls/${selectedPollObject.pollId}`)
-      .update({ title: pollTitle })
+      .update({ title: pollTitle, defaultResponseOption })
       .then(() => {
-        dispatch(setAlert(t('createdPoll', { title: pollTitle }), 'info'));
+        dispatch(setAlert(t('updatedPoll', { title: pollTitle }), 'info'));
         dispatch(setLoading(false));
         onGoEdit();
+        delay(5000).then(() => dispatch(setAlert()));
       })
       .catch((err) => {
         dispatch(setLoading(false));
@@ -135,13 +137,17 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
       const { key } = await firebase
         .database()
         .ref('polls/')
-        .push({ title: pollTitle, isOpen: false, questions: ['question1', 'question2'] });
+        .push({ title: pollTitle, defaultResponseOption, isOpen: false });
 
       await firebase.database().ref(`polls/${key}`).update({ pollId: key });
 
       dispatch(setAlert(t('createdPoll', { title: pollTitle }), 'info'));
       dispatch(setLoading(false));
       onGoEdit();
+
+      await delay(5000);
+      console.log('executed after delay');
+      dispatch(setAlert());
     } catch (err) {
       dispatch(setLoading(false));
       console.error(err);
@@ -170,7 +176,7 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
 
       <View>
         <FormOptionSelector
-          label={t('selectedOption')}
+          label={t('defaultResponseOption')}
           boldLabel={defaultResponseOption || t('noSelectedOption')}
           onPress={() => {}}
         />
