@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty } from 'validator';
 import firebase from 'firebase';
@@ -31,6 +31,7 @@ import {
 } from '../../store/actions/poll';
 
 import { green } from '../../global/colors';
+import ProgressIndicator from '../containers/ProgressIndicator';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -261,6 +262,8 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
           )}
         </View>
       )}
+
+      <ProgressIndicator />
 
       <AlertBox />
 
