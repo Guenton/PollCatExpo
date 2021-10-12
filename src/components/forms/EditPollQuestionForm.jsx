@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, ActivityIndicator } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty } from 'validator';
 import firebase from 'firebase';
 import i18n from 'i18n-js';
+import delay from 'delay';
 
 import FormHeader from '../labels/FormHeader';
 import PollQuestionInput from '../inputs/PollQuestionInput';
@@ -21,8 +22,11 @@ import AlertBox from '../containers/AlertBox';
 
 import { setAlert, setLoading } from '../../store/actions/core';
 import {
+  incrementQuestionNumber,
+  setCurrentPollQuestion,
   setCurrentPollQuestionAsk,
   setCurrentPollQuestionResponses,
+  setQuestionNumber,
   setSelectablePollUsers,
 } from '../../store/actions/poll';
 
@@ -36,19 +40,20 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '10@s',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingBottom: '10@s',
   },
 });
 
 const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
+  const questionRef = createRef();
+  const choiceRef = createRef();
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
-  const isLoading = useSelector((state) => state.core.isLoading);
 
-  const pollTitle = useSelector((state) => state.poll.pollTitle);
-
-  const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
+  const currentPollId = useSelector((state) => state.poll.selectedPollObject.pollId);
+  const questionNumber = useSelector((state) => state.poll.questionNumber);
   const currentPollQuestion = useSelector((state) => state.poll.currentPollQuestion);
   const defaultResponseOption = useSelector((state) => state.poll.defaultResponseOption);
   const responseOptions = useSelector((state) => state.poll.responseOptions);
@@ -57,9 +62,31 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   const [showAddChoice, setShowAddChoice] = useState(false);
   const [showResponseOptions, setShowResponseOptions] = useState(false);
   const [responseOption, setResponseOption] = useState('');
-
   const [selectedChoice, setSelectedChoice] = useState('');
-  const [inputErr, setInputErr] = useState('');
+
+  const [questionErr, setQuestionErr] = useState('');
+  const [choiceErr, setChoiceErr] = useState('');
+
+  useEffect(() => {
+    firebase
+      .database()
+      .ref(`polls/${currentPollId}/questions/${questionNumber}`)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists()) dispatch(setCurrentPollQuestion(snapshot.val()));
+        else {
+          dispatch(
+            setCurrentPollQuestion({
+              number: questionNumber,
+              ask: '',
+              responseOption: '',
+              responses: [],
+              answer: '',
+            }),
+          );
+        }
+      });
+  }, [questionNumber]);
 
   useEffect(() => {
     firebase
@@ -74,7 +101,12 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
         dispatch(setSelectablePollUsers(array));
       })
       .catch((err) => console.error(err));
-  });
+  }, []);
+
+  useEffect(() => {
+    if (!showAddChoice) return;
+    else choiceRef.current.focus();
+  }, [showAddChoice]);
 
   const setResponseOptionAndHideSelector = (val) => {
     setResponseOption(val);
@@ -97,17 +129,17 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   };
 
   const validateAndSetAsk = (val) => {
-    if (isEmpty(val)) setInputErr('errNotFilled');
-    else if (val.length < 3) setInputErr('errNotLongTitle');
-    else setInputErr(null);
+    if (isEmpty(val)) setQuestionErr(t('errNotFilled'));
+    else if (val.length < 3) setQuestionErr(t('errNotLongTitle'));
+    else setQuestionErr(null);
 
     dispatch(setCurrentPollQuestionAsk(val));
   };
 
   const validateAndSetSelectedChoice = (val) => {
-    if (isEmpty(val)) setInputErr('errNotFilled');
-    else if (val.length < 3) setInputErr('errNotLongTitle');
-    else setInputErr(null);
+    if (isEmpty(val)) setChoiceErr(t('errNotFilled'));
+    else if (val.length < 3) setChoiceErr(t('errNotLongTitle'));
+    else setChoiceErr(null);
 
     setSelectedChoice(val);
   };
@@ -130,36 +162,51 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
     setSelectedChoice('');
   };
 
-  const updatePollAsync = async () => {
+  const shakeInputOnError = () => {
+    if (questionErr) questionRef.current.shake();
+    if (choiceErr) choiceRef.current.shake();
+  };
+
+  const updatePollAsync = async (followUp = '') => {
     dispatch(setLoading());
-    validateAndSetAsk(pollTitle);
-    if (inputErr) return shakeOnError();
+    validateAndSetAsk(currentPollQuestion.ask);
+    if (questionErr) return shakeInputOnError();
 
     firebase
       .database()
-      .ref(`polls/${selectedPollObject.pollId}`)
-      .update({ title: pollTitle })
+      .ref(`polls/${currentPollId}/questions/${questionNumber}`)
+      .set({
+        number: currentPollQuestion.number,
+        ask: currentPollQuestion.ask,
+        responseOption: currentPollQuestion.responseOption,
+        responses: currentPollQuestion.responses,
+        answer: currentPollQuestion.answer,
+      })
       .then(() => {
-        dispatch(setAlert(t('updatedPoll', { title: pollTitle }), 'info'));
         dispatch(setLoading(false));
-        onGoEdit();
+
+        if (followUp === 'add') dispatch(incrementQuestionNumber());
+        if (followUp === 'done') {
+          dispatch(setCurrentPollQuestion());
+          onGoBack();
+        }
       })
       .catch((err) => {
         dispatch(setLoading(false));
-        console.error(err);
-        console.log(err.code);
-        console.log(err.message);
+        dispatch(setAlert(err, 'error'));
       });
   };
 
   return (
     <View style={styles.container}>
-      <FormHeader label={t('questionNumber', { number: currentPollQuestion.number })} />
+      <FormHeader label={t('questionNumber', { number: questionNumber })} />
 
       <View style={styles.inputContainer}>
         <PollQuestionInput
+          inputRef={questionRef}
           containerStyle={styles.input}
           value={currentPollQuestion.ask}
+          errorMessage={questionErr}
           onChange={(val) => validateAndSetAsk(val)}
         />
       </View>
@@ -197,6 +244,7 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
         <View>
           <View style={styles.inputContainer}>
             <PollOptionInput
+              inputRef={choiceRef}
               containerStyle={styles.input}
               onChange={(val) => validateAndSetSelectedChoice(val)}
               onBlur={() => addSelectedChoiceToResponses()}
@@ -205,20 +253,22 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
           {!isKeyboardOpen && (
             <View style={styles.buttonContainer}>
               <CancelButton onPress={() => setShowAddChoice(false)} />
-              <ConfirmButton disabled={!!inputErr} onPress={() => addSelectedChoiceToResponses()} />
+              <ConfirmButton
+                disabled={!!choiceErr}
+                onPress={() => addSelectedChoiceToResponses()}
+              />
             </View>
           )}
         </View>
       )}
 
-      <ActivityIndicator animating={isLoading} color={green} />
       <AlertBox />
 
       {!isKeyboardOpen && (
         <View style={styles.buttonContainer}>
           <DeleteFab onPress={() => console.log('delete')} />
-          <ConfirmFab onPress={() => onGoBack()} />
-          <AddFab onPress={() => console.log('add')} />
+          <ConfirmFab onPress={() => updatePollAsync('done')} />
+          <AddFab onPress={() => updatePollAsync('add')} />
         </View>
       )}
     </View>

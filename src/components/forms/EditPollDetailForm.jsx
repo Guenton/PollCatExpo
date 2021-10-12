@@ -145,7 +145,7 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
       dispatch(setLoading(false));
       onGoEdit();
 
-      await delay(5000);
+      await delay(3000);
       console.log('executed after delay');
       dispatch(setAlert());
     } catch (err) {
@@ -187,7 +187,6 @@ const EditPollDetailForm = ({ onGoBack, onGoEdit }) => {
         />
       </View>
 
-      <ActivityIndicator animating={isLoading} color={green} />
       <AlertBox />
 
       {!isKeyboardOpen && (
