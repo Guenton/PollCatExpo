@@ -9,8 +9,10 @@ import {
   SET_ALL_POLLS_OBJECT,
   SET_SELECTED_POLL_OBJECT,
   SET_RESPONSE_OPTIONS,
+  SET_SELECTABLE_POLL_USERS,
   SET_DEFAULT_RESPONSE_OPTION,
   SET_CURRENT_POLL_QUESTION,
+  SET_CURRENT_POLL_QUESTION_RESPONSES,
 } from '../actions/poll';
 
 const initialState = {
@@ -24,10 +26,11 @@ const initialState = {
   allPollsObject: {},
   selectedPollObject: {},
   responseOptions: [],
+  selectablePollUsers: [],
   defaultResponseOption: '',
   currentPollQuestion: {
     number: 1,
-    question: '',
+    ask: '',
     responseOption: '',
     responses: [],
     answer: '',
@@ -56,10 +59,17 @@ const coreReducer = (state = initialState, action) => {
       return { ...state, selectedPollObject: action.object };
     case SET_RESPONSE_OPTIONS:
       return { ...state, responseOptions: action.array };
+    case SET_SELECTABLE_POLL_USERS:
+      return { ...state, selectablePollUsers: action.array };
     case SET_DEFAULT_RESPONSE_OPTION:
       return { ...state, defaultResponseOption: action.input };
     case SET_CURRENT_POLL_QUESTION:
       return { ...state, currentPollQuestion: action.object };
+    case SET_CURRENT_POLL_QUESTION_RESPONSES:
+      return {
+        ...state,
+        currentPollQuestion: { ...state.currentPollQuestion, responses: action.array },
+      };
     default:
       return state;
   }

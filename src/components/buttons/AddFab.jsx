@@ -2,15 +2,15 @@ import React from 'react';
 import { Icon } from 'react-native-elements';
 import { scale } from 'react-native-size-matters';
 
-import { yellow } from '../../global/colors';
+import { green } from '../../global/colors';
 
-const AddFab = ({ disabled, onPress }) => (
+const AddFab = ({ disabled, onPress, small }) => (
   <Icon
     name="plus"
     type="font-awesome-5"
-    color={yellow}
+    color={green}
     disabled={disabled}
-    size={scale(22)}
+    size={small ? scale(14) : scale(22)}
     onPress={() => onPress()}
     reverse
     raised

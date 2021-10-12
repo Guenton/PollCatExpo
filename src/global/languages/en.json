@@ -82,6 +82,7 @@
   "edit": "Edit",
   "delete": "Delete",
   "confirm": "Confirm",
+  "response": "Response",
   "responseOptions": "Response Options",
   "notSelected": "Not Selected",
   "errUserNotSelected": "No User was Selected",
