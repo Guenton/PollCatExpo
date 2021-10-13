@@ -35,13 +35,12 @@ import ProgressIndicator from '../containers/ProgressIndicator';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
-  inputContainer: { width: '310@s', marginBottom: '15@s' },
+  inputContainer: { width: '310@s' },
   buttonContainer: {
     width: '290@s',
     paddingHorizontal: '10@s',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingBottom: '10@s',
   },
 });
 
