@@ -18,6 +18,7 @@ export const SET_DEFAULT_RESPONSE_OPTION = 'SET_DEFAULT_RESPONSE_OPTION';
 export const SET_CURRENT_POLL_QUESTION = 'SET_CURRENT_POLL_QUESTION';
 export const SET_CURRENT_POLL_QUESTION_ASK = 'SET_CURRENT_POLL_QUESTION_ASK';
 export const SET_CURRENT_POLL_QUESTION_RESPONSES = 'SET_CURRENT_POLL_QUESTION_RESPONSES';
+export const SET_CURRENT_POLL_QUESTION_TOTAL = 'SET_CURRENT_POLL_QUESTION_TOTAL';
 export const INCREMENT_CURRENT_POLL_QUESTION = 'INCREMENT_CURRENT_POLL_QUESTION';
 export const DECREMENT_CURRENT_POLL_QUESTION = 'DECREMENT_CURRENT_POLL_QUESTION';
 
@@ -60,6 +61,10 @@ export const setCurrentPollQuestionAsk = (input = '') => ({
 export const setCurrentPollQuestionResponses = (array = []) => ({
   type: SET_CURRENT_POLL_QUESTION_RESPONSES,
   array,
+});
+export const setCurrentPollQuestionTotal = (int = null) => ({
+  type: SET_CURRENT_POLL_QUESTION_TOTAL,
+  int,
 });
 export const incrementCurrentPollQuestion = () => ({ type: INCREMENT_CURRENT_POLL_QUESTION });
 export const decrementCurrentPollQuestion = () => ({ type: DECREMENT_CURRENT_POLL_QUESTION });

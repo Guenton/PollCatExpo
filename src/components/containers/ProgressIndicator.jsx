@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 
 import { green, blue, white, blueShade, greenShade } from '../../global/colors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setQuestionNumber } from '../../store/actions/poll';
 
 const styles = ScaledSheet.create({
   container: {
@@ -38,29 +39,35 @@ const styles = ScaledSheet.create({
 });
 
 const ProgressIndicator = ({ isGreen }) => {
-  const length = 5;
-  const activeStyle = { borderColor: greenShade, borderWidth: scale(1.2) };
+  const dispatch = useDispatch();
+
+  const activeStyle = { borderColor: green, borderWidth: scale(3) };
   const completeStyle = { backgroundColor: green };
 
   const questionNumber = useSelector((state) => state.poll.questionNumber);
+  const currentPollQuestionTotal = useSelector((state) => state.poll.currentPollQuestionTotal);
 
   const [indicatorArray, setIndicatorArray] = useState([]);
 
   useEffect(() => {
     const array = [];
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < currentPollQuestionTotal; i++) {
       array[i] = {
         completed: false,
         focused: questionNumber - 1 === i ? true : false,
       };
     }
     setIndicatorArray(array);
-  }, [length]);
+  }, [currentPollQuestionTotal]);
 
   return (
     <View style={styles.container}>
       {indicatorArray.map((item, index) => (
-        <View key={index} style={styles.indicator} />
+        <Pressable
+          key={index}
+          style={item.focused ? { ...styles.indicator, ...activeStyle } : styles.indicator}
+          onPress={() => console.log(index + 1)}
+        />
       ))}
     </View>
   );

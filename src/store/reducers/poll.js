@@ -17,6 +17,7 @@ import {
   SET_CURRENT_POLL_QUESTION,
   SET_CURRENT_POLL_QUESTION_ASK,
   SET_CURRENT_POLL_QUESTION_RESPONSES,
+  SET_CURRENT_POLL_QUESTION_TOTAL,
   INCREMENT_CURRENT_POLL_QUESTION,
   DECREMENT_CURRENT_POLL_QUESTION,
 } from '../actions/poll';
@@ -42,6 +43,7 @@ const initialState = {
     responses: [],
     answer: '',
   },
+  currentPollQuestionTotal: null,
 };
 
 const coreReducer = (state = initialState, action) => {
@@ -88,6 +90,8 @@ const coreReducer = (state = initialState, action) => {
         ...state,
         currentPollQuestion: { ...state.currentPollQuestion, responses: action.array },
       };
+    case SET_CURRENT_POLL_QUESTION_TOTAL:
+      return { ...state, currentPollQuestionTotal: action.int };
     case INCREMENT_CURRENT_POLL_QUESTION:
       return {
         ...state,

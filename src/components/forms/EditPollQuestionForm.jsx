@@ -26,6 +26,7 @@ import {
   setCurrentPollQuestion,
   setCurrentPollQuestionAsk,
   setCurrentPollQuestionResponses,
+  setCurrentPollQuestionTotal,
   setQuestionNumber,
   setSelectablePollUsers,
 } from '../../store/actions/poll';
@@ -55,6 +56,7 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   const currentPollId = useSelector((state) => state.poll.selectedPollObject.pollId);
   const questionNumber = useSelector((state) => state.poll.questionNumber);
   const currentPollQuestion = useSelector((state) => state.poll.currentPollQuestion);
+  const currentPollQuestionTotal = useSelector((state) => state.poll.currentPollQuestionTotal);
   const defaultResponseOption = useSelector((state) => state.poll.defaultResponseOption);
   const responseOptions = useSelector((state) => state.poll.responseOptions);
   const selectablePollUsers = useSelector((state) => state.poll.selectablePollUsers);
@@ -87,6 +89,14 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
         }
       });
   }, [questionNumber]);
+
+  useEffect(() => {
+    firebase
+      .database()
+      .ref(`polls/${currentPollId}/questions/`)
+      .get()
+      .then((snapshot) => dispatch(setCurrentPollQuestionTotal(snapshot.numChildren())));
+  }, [currentPollQuestionTotal]);
 
   useEffect(() => {
     firebase
