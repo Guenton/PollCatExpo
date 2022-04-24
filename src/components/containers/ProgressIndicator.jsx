@@ -60,13 +60,20 @@ const ProgressIndicator = ({ isGreen }) => {
     setIndicatorArray(array);
   }, [currentPollQuestionTotal]);
 
+  const handleIndicatorPress = (index) => {
+    console.log(typeof index);
+    console.log(typeof index.toString());
+    const newQuestion = (index + 1).toString();
+    // dispatch(setQuestionNumber(newQuestion));
+  };
+
   return (
     <View style={styles.container}>
       {indicatorArray.map((item, index) => (
         <Pressable
           key={index}
           style={item.focused ? { ...styles.indicator, ...activeStyle } : styles.indicator}
-          onPress={() => console.log(index + 1)}
+          onPress={() => handleIndicatorPress(index)}
         />
       ))}
     </View>
