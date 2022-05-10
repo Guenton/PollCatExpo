@@ -14,6 +14,7 @@ import { setLoading } from '../../store/actions/core';
 import { setEmail } from '../../store/actions/auth';
 import { setFirstName, setLastName } from '../../store/actions/user';
 import PawButton from '../buttons/PawButton';
+import authService from '../../services/auth';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -30,52 +31,41 @@ const LoginBiometricForm = ({ onGoLogin, onGoMain }) => {
   const firstName = useSelector((state) => state.user.firstName);
 
   useEffect(() => {
-    const hasBiometrics = async () => {
-      try {
-        const type = await LocalAuthentication.getEnrolledLevelAsync();
-        if (type === 'NONE') return false;
-
-        return true;
-      } catch (err) {
+    authService
+      .hasBiometricsAsync()
+      .then((hasBiometrics) => {
+        if (!hasBiometrics) return onGoLogin();
+      })
+      .catch((err) => {
         console.error(err);
-      }
-    };
+        return onGoLogin();
+      });
 
-    const getStoredEmail = async () => {
-      try {
-        const storedEmail = await SecureStore.getItemAsync('email');
-        if (!storedEmail) return false;
+    authService
+      .getStoredEmailAsync()
+      .then((storedEmail) => {
+        if (!storedEmail) return onGoLogin();
+        else {
+          const storedFirstName = storedEmail.split('.')[0];
+          const storedLastName = storedEmail.split('.')[1].split('@')[0];
 
-        const storedFirstName = storedEmail.split('.')[0];
-        const storedLastName = storedEmail.split('.')[1].split('@')[0];
-
-        dispatch(setFirstName(storedFirstName));
-        dispatch(setLastName(storedLastName));
-        dispatch(setEmail(storedEmail));
-        return true;
-      } catch (err) {
+          dispatch(setFirstName(storedFirstName));
+          dispatch(setLastName(storedLastName));
+          dispatch(setEmail(storedEmail));
+        }
+      })
+      .catch((err) => {
         console.error(err);
-      }
-    };
-
-    (async () => {
-      if (!(await hasBiometrics())) return onGoLogin();
-      if (!(await getStoredEmail())) return onGoLogin();
-    })();
+        return onGoLogin();
+      });
   }, []);
 
   const loginBiometricWithFirebase = async () => {
     try {
       dispatch(setLoading());
-      const { success } = await LocalAuthentication.authenticateAsync();
-
-      if (success) {
-        const storedPassword = await SecureStore.getItemAsync('password');
-        await firebase.auth().signInWithEmailAndPassword(email, storedPassword);
-
-        dispatch(setLoading(false));
-        onGoMain();
-      }
+      await authService.loginBiometricAsync(email);
+      dispatch(setLoading(false));
+      onGoMain();
     } catch (err) {
       dispatch(setLoading(false));
       console.error(err);

@@ -18,6 +18,7 @@ import FormFooter from '../labels/FormFooter';
 import { setLoading } from '../../store/actions/core';
 import { setEmail, setPassword, setErrEmail, setErrPassword } from '../../store/actions/auth';
 import { setFirstName, setLastName, setUserId } from '../../store/actions/user';
+import authService from '../../services/auth';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -70,22 +71,15 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
     if (email && password) {
       try {
         dispatch(setLoading());
-        await firebase.auth().signInWithEmailAndPassword(email, password);
 
-        const canStore = await SecureStore.isAvailableAsync();
-        if (canStore) await SecureStore.setItemAsync('email', email);
-        if (canStore) await SecureStore.setItemAsync('password', password);
+        await authService.loginAsync(email, password);
+        await authService.storeCredentialsAsync(email, password);
 
-        const userId = firebase.auth().currentUser.uid;
+        const userId = authService.getCurrentUserId();
         const firstName = _.capitalize(email.split('.')[0]);
         const lastName = _.capitalize(email.split('.')[1].split('@')[0]);
 
-        await firebase.database().ref(`users/${userId}`).set({
-          userId,
-          firstName,
-          lastName,
-          email,
-        });
+        await authService.setUserInfoAsync(userId, firstName, lastName, email);
 
         dispatch(setUserId(userId));
         dispatch(setFirstName(firstName));
