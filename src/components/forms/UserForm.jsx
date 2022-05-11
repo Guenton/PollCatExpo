@@ -1,17 +1,17 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScaledSheet } from 'react-native-size-matters';
-import firebase from 'firebase';
 import I18n from 'i18n-js';
 
 import AvatarSelect from '../inputs/AvatarSelect';
 import LogoutButton from '../buttons/LogoutButton';
 import SwitchButton from '../buttons/SwitchButton';
 
+import authService from '../../services/auth';
+
 import { toggleNotifications } from '../../store/actions/user';
 import { setLoading, toggleDark } from '../../store/actions/core';
-import { ScrollView } from 'react-native';
 
 const styles = ScaledSheet.create({
   container: {
@@ -34,7 +34,7 @@ const UserForm = ({ onGoLogin }) => {
   const firebaseSignOut = async () => {
     try {
       dispatch(setLoading());
-      await firebase.auth().signOut();
+      await authService.logoutAsync();
       dispatch(setLoading(false));
       onGoLogin();
     } catch (err) {

@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty, isEmail } from 'validator';
-import * as SecureStore from 'expo-secure-store';
-import firebase from 'firebase';
 import i18n from 'i18n-js';
 import _ from 'lodash';
 
@@ -15,10 +13,11 @@ import ForgotPasswordButton from '../buttons/ForgotPasswordButton';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 
+import authService from '../../services/auth';
+
 import { setLoading } from '../../store/actions/core';
 import { setEmail, setPassword, setErrEmail, setErrPassword } from '../../store/actions/auth';
 import { setFirstName, setLastName, setUserId } from '../../store/actions/user';
-import authService from '../../services/auth';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },

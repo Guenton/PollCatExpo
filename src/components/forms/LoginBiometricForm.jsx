@@ -2,19 +2,17 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
-import * as LocalAuthentication from 'expo-local-authentication';
-import * as SecureStore from 'expo-secure-store';
-import firebase from 'firebase';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
 import FormFooter from '../labels/FormFooter';
 
+import authService from '../../services/auth';
+
 import { setLoading } from '../../store/actions/core';
 import { setEmail } from '../../store/actions/auth';
 import { setFirstName, setLastName } from '../../store/actions/user';
 import PawButton from '../buttons/PawButton';
-import authService from '../../services/auth';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },

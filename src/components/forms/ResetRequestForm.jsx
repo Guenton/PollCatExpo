@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty, isEmail } from 'validator';
-import firebase from 'firebase';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
 import EmailInput from '../inputs/EmailInput';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
+
+import authService from '../../services/auth';
 
 import { setLoading } from '../../store/actions/core';
 import { setEmail, setErrEmail } from '../../store/actions/auth';
@@ -51,7 +52,7 @@ const ResetRequestFrom = ({ onGoLogin }) => {
     if (email) {
       try {
         dispatch(setLoading());
-        await firebase.auth().sendPasswordResetEmail(email);
+        await authService.loginResetAsync(email);
 
         dispatch(setLoading(false));
         onGoLogin();

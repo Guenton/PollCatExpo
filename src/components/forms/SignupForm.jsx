@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty, isEmail, isStrongPassword } from 'validator';
-import * as SecureStore from 'expo-secure-store';
-import firebase from 'firebase';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
@@ -12,6 +10,8 @@ import EmailInput from '../inputs/EmailInput';
 import PasswordInput from '../inputs/PasswordInput';
 import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
+
+import authService from '../../services/auth';
 
 import { setLoading } from '../../store/actions/core';
 import {
@@ -90,19 +90,20 @@ const SignupForm = ({ onGoLogin, onGoMain }) => {
     if (email && password && passwordConfirm) {
       try {
         dispatch(setLoading());
-        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        await authService.loginCreateAsync(email, password);
 
-        const canStore = await SecureStore.isAvailableAsync();
-        if (canStore) await SecureStore.setItemAsync('email', email);
-        if (canStore) await SecureStore.setItemAsync('password', password);
-
+        const userId = authService.getCurrentUserId();
         const firstName = email.split('.')[0];
         const lastName = email.split('.')[1].split('@')[0];
+
+        await authService.setUserInfoAsync(userId, firstName, lastName, email);
+
+        dispatch(setUserId(userId));
         dispatch(setFirstName(firstName));
         dispatch(setLastName(lastName));
-
         dispatch(setPassword());
         dispatch(setPasswordConfirm());
+
         dispatch(setLoading(false));
         onGoMain();
       } catch (err) {

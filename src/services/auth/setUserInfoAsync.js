@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-const setUserInfoAsync = async (userId, firstName, lastName, email) => {
+const setUserInfoAsync = async (userId = '', firstName = '', lastName = '', email = '') => {
   try {
     await firebase.database().ref(`users/${userId}`).set({
       userId,

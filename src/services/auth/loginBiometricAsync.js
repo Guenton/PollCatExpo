@@ -2,7 +2,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import * as SecureStore from 'expo-secure-store';
 import firebase from 'firebase';
 
-const loginBiometricAsync = async (email) => {
+const loginBiometricAsync = async (email = '') => {
   try {
     const { success } = await LocalAuthentication.authenticateAsync();
 

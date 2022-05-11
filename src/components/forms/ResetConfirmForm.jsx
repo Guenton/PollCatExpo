@@ -12,6 +12,8 @@ import GradientPawButton from '../buttons/GradientPawButton';
 import FormFooter from '../labels/FormFooter';
 import ResetCodeInput from '../inputs/ResetCodeInput';
 
+import authService from '../../services/auth';
+
 import { setLoading } from '../../store/actions/core';
 import {
   setResetCode,
@@ -71,7 +73,7 @@ const ResetConfirmFrom = ({ onGoReset, onGoLogin }) => {
     if (resetCode && password) {
       try {
         dispatch(setLoading());
-        await firebase.auth().confirmPasswordReset(resetCode, password);
+        await authService.loginResetConfirmAsync(resetCode, password);
 
         dispatch(setLoading(false));
         onGoLogin();
