@@ -3,15 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { View, ActivityIndicator } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty } from 'validator';
-import firebase from 'firebase';
+import delay from 'delay';
 import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
+import SubHeader from '../labels/SubHeader';
+import FormOptionSelector from '../labels/FormOptionSelector';
 import PollTitleInput from '../inputs/PollTitleInput';
 import CancelButton from '../buttons/CancelButton';
 import ConfirmButton from '../buttons/ConfirmButton';
-import SubHeader from '../labels/SubHeader';
+import ResponseOptionSelectionDropdown from '../buttons/ResponseOptionSelectionDropdown';
 import AlertBox from '../containers/AlertBox';
+
+import pollService from '../../services/poll';
 
 import {
   setDefaultResponseOption,
@@ -22,9 +26,6 @@ import {
 import { setAlert, setLoading } from '../../store/actions/core';
 
 import { green } from '../../global/colors';
-import FormOptionSelector from '../labels/FormOptionSelector';
-import ResponseOptionSelectionDropdown from '../buttons/ResponseOptionSelectionDropdown';
-import delay from 'delay';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -51,18 +52,10 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
   const defaultResponseOption = useSelector((state) => state.poll.defaultResponseOption);
 
   useEffect(() => {
-    firebase
-      .database()
-      .ref('response-options')
-      .get()
-      .then((snapshot) => {
-        const array = [];
-        for (const key in snapshot.val()) {
-          array.push(`${snapshot.val()[key].label}`);
-        }
-        dispatch(setResponseOptions(array));
-      })
-      .catch((err) => console.error(err));
+    pollService
+      .fetchResponseOptionsAsync()
+      .then((array) => dispatch(setResponseOptions(array)))
+      .catch((err) => dispatch(setAlert(err)));
   }, []);
 
   const shakeOnError = () => {
@@ -88,12 +81,8 @@ const CreatePollForm = ({ onGoAdmin, onGoEdit }) => {
     if (errPollTitle) return shakeOnError();
 
     try {
-      const { key } = await firebase
-        .database()
-        .ref('polls/')
-        .push({ title: pollTitle, defaultResponseOption, isOpen: false });
-
-      await firebase.database().ref(`polls/${key}`).update({ pollId: key });
+      dispatch(setLoading());
+      await pollService.createAsync(pollTitle, defaultResponseOption);
 
       dispatch(setAlert(t('createdPoll', { title: pollTitle }), 'info'));
       dispatch(setLoading(false));
