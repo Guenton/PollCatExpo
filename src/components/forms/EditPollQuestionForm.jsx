@@ -5,7 +5,6 @@ import { ScaledSheet } from 'react-native-size-matters';
 import { isEmpty } from 'validator';
 import firebase from 'firebase';
 import i18n from 'i18n-js';
-import delay from 'delay';
 
 import FormHeader from '../labels/FormHeader';
 import PollQuestionInput from '../inputs/PollQuestionInput';
@@ -18,7 +17,10 @@ import ConfirmFab from '../buttons/ConfirmFab';
 import DeleteFab from '../buttons/DeleteFab';
 import CancelButton from '../buttons/CancelButton';
 import ConfirmButton from '../buttons/ConfirmButton';
+import ProgressIndicator from '../containers/ProgressIndicator';
 import AlertBox from '../containers/AlertBox';
+
+import pollService from '../../services/poll';
 
 import { setAlert, setLoading } from '../../store/actions/core';
 import {
@@ -27,12 +29,8 @@ import {
   setCurrentPollQuestionAsk,
   setCurrentPollQuestionResponses,
   setCurrentPollQuestionTotal,
-  setQuestionNumber,
   setSelectablePollUsers,
 } from '../../store/actions/poll';
-
-import { green } from '../../global/colors';
-import ProgressIndicator from '../containers/ProgressIndicator';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'space-evenly' },
@@ -44,6 +42,14 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+const questionFormat = {
+  number: '',
+  ask: '',
+  responseOption: '',
+  responses: [],
+  answer: '',
+};
 
 const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   const { t } = i18n;
@@ -70,47 +76,27 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
   const [choiceErr, setChoiceErr] = useState('');
 
   useEffect(() => {
-    firebase
-      .database()
-      .ref(`polls/${currentPollId}/questions/${questionNumber}`)
-      .get()
-      .then((snapshot) => {
-        if (snapshot.exists()) dispatch(setCurrentPollQuestion(snapshot.val()));
-        else {
-          dispatch(
-            setCurrentPollQuestion({
-              number: questionNumber,
-              ask: '',
-              responseOption: '',
-              responses: [],
-              answer: '',
-            }),
-          );
-        }
-      });
-  }, [questionNumber]);
-
-  useEffect(() => {
-    firebase
-      .database()
-      .ref(`polls/${currentPollId}/questions/`)
-      .get()
-      .then((snapshot) => dispatch(setCurrentPollQuestionTotal(snapshot.numChildren())));
-  }, [currentPollQuestionTotal]);
-
-  useEffect(() => {
-    firebase
-      .database()
-      .ref('users')
-      .get()
-      .then((snapshot) => {
-        const array = [];
-        for (const key in snapshot.val()) {
-          array.push(`${snapshot.val()[key].firstName} ${snapshot.val()[key].lastName}`);
-        }
-        dispatch(setSelectablePollUsers(array));
+    pollService
+      .fetchQuestionAsync(currentPollId, questionNumber)
+      .then((questionObject) => {
+        if (questionObject) dispatch(setCurrentPollQuestion(questionObject));
+        else dispatch(setCurrentPollQuestion({ ...questionFormat, number: questionNumber }));
       })
-      .catch((err) => console.error(err));
+      .catch((err) => dispatch(setAlert(err)));
+  }, [currentPollId, questionNumber]);
+
+  useEffect(() => {
+    pollService
+      .fetchTotalQuestionAmountAsync(currentPollId)
+      .then((total) => dispatch(setCurrentPollQuestionTotal(total)))
+      .catch((err) => dispatch(setAlert(err)));
+  }, [currentPollId, currentPollQuestionTotal]);
+
+  useEffect(() => {
+    pollService
+      .fetchSelectableUsersAsync()
+      .then((users) => dispatch(setSelectablePollUsers(users)))
+      .catch((err) => dispatch(setAlert(err)));
   }, []);
 
   useEffect(() => {
@@ -272,7 +258,7 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
         </View>
       )}
 
-      <ProgressIndicator />
+      <ProgressIndicator onPress={(val) => console.log(val)} />
 
       <AlertBox />
 

@@ -14,7 +14,7 @@ import ResetCodeInput from '../inputs/ResetCodeInput';
 
 import authService from '../../services/auth';
 
-import { setLoading } from '../../store/actions/core';
+import { setAlert, setLoading } from '../../store/actions/core';
 import {
   setResetCode,
   setPassword,
@@ -79,9 +79,7 @@ const ResetConfirmFrom = ({ onGoReset, onGoLogin }) => {
         onGoLogin();
       } catch (err) {
         dispatch(setLoading(false));
-        console.error(err);
-        console.log(err.code);
-        console.log(err.message);
+        dispatch(setAlert(err));
       }
     }
   };

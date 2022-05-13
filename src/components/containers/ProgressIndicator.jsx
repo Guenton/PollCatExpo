@@ -38,7 +38,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const ProgressIndicator = ({ isGreen }) => {
+const ProgressIndicator = ({ onPress }) => {
   const dispatch = useDispatch();
 
   const activeStyle = { borderColor: green, borderWidth: scale(3) };
@@ -51,10 +51,10 @@ const ProgressIndicator = ({ isGreen }) => {
 
   useEffect(() => {
     const array = [];
-    for (let i = 0; i < currentPollQuestionTotal; i++) {
+    for (let i = 0; i < parseInt(currentPollQuestionTotal); i++) {
       array[i] = {
         completed: false,
-        focused: questionNumber - 1 === i ? true : false,
+        focused: parseInt(questionNumber) - 1 === i ? true : false,
       };
     }
     setIndicatorArray(array);
@@ -66,7 +66,7 @@ const ProgressIndicator = ({ isGreen }) => {
         <Pressable
           key={index}
           style={item.focused ? { ...styles.indicator, ...activeStyle } : styles.indicator}
-          onPress={() => console.log(index + 1)}
+          onPress={() => onPress(index + 1)}
         />
       ))}
     </View>

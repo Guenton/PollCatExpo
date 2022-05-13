@@ -29,7 +29,7 @@ export const setPollTitle = (input = '') => ({ type: SET_POLL_TITLE, input });
 export const setErrPollTitle = (err = '') => ({ type: SET_ERR_POLL_TITLE, err });
 export const setUserEmail = (input = '') => ({ type: SET_USER_EMAIL, input });
 export const setErrUserEmail = (err = '') => ({ type: SET_ERR_USER_EMAIL, err });
-export const setQuestionNumber = (int = 1) => ({ type: SET_QUESTION_NUMBER, int });
+export const setQuestionNumber = (input = '1') => ({ type: SET_QUESTION_NUMBER, input });
 export const incrementQuestionNumber = () => ({ type: INCREMENT_QUESTION_NUMBER });
 export const decrementQuestionNumber = () => ({ type: DECREMENT_QUESTION_NUMBER });
 
@@ -44,7 +44,7 @@ export const setDefaultResponseOption = (input = '') => ({
 });
 export const setCurrentPollQuestion = (
   object = {
-    number: 1,
+    number: '1',
     ask: '',
     responseOption: '',
     responses: [],

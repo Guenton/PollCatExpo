@@ -15,7 +15,7 @@ import FormFooter from '../labels/FormFooter';
 
 import authService from '../../services/auth';
 
-import { setLoading } from '../../store/actions/core';
+import { setAlert, setLoading } from '../../store/actions/core';
 import { setEmail, setPassword, setErrEmail, setErrPassword } from '../../store/actions/auth';
 import { setFirstName, setLastName, setUserId } from '../../store/actions/user';
 
@@ -89,9 +89,7 @@ const LoginForm = ({ onGoSignup, onGoReset, onGoMain }) => {
         onGoMain();
       } catch (err) {
         dispatch(setLoading(false));
-        console.error(err);
-        console.log(err.code);
-        console.log(err.message);
+        dispatch(setAlert(err));
       }
     }
   };

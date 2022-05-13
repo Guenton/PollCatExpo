@@ -6,13 +6,13 @@ import i18n from 'i18n-js';
 
 import FormHeader from '../labels/FormHeader';
 import FormFooter from '../labels/FormFooter';
+import PawButton from '../buttons/PawButton';
 
 import authService from '../../services/auth';
 
-import { setLoading } from '../../store/actions/core';
+import { setAlert, setLoading } from '../../store/actions/core';
 import { setEmail } from '../../store/actions/auth';
 import { setFirstName, setLastName } from '../../store/actions/user';
-import PawButton from '../buttons/PawButton';
 
 const styles = ScaledSheet.create({
   container: { flex: 1, justifyContent: 'space-evenly' },
@@ -66,9 +66,7 @@ const LoginBiometricForm = ({ onGoLogin, onGoMain }) => {
       onGoMain();
     } catch (err) {
       dispatch(setLoading(false));
-      console.error(err);
-      console.log(err.code);
-      console.log(err.message);
+      dispatch(setAlert(err));
     }
   };
 

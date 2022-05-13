@@ -2,14 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScaledSheet } from 'react-native-size-matters';
-import firebase from 'firebase';
 import I18n from 'i18n-js';
 
 import FormOptionSelector from '../labels/FormOptionSelector';
 import SwitchButton from '../buttons/SwitchButton';
 import DoubleButton from '../buttons/DoubleButton';
 
-import { setLoading } from '../../store/actions/core';
 import { setPollOpen } from '../../store/actions/poll';
 import { ScrollView } from 'react-native';
 

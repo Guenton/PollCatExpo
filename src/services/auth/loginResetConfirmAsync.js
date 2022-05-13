@@ -4,7 +4,8 @@ const loginResetConfirmAsync = async (resetCode = '', password = '') => {
   try {
     await firebase.auth().confirmPasswordReset(resetCode, password);
   } catch (err) {
-    throw err;
+    if (err.message) throw err.message;
+    else throw err;
   }
 };
 

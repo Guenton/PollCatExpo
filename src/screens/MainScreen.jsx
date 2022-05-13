@@ -30,16 +30,6 @@ const MainScreen = ({ setRoute }) => {
   const [view, setView] = useState('main');
 
   const isKeyboardOpen = useSelector((state) => state.core.isKeyboardOpen);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
-    Keyboard.addListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
-    return () => {
-      Keyboard.removeListener('keyboardDidShow', () => dispatch(setKeyboardOpen(true)));
-      Keyboard.removeListener('keyboardDidHide', () => dispatch(setKeyboardOpen(false)));
-    };
-  }, []);
 
   return (
     <View style={styles.container}>

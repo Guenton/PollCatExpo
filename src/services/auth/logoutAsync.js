@@ -4,7 +4,8 @@ const logoutAsync = async () => {
   try {
     await firebase.auth().signOut();
   } catch (err) {
-    throw err;
+    if (err.message) throw err.message;
+    else throw err;
   }
 };
 

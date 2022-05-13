@@ -2,19 +2,21 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
-import firebase from 'firebase';
 import i18n from 'i18n-js';
 
-import FormHeader from '../labels/FormHeader';
+import AlertBox from '../containers/AlertBox';
 import ButtonContainer from '../containers/ButtonContainer';
+import PollSelectionDropdown from '../buttons/PollSelectionDropdown';
 import CancelButton from '../buttons/CancelButton';
 import EditButton from '../buttons/EditButton';
 import DeleteFab from '../buttons/DeleteFab';
-import AlertBox from '../containers/AlertBox';
-
+import FormHeader from '../labels/FormHeader';
 import FormOptionSelector from '../labels/FormOptionSelector';
-import PollSelectionDropdown from '../buttons/PollSelectionDropdown';
+
+import pollService from '../../services/poll';
+
 import { setAllPollsObject, setPollTitle, setSelectedPollObject } from '../../store/actions/poll';
+import { setAlert } from '../../store/actions/core';
 
 const styles = ScaledSheet.create({
   container: {
@@ -56,12 +58,10 @@ const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
   };
 
   useEffect(() => {
-    firebase
-      .database()
-      .ref('polls')
-      .once('value', (snapshot) => {
-        dispatch(setAllPollsObject(snapshot.val()));
-      });
+    pollService
+      .fetchAllAsync()
+      .then((polls) => dispatch(setAllPollsObject(polls)))
+      .catch((err) => dispatch(setAlert(err)));
   }, []);
 
   return (

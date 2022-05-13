@@ -30,14 +30,14 @@ const initialState = {
   errPollTitle: '',
   userEmail: '',
   errUserEmail: '',
-  questionNumber: 1,
+  questionNumber: '1',
   allPollsObject: {},
   selectedPollObject: {},
   responseOptions: [],
   selectablePollUsers: [],
   defaultResponseOption: '',
   currentPollQuestion: {
-    number: 1,
+    number: '1',
     ask: '',
     responseOption: '',
     responses: [],
@@ -63,11 +63,17 @@ const coreReducer = (state = initialState, action) => {
     case SET_ERR_USER_EMAIL:
       return { ...state, errUserEmail: action.err };
     case SET_QUESTION_NUMBER:
-      return { ...state, questionNumber: action.int };
+      return { ...state, questionNumber: action.input };
     case INCREMENT_QUESTION_NUMBER:
-      return { ...state, questionNumber: state.questionNumber + 1 };
+      return { ...state, questionNumber: (parseInt(state.questionNumber) + 1).toString() };
     case DECREMENT_QUESTION_NUMBER:
-      return { ...state, questionNumber: state.questionNumber > 1 ? state.questionNumber - 1 : 1 };
+      return {
+        ...state,
+        questionNumber:
+          parseInt(state.questionNumber) > 1
+            ? (parseInt(state.questionNumber) - 1).toString()
+            : '1',
+      };
     case SET_ALL_POLLS_OBJECT:
       return { ...state, allPollsObject: action.object };
     case SET_SELECTED_POLL_OBJECT:
@@ -97,7 +103,7 @@ const coreReducer = (state = initialState, action) => {
         ...state,
         currentPollQuestion: {
           ...state.currentPollQuestion,
-          number: state.currentPollQuestion.number + 1,
+          number: (parseInt(state.currentPollQuestion.number) + 1).toString(),
         },
       };
     case DECREMENT_CURRENT_POLL_QUESTION:
@@ -105,7 +111,10 @@ const coreReducer = (state = initialState, action) => {
         ...state,
         currentPollQuestion: {
           ...state.currentPollQuestion,
-          number: state.currentPollQuestion.number > 1 ? state.currentPollQuestion.number - 1 : 1,
+          number:
+            parseInt(state.currentPollQuestion.number) > 1
+              ? (parseInt(state.currentPollQuestion.number) - 1).toString()
+              : '1',
         },
       };
     default:

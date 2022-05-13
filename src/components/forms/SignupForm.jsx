@@ -13,7 +13,7 @@ import FormFooter from '../labels/FormFooter';
 
 import authService from '../../services/auth';
 
-import { setLoading } from '../../store/actions/core';
+import { setAlert, setLoading } from '../../store/actions/core';
 import {
   setEmail,
   setPassword,
@@ -108,9 +108,7 @@ const SignupForm = ({ onGoLogin, onGoMain }) => {
         onGoMain();
       } catch (err) {
         dispatch(setLoading(false));
-        console.error(err);
-        console.log(err.code);
-        console.log(err.message);
+        dispatch(setAlert(err));
       }
     }
   };

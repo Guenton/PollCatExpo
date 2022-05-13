@@ -4,7 +4,8 @@ const loginCreateAsync = async (email = '', password = '') => {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
   } catch (err) {
-    throw err;
+    if (err.message) throw err.message;
+    else throw err;
   }
 };
 

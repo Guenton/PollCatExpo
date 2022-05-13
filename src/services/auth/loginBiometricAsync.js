@@ -11,7 +11,8 @@ const loginBiometricAsync = async (email = '') => {
       await firebase.auth().signInWithEmailAndPassword(email, storedPassword);
     }
   } catch (err) {
-    throw err;
+    if (err.message) throw err.message;
+    else throw err;
   }
 };
 
