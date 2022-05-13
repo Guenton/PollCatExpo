@@ -1,13 +1,11 @@
 import firebase from 'firebase';
 
-const setQuestionAsync = async (pollId = '', questionNumber = '', questionObject = {}) => {
+const setQuestionAsync = async (pollId = '', number = '', questionObject = {}) => {
   try {
-    const snapshot = await firebase
+    await firebase
       .database()
-      .ref(`polls/${pollId}/questions/${questionNumber}`)
-      .once('value');
-
-    return snapshot.val();
+      .ref(`polls/${pollId}/questions/${number}`)
+      .set({ ...questionObject, number });
   } catch (err) {
     throw err;
   }

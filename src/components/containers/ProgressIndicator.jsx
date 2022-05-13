@@ -38,7 +38,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const ProgressIndicator = ({ onPress }) => {
+const ProgressIndicator = ({ onSelect, hasAddOption }) => {
   const dispatch = useDispatch();
 
   const activeStyle = { borderColor: green, borderWidth: scale(3) };
@@ -57,8 +57,14 @@ const ProgressIndicator = ({ onPress }) => {
         focused: parseInt(questionNumber) - 1 === i ? true : false,
       };
     }
+    if (hasAddOption) {
+      array.push({
+        completed: false,
+        focused: array.length === parseInt(questionNumber) - 1 ? true : false,
+      });
+    }
     setIndicatorArray(array);
-  }, [currentPollQuestionTotal]);
+  }, [currentPollQuestionTotal, questionNumber]);
 
   return (
     <View style={styles.container}>
@@ -66,7 +72,7 @@ const ProgressIndicator = ({ onPress }) => {
         <Pressable
           key={index}
           style={item.focused ? { ...styles.indicator, ...activeStyle } : styles.indicator}
-          onPress={() => onPress(index + 1)}
+          onPress={() => onSelect((index + 1).toString())}
         />
       ))}
     </View>

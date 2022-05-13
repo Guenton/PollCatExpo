@@ -29,6 +29,7 @@ import {
   setCurrentPollQuestionAsk,
   setCurrentPollQuestionResponses,
   setCurrentPollQuestionTotal,
+  setQuestionNumber,
   setSelectablePollUsers,
 } from '../../store/actions/poll';
 
@@ -44,11 +45,11 @@ const styles = ScaledSheet.create({
 });
 
 const questionFormat = {
-  number: '',
+  answer: '',
   ask: '',
+  number: '',
   responseOption: '',
   responses: [],
-  answer: '',
 };
 
 const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
@@ -80,24 +81,31 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
       .fetchQuestionAsync(currentPollId, questionNumber)
       .then((questionObject) => {
         if (questionObject) dispatch(setCurrentPollQuestion(questionObject));
-        else dispatch(setCurrentPollQuestion({ ...questionFormat, number: questionNumber }));
+        else {
+          pollService
+            .setQuestionAsync(currentPollId, questionNumber, questionFormat)
+            .then(() =>
+              dispatch(setCurrentPollQuestion({ ...questionFormat, number: questionNumber })),
+            )
+            .catch((err) => dispatch(setAlert(err)));
+        }
       })
       .catch((err) => dispatch(setAlert(err)));
-  }, [currentPollId, questionNumber]);
+  }, [dispatch, currentPollId, questionNumber]);
 
   useEffect(() => {
     pollService
       .fetchTotalQuestionAmountAsync(currentPollId)
       .then((total) => dispatch(setCurrentPollQuestionTotal(total)))
       .catch((err) => dispatch(setAlert(err)));
-  }, [currentPollId, currentPollQuestionTotal]);
+  }, [dispatch, currentPollId, questionNumber]);
 
   useEffect(() => {
     pollService
       .fetchSelectableUsersAsync()
       .then((users) => dispatch(setSelectablePollUsers(users)))
       .catch((err) => dispatch(setAlert(err)));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!showAddChoice) return;
@@ -163,34 +171,55 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
     if (choiceErr) choiceRef.current.shake();
   };
 
+  const selectOrCreatePollQuestionAsync = async (number) => {
+    if (!number) return;
+    try {
+      dispatch(setLoading());
+
+      const questionObject = await pollService.fetchQuestionAsync(currentPollId, number);
+      if (questionObject) {
+        dispatch(setCurrentPollQuestion(questionObject));
+        dispatch(setQuestionNumber(number));
+        dispatch(setLoading(false));
+        return;
+      }
+
+      validateAndSetAsk(currentPollQuestion.ask);
+      if (questionErr) {
+        shakeInputOnError();
+        return;
+      }
+
+      await pollService.setQuestionAsync(currentPollId, questionNumber, questionFormat);
+      dispatch(setCurrentPollQuestion({ ...questionFormat, number: questionNumber }));
+      dispatch(setQuestionNumber(number));
+      dispatch(setLoading(false));
+    } catch (err) {
+      dispatch(setLoading(false));
+      dispatch(setAlert(err));
+    }
+  };
+
   const updatePollAsync = async (followUp = '') => {
-    dispatch(setLoading());
     validateAndSetAsk(currentPollQuestion.ask);
     if (questionErr) return shakeInputOnError();
 
-    firebase
-      .database()
-      .ref(`polls/${currentPollId}/questions/${questionNumber}`)
-      .set({
-        number: currentPollQuestion.number,
-        ask: currentPollQuestion.ask,
-        responseOption: currentPollQuestion.responseOption,
-        responses: currentPollQuestion.responses,
-        answer: currentPollQuestion.answer,
-      })
-      .then(() => {
-        dispatch(setLoading(false));
+    try {
+      dispatch(setLoading());
+      await pollService.setQuestionAsync(currentPollId, questionNumber, currentPollQuestion);
+      dispatch(setLoading(false));
 
-        if (followUp === 'add') dispatch(incrementQuestionNumber());
-        if (followUp === 'done') {
-          dispatch(setCurrentPollQuestion());
-          onGoBack();
-        }
-      })
-      .catch((err) => {
-        dispatch(setLoading(false));
-        dispatch(setAlert(err, 'error'));
-      });
+      if (followUp === 'add') {
+        await selectOrCreatePollQuestionAsync((parseInt(questionNumber) + 1).toString());
+      }
+      if (followUp === 'done') {
+        dispatch(setCurrentPollQuestion());
+        onGoBack();
+      }
+    } catch (err) {
+      dispatch(setLoading(false));
+      dispatch(setAlert(err));
+    }
   };
 
   return (
@@ -216,7 +245,7 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
           />
           {showResponseOptions && (
             <ResponseOptionSelectionDropdown
-              options={responseOptions}
+              options={responseOptions || []}
               selectedOption={defaultResponseOption}
               onSelect={(val) => setResponseOptionAndHideSelector(val)}
             />
@@ -226,7 +255,7 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
           )}
           {!showResponseOptions && responseDropdownType() === 'multi' && (
             <MultipleChoiceCreatorDropdown
-              options={currentPollQuestion.responses}
+              options={currentPollQuestion.responses || []}
               selectedOption={selectedChoice}
               onSelect={(val) => validateAndSetSelectedChoice(val)}
               onAdd={() => setShowAddChoice(true)}
@@ -258,7 +287,8 @@ const EditPollQuestionForm = ({ onGoBack, onGoEdit }) => {
         </View>
       )}
 
-      <ProgressIndicator onPress={(val) => console.log(val)} />
+      <ProgressIndicator onSelect={(val) => selectOrCreatePollQuestionAsync(val)} hasAddOption />
+      {/* <ProgressIndicator onSelect={(val) => dispatch(setQuestionNumber(val))} hasAddOption /> */}
 
       <AlertBox />
 

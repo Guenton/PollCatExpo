@@ -47,7 +47,13 @@ const styles = ScaledSheet.create({
   },
 });
 
-const MultipleChoiceCreatorDropdown = ({ options, selectedOption, onSelect, onAdd, onDelete }) => {
+const MultipleChoiceCreatorDropdown = ({
+  options = [],
+  selectedOption = '',
+  onSelect,
+  onAdd,
+  onDelete,
+}) => {
   const { t } = I18n;
 
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
