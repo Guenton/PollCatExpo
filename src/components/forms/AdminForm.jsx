@@ -7,9 +7,13 @@ import I18n from 'i18n-js';
 import FormOptionSelector from '../labels/FormOptionSelector';
 import SwitchButton from '../buttons/SwitchButton';
 import DoubleButton from '../buttons/DoubleButton';
+import AlertBox from '../containers/AlertBox';
 
-import { setPollOpen } from '../../store/actions/poll';
+import pollService from '../../services/poll';
+
+import { setSelectedPollObject } from '../../store/actions/poll';
 import { ScrollView } from 'react-native';
+import { setAlert, setRoute } from '../../store/actions/core';
 
 const styles = ScaledSheet.create({
   container: {
@@ -29,9 +33,24 @@ const styles = ScaledSheet.create({
 const AdminForm = ({ onGoCreatePoll, onGoEditPoll, onGoEditUser, onGoRemoveUser }) => {
   const { t } = I18n;
   const dispatch = useDispatch();
+
   const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
-  const selectedPoll = selectedPollObject.title ? selectedPollObject.title : '';
+
+  const pollTitle = selectedPollObject.title || '';
+  const pollId = selectedPollObject.pollId || '';
   const isOpen = selectedPollObject.isOpen;
+
+  const togglePollOpenAsync = async () => {
+    try {
+      if (isOpen) await pollService.closeByIdAsync(pollId);
+      else await pollService.openByIdAsync(pollId);
+
+      const updatedPoll = await pollService.fetchByIdAsync(pollId);
+      dispatch(setSelectedPollObject(updatedPoll));
+    } catch {
+      dispatch(setAlert(err));
+    }
+  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -47,16 +66,18 @@ const AdminForm = ({ onGoCreatePoll, onGoEditPoll, onGoEditUser, onGoRemoveUser 
       <View>
         <FormOptionSelector
           label={t('selectedPoll')}
-          boldLabel={selectedPoll ? selectedPoll : t('noSelectedPoll')}
-          onPress={() => {}}
+          boldLabel={pollTitle ? pollTitle : t('noSelectedPoll')}
+          onPress={() => dispatch(setRoute('setup-select-poll'))}
         />
         <SwitchButton
           icon="play-circle"
           label={isOpen ? t('closeSelectedPoll') : t('openSelectedPoll')}
           isOn={isOpen}
-          onPress={() => dispatch(setPollOpen(!isOpen))}
+          onPress={() => togglePollOpenAsync()}
         />
       </View>
+
+      <AlertBox />
 
       <DoubleButton
         iconLeft="user-edit"

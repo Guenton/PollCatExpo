@@ -35,7 +35,7 @@ const SwitchButton = ({ style, onPress, icon, label, isOn }) => (
       <Icon type="font-awesome-5" name={icon} size={scale(23)} color={blue} solid />
       <FormText label={label} containerStyle={styles.label} />
     </View>
-    <Switch value={isOn} color={green} />
+    <Switch value={isOn} color={green} onChange={() => onPress()} />
   </Pressable>
 );
 

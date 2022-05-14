@@ -23,7 +23,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const EditPollScreen = () => {
+const SelectPollScreen = () => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -33,13 +33,13 @@ const EditPollScreen = () => {
     <View style={styles.container}>
       <View style={styles.setupHeader}>
         <Curtain color={greenShade} height={isKeyboardOpen ? scale(100) : scale(200)}>
-          <Header label={t('editPoll')} />
+          <Header label={t('selectPoll')} />
         </Curtain>
       </View>
 
       <SelectPollForm
         onCancel={() => dispatch(setRoute('setup-admin'))}
-        onConfirm={() => dispatch(setRoute('setup-edit-poll-detail'))}
+        onConfirm={() => dispatch(setRoute('setup-admin'))}
         onDelete={() => dispatch(setRoute('setup-remove-poll-confirm'))}
       />
 
@@ -49,4 +49,4 @@ const EditPollScreen = () => {
   );
 };
 
-export default EditPollScreen;
+export default SelectPollScreen;

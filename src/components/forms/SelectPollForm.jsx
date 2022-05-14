@@ -8,7 +8,7 @@ import AlertBox from '../containers/AlertBox';
 import ButtonContainer from '../containers/ButtonContainer';
 import PollSelectionDropdown from '../buttons/PollSelectionDropdown';
 import CancelButton from '../buttons/CancelButton';
-import EditButton from '../buttons/EditButton';
+import ConfirmButton from '../buttons/ConfirmButton';
 import DeleteFab from '../buttons/DeleteFab';
 import FormHeader from '../labels/FormHeader';
 import FormOptionSelector from '../labels/FormOptionSelector';
@@ -39,7 +39,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
+const SelectPollForm = ({ onCancel, onConfirm, onDelete }) => {
   const { t } = i18n;
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
 
   const deSelectAndCancel = () => {
     dispatch(setSelectedPollObject());
-    onGoAdmin();
+    onCancel();
   };
 
   const setSelectedPollObjectAndTitle = (poll) => {
@@ -82,7 +82,7 @@ const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
         />
 
         <View style={styles.centerContent}>
-          <DeleteFab disabled={!selectedPoll} onPress={() => onGoRemove()} />
+          <DeleteFab disabled={!selectedPoll} onPress={() => onDelete()} />
         </View>
       </View>
 
@@ -90,10 +90,10 @@ const EditPollForm = ({ onGoAdmin, onGoEdit, onGoRemove }) => {
 
       <ButtonContainer>
         <CancelButton onPress={() => deSelectAndCancel()} />
-        <EditButton disabled={!selectedPoll} onPress={() => onGoEdit()} />
+        <ConfirmButton disabled={!selectedPoll} onPress={() => onConfirm()} />
       </ButtonContainer>
     </View>
   );
 };
 
-export default EditPollForm;
+export default SelectPollForm;
