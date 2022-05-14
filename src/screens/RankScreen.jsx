@@ -26,10 +26,10 @@ const styles = ScaledSheet.create({
   },
 });
 
-const MainScreen = () => {
+const RankScreen = () => {
   return (
     <View style={styles.container}>
-      <MainCurtain view="main" color={blueShade} height={curtainHeight} />
+      <MainCurtain view="rank" color={pinkShade} height={curtainHeight} />
 
       <LoadingBar />
       <NavBar />
@@ -37,4 +37,4 @@ const MainScreen = () => {
   );
 };
 
-export default MainScreen;
+export default RankScreen;

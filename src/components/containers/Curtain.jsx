@@ -15,7 +15,7 @@ const deviceWindowWidth = Dimensions.get('window').width;
 const styles = ScaledSheet.create({
   container: {
     width: deviceWindowWidth,
-    marginTop: isIosDevice ? '-40@s' : '-1@s',
+    marginTop: isIosDevice ? '-45@s' : '-1@s',
     borderBottomRightRadius: '35@s',
     borderBottomLeftRadius: '35@s',
     // Shadows

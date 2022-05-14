@@ -10,6 +10,7 @@ import LoginResetScreen from './screens/LoginResetScreen';
 import LoginSignupScreen from './screens/LoginSignupScreen';
 
 import MainScreen from './screens/MainScreen';
+import RankScreen from './screens/RankScreen';
 
 import SetupUserScreen from './screens/SetupUserScreen';
 import SetupAdminScreen from './screens/SetupAdminScreen';
@@ -46,6 +47,7 @@ const Router = () => {
       {route === 'login-reset' && <LoginResetScreen />}
 
       {route === 'main' && <MainScreen />}
+      {route === 'rank' && <RankScreen />}
 
       {route === 'setup-user' && <SetupUserScreen />}
       {route === 'setup-admin' && <SetupAdminScreen />}
