@@ -10,6 +10,7 @@ import {
   INCREMENT_QUESTION_NUMBER,
   DECREMENT_QUESTION_NUMBER,
   SET_ALL_POLLS_OBJECT,
+  SET_OPEN_POLLS_ARRAY,
   SET_SELECTED_POLL_OBJECT,
   SET_RESPONSE_OPTIONS,
   SET_SELECTABLE_POLL_USERS,
@@ -32,6 +33,7 @@ const initialState = {
   errUserEmail: '',
   questionNumber: '1',
   allPollsObject: {},
+  openPollsArray: [],
   selectedPollObject: {},
   responseOptions: [],
   selectablePollUsers: [],
@@ -76,6 +78,8 @@ const coreReducer = (state = initialState, action) => {
       };
     case SET_ALL_POLLS_OBJECT:
       return { ...state, allPollsObject: action.object };
+    case SET_OPEN_POLLS_ARRAY:
+      return { ...state, openPollsArray: action.array };
     case SET_SELECTED_POLL_OBJECT:
       return { ...state, selectedPollObject: action.object };
     case SET_RESPONSE_OPTIONS:

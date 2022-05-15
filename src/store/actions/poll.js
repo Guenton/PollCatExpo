@@ -10,6 +10,7 @@ export const INCREMENT_QUESTION_NUMBER = 'INCREMENT_QUESTION_NUMBER';
 export const DECREMENT_QUESTION_NUMBER = 'DECREMENT_QUESTION_NUMBER';
 
 export const SET_ALL_POLLS_OBJECT = 'SET_ALL_POLLS_OBJECT';
+export const SET_OPEN_POLLS_ARRAY = 'SET_OPEN_POLLS_ARRAY';
 export const SET_SELECTED_POLL_OBJECT = 'SET_SELECTED_POLL_OBJECT';
 export const SET_RESPONSE_OPTIONS = 'SET_RESPONSE_OPTIONS';
 export const SET_SELECTABLE_POLL_USERS = 'SET_SELECTABLE_POLL_USERS';
@@ -34,6 +35,7 @@ export const incrementQuestionNumber = () => ({ type: INCREMENT_QUESTION_NUMBER 
 export const decrementQuestionNumber = () => ({ type: DECREMENT_QUESTION_NUMBER });
 
 export const setAllPollsObject = (object = {}) => ({ type: SET_ALL_POLLS_OBJECT, object });
+export const setOpenPollsOArray = (array = []) => ({ type: SET_OPEN_POLLS_ARRAY, array });
 export const setSelectedPollObject = (object = {}) => ({ type: SET_SELECTED_POLL_OBJECT, object });
 export const setResponseOptions = (array = []) => ({ type: SET_RESPONSE_OPTIONS, array });
 export const setSelectablePollUsers = (array = []) => ({ type: SET_SELECTABLE_POLL_USERS, array });

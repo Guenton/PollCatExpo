@@ -1,5 +1,6 @@
 import fetchAllAsync from './fetchAllAsync';
 import fetchByIdAsync from './fetchByIdAsync';
+import fetchAllOpenAsync from './fetchAllOpenAsync';
 import createAsync from './createAsync';
 import fetchResponseOptionsAsync from './fetchResponseOptionsAsync';
 import fetchQuestionAsync from './fetchQuestionAsync';
@@ -12,6 +13,7 @@ import closeByIdAsync from './closeByIdAsync';
 const pollService = {
   fetchAllAsync,
   fetchByIdAsync,
+  fetchAllOpenAsync,
   createAsync,
   fetchResponseOptionsAsync,
   fetchQuestionAsync,
