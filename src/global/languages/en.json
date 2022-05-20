@@ -53,6 +53,7 @@
   "noStoredOptions": "No Options Stored",
   "openSelectedPoll": "Open Selected Poll",
   "closeSelectedPoll": "Close Selected Poll",
+  "currentlyOpenPolls": "Currently Open Polls:",
   "createPoll": "Create Poll",
   "createUser": "Create User",
   "removePoll": "Remove Poll",

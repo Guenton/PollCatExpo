@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Dimensions, Keyboard } from 'react-native';
+import React from 'react';
+import { Dimensions } from 'react-native';
 import { View } from 'react-native';
 import { ScaledSheet, scale } from 'react-native-size-matters';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import i18n from 'i18n-js';
 
-import MainCurtain from '../components/containers/MainCurtain';
 import NavBar from '../components/containers/NavBar';
-import NavCard from '../components/containers/NavCard';
-import UserForm from '../components/forms/UserForm';
 import LoadingBar from '../components/images/LoadingBar';
+import SelectPollCardList from '../components/forms/SelectPollCardList';
 
-import { blueShade, pinkShade, greenShade } from '../global/colors';
+import { blueShade } from '../global/colors';
 
-import { setKeyboardOpen } from '../store/actions/core';
+import Curtain from '../components/containers/Curtain';
+import Header from '../components/labels/Header';
 
 const curtainHeight = Dimensions.get('window').height - scale(55);
 
@@ -21,15 +21,26 @@ const styles = ScaledSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-  setupHeader: {
-    justifyContent: 'flex-start',
+  content: {
+    flex: 1,
+    marginTop: '100@s',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 
 const MainScreen = () => {
+  const { t } = i18n;
+  const firstName = useSelector((state) => state.user.firstName);
+
   return (
     <View style={styles.container}>
-      <MainCurtain view="main" color={blueShade} height={curtainHeight} />
+      <Curtain color={blueShade} height={curtainHeight}>
+        <View style={styles.content}>
+          <Header label={t('hiName', { name: firstName })} />
+          <SelectPollCardList />
+        </View>
+      </Curtain>
 
       <LoadingBar />
       <NavBar />
