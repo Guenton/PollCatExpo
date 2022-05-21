@@ -13,8 +13,9 @@ import { blueShade } from '../global/colors';
 
 import Curtain from '../components/containers/Curtain';
 import Header from '../components/labels/Header';
+import ProgressIndicator from '../components/containers/ProgressIndicator';
 
-const curtainHeight = Dimensions.get('window').height - scale(55);
+const curtainHeight = Dimensions.get('window').height - scale(110);
 
 const styles = ScaledSheet.create({
   container: {
@@ -29,23 +30,25 @@ const styles = ScaledSheet.create({
   },
 });
 
-const MainScreen = () => {
+const MainPollScreen = () => {
   const { t } = i18n;
   const firstName = useSelector((state) => state.user.firstName);
+  const pollTitle = useSelector((state) => state.poll.pollTitle);
 
   return (
     <View style={styles.container}>
       <Curtain color={blueShade} height={curtainHeight}>
         <View style={styles.content}>
-          <Header label={t('hiName', { name: firstName })} />
+          <Header label={pollTitle} />
           <SelectPollCardList />
         </View>
       </Curtain>
 
+      <ProgressIndicator />
       <LoadingBar />
       <NavBar />
     </View>
   );
 };
 
-export default MainScreen;
+export default MainPollScreen;

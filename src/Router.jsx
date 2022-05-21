@@ -10,6 +10,8 @@ import LoginResetScreen from './screens/LoginResetScreen';
 import LoginSignupScreen from './screens/LoginSignupScreen';
 
 import MainScreen from './screens/MainScreen';
+import MainPollScreen from './screens/MainPollScreen';
+
 import RankScreen from './screens/RankScreen';
 
 import SetupUserScreen from './screens/SetupUserScreen';
@@ -47,6 +49,8 @@ const Router = () => {
       {route === 'login-reset' && <LoginResetScreen />}
 
       {route === 'main' && <MainScreen />}
+      {route === 'main-poll' && <MainPollScreen />}
+
       {route === 'rank' && <RankScreen />}
 
       {route === 'setup-user' && <SetupUserScreen />}

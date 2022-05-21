@@ -8,7 +8,7 @@ import Header from '../labels/Header';
 import PollSelectionButton from '../buttons/PollSelectionButton';
 import CurtainListSeparator from '../containers/CurtainListSeparator';
 
-import { setAlert } from '../../store/actions/core';
+import { setAlert, setRoute } from '../../store/actions/core';
 import { setOpenPollsOArray, setPollTitle, setSelectedPollObject } from '../../store/actions/poll';
 
 import pollService from '../../services/poll';
@@ -45,6 +45,7 @@ const SelectPollCardList = () => {
   const handlePollSelection = (pollObject) => {
     dispatch(setSelectedPollObject(pollObject));
     dispatch(setPollTitle(pollObject.title));
+    dispatch(setRoute('main-poll'));
   };
 
   const renderItem = ({ item }) => (
