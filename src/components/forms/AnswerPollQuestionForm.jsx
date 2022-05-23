@@ -17,6 +17,7 @@ import CurtainListSeparator from '../containers/CurtainListSeparator';
 import PollSelectionButton from '../buttons/PollSelectionButton';
 import PollAnswerButton from '../buttons/PollAnswerButton';
 import PollHeader from '../labels/PollHeader';
+import AnswerSelectionDropdown from '../buttons/AnswerSelectionDropdown';
 
 const styles = ScaledSheet.create({
   container: {
@@ -28,10 +29,10 @@ const styles = ScaledSheet.create({
     height: '275@s',
     marginTop: '10@s',
     marginBottom: '20@s',
+    alignItems: 'center',
   },
   answerOptions: {
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
   answerOptionSpacing: {
     marginVertical: '10@s',
@@ -53,13 +54,9 @@ const AnswerPollQuestionForm = ({ onGoLogin }) => {
       <PollHeader label={questionNumber + '.'} />
       <PollHeader label={currentPollQuestion.ask} />
 
-      <ScrollView style={styles.answerContainer} contentContainerStyle={styles.answerOptions}>
-        {answerArray.map((answer) => (
-          <View style={styles.answerOptionSpacing}>
-            <PollAnswerButton label={answer} onPress={() => handlePollAnswerSelection(answer)} />
-          </View>
-        ))}
-      </ScrollView>
+      <View style={styles.answerContainer}>
+        <AnswerSelectionDropdown answers={answerArray} />
+      </View>
     </View>
   );
 };
