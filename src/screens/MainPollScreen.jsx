@@ -14,8 +14,9 @@ import { blueShade } from '../global/colors';
 import Curtain from '../components/containers/Curtain';
 import Header from '../components/labels/Header';
 import ProgressIndicator from '../components/containers/ProgressIndicator';
+import AnswerPollQuestionForm from '../components/forms/AnswerPollQuestionForm';
 
-const curtainHeight = Dimensions.get('window').height - scale(110);
+const curtainHeight = Dimensions.get('window').height - scale(100);
 
 const styles = ScaledSheet.create({
   container: {
@@ -24,9 +25,9 @@ const styles = ScaledSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: '100@s',
+    marginTop: '50@s',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
 });
 
@@ -40,7 +41,7 @@ const MainPollScreen = () => {
       <Curtain color={blueShade} height={curtainHeight}>
         <View style={styles.content}>
           <Header label={pollTitle} />
-          <SelectPollCardList />
+          <AnswerPollQuestionForm />
         </View>
       </Curtain>
 

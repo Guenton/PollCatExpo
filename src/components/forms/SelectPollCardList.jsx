@@ -9,7 +9,14 @@ import PollSelectionButton from '../buttons/PollSelectionButton';
 import CurtainListSeparator from '../containers/CurtainListSeparator';
 
 import { setAlert, setRoute } from '../../store/actions/core';
-import { setOpenPollsOArray, setPollTitle, setSelectedPollObject } from '../../store/actions/poll';
+import {
+  setCurrentPollQuestion,
+  setCurrentPollQuestionTotal,
+  setOpenPollsOArray,
+  setPollTitle,
+  setQuestionNumber,
+  setSelectedPollObject,
+} from '../../store/actions/poll';
 
 import pollService from '../../services/poll';
 
@@ -45,6 +52,9 @@ const SelectPollCardList = () => {
   const handlePollSelection = (pollObject) => {
     dispatch(setSelectedPollObject(pollObject));
     dispatch(setPollTitle(pollObject.title));
+    dispatch(setCurrentPollQuestionTotal(pollObject.questions.length));
+    dispatch(setQuestionNumber('1'));
+    dispatch(setCurrentPollQuestion(pollObject.questions[1]));
     dispatch(setRoute('main-poll'));
   };
 
