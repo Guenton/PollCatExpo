@@ -9,6 +9,8 @@ import fetchSelectableUsersAsync from './fetchSelectableUsersAsync';
 import setQuestionAsync from './setQuestionAsync';
 import openByIdAsync from './openByIdAsync';
 import closeByIdAsync from './closeByIdAsync';
+import setPollQuestionAnswer from './setPollQuestionAnswer';
+import fetchPollQuestionAnswer from './fetchPollQuestionAnswer';
 
 const pollService = {
   fetchAllAsync,
@@ -22,6 +24,8 @@ const pollService = {
   setQuestionAsync,
   openByIdAsync,
   closeByIdAsync,
+  setPollQuestionAnswer,
+  fetchPollQuestionAnswer,
 };
 
 export default pollService;

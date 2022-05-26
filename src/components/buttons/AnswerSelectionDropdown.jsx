@@ -6,18 +6,17 @@ import I18n from 'i18n-js';
 
 import FormText from '../labels/FormText';
 
-import { greyShade, blue, green } from '../../global/colors';
+import { whiteTint, blue, green } from '../../global/colors';
 
 const styles = ScaledSheet.create({
   container: {
-    flexDirection: 'row',
-    height: '60@s',
+    height: '75@s',
     width: '300@s',
     padding: '14@s',
     borderRadius: '10@s',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: greyShade,
+    justifyContent: 'center',
+    backgroundColor: whiteTint,
   },
   bottomListItem: {
     flexDirection: 'row',
@@ -45,7 +44,7 @@ const AnswerSelectionDropdown = ({ answers, selectedAnswer, onSelect }) => {
   const selectLabel = () => {
     if (selectedAnswer) return selectedAnswer;
     else if (answers.length === 0) return t('noStoredPolls');
-    else return t('selectPoll');
+    else return t('selectYourAnswer');
   };
 
   const selectItemAndCloseList = (item) => {
@@ -60,11 +59,7 @@ const AnswerSelectionDropdown = ({ answers, selectedAnswer, onSelect }) => {
   return (
     <>
       <Pressable style={styles.container} onPress={() => openBottomSheet()}>
-        <View style={styles.leftBox}>
-          <Icon type="font-awesome-5" name="bell" size={scale(23)} color={blue} solid />
-          <FormText label={selectLabel()} containerStyle={styles.label} />
-        </View>
-        <Icon type="font-awesome-5" name="chevron-down" size={scale(20)} color={green} solid />
+        <FormText label={selectLabel()} />
       </Pressable>
 
       <BottomSheet isVisible={isBottomSheetVisible}>
@@ -74,7 +69,7 @@ const AnswerSelectionDropdown = ({ answers, selectedAnswer, onSelect }) => {
             containerStyle={styles.bottomListItem}
             onPress={() => selectItemAndCloseList(item)}
             bottomDivider>
-            <Icon type="font-awesome-5" name="bell" size={scale(20)} color={blue} solid />
+            <Icon type="font-awesome-5" name="paw" size={scale(20)} color={blue} solid />
             <ListItem.Content>
               <ListItem.Title>{item}</ListItem.Title>
             </ListItem.Content>

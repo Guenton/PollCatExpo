@@ -5,6 +5,7 @@ export const info = '#64B5F699';
 export const success = '#81C78499';
 export const error = '#E5737399';
 
+export const whiteTint = '#F1F1F1';
 export const grey = '#9A9A9A';
 export const greyShade = '#9A9A9A33';
 export const blue = '#30348C';
@@ -23,6 +24,7 @@ const colors = {
   info,
   success,
   error,
+  whiteTint,
   grey,
   greyShade,
   blue,
