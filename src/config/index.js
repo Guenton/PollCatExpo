@@ -9,9 +9,6 @@ import pap from '../global/languages/pap';
 import firebase from 'firebase';
 
 export const initFirebaseTimeoutErrorBypass = () => LogBox.ignoreLogs(['Setting a timer']);
-export const initAsyncStorageErrorBypass = () => {
-  LogBox.ignoreLogs(['Warning: Async Storage has been extracted from react-native core']);
-};
 
 export const initLanguages = () => {
   i18n.translations = { en, es, nl, pap };

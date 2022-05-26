@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScaledSheet } from 'react-native-size-matters';
-import I18n from 'i18n-js';
 
-import AvatarSelect from '../inputs/AvatarSelect';
-import LogoutButton from '../buttons/LogoutButton';
-import SwitchButton from '../buttons/SwitchButton';
-
-import authService from '../../services/auth';
-
-import { toggleNotifications } from '../../store/actions/user';
-import { setAlert, setLoading, toggleDark } from '../../store/actions/core';
-import Header from '../labels/Header';
-import CurtainListSeparator from '../containers/CurtainListSeparator';
-import PollSelectionButton from '../buttons/PollSelectionButton';
-import PollAnswerButton from '../buttons/PollAnswerButton';
 import PollHeader from '../labels/PollHeader';
 import AnswerSelectionDropdown from '../buttons/AnswerSelectionDropdown';
+
+import { setAlert, setLoading } from '../../store/actions/core';
+import { setCurrentPollQuestion, setQuestionNumber } from '../../store/actions/poll';
+
 import pollService from '../../services/poll';
 
 const styles = ScaledSheet.create({
@@ -27,16 +18,9 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   answerContainer: {
-    height: '275@s',
-    marginTop: '10@s',
-    marginBottom: '20@s',
+    flex: 1,
+    marginVertical: '50@s',
     alignItems: 'center',
-  },
-  answerOptions: {
-    justifyContent: 'space-between',
-  },
-  answerOptionSpacing: {
-    marginVertical: '10@s',
   },
 });
 
@@ -46,6 +30,7 @@ const AnswerPollQuestionForm = () => {
   const selectedPollObject = useSelector((state) => state.poll.selectedPollObject);
   const questionNumber = useSelector((state) => state.poll.questionNumber);
   const currentPollQuestion = useSelector((state) => state.poll.currentPollQuestion);
+  const currentPollQuestionTotal = useSelector((state) => state.poll.currentPollQuestionTotal);
 
   const answerArray = currentPollQuestion.responses || [];
   const pollId = selectedPollObject.pollId || null;
@@ -63,9 +48,16 @@ const AnswerPollQuestionForm = () => {
     dispatch(setLoading());
     pollService
       .setPollQuestionAnswer(pollId, questionNumber, answer)
-      .then(() => setSelectedAnswer(answer))
+      .then(() => handleNextQuestionSelection(parseInt(questionNumber) + 1))
       .catch((err) => dispatch(setAlert(err)))
       .finally(() => dispatch(setLoading(false)));
+  };
+
+  const handleNextQuestionSelection = (number = 1) => {
+    if (number > currentPollQuestionTotal) return;
+    if (number < 1) return;
+    dispatch(setQuestionNumber(number.toString()));
+    dispatch(setCurrentPollQuestion(selectedPollObject.questions[number]));
   };
 
   return (

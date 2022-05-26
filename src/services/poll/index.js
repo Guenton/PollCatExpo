@@ -11,6 +11,7 @@ import openByIdAsync from './openByIdAsync';
 import closeByIdAsync from './closeByIdAsync';
 import setPollQuestionAnswer from './setPollQuestionAnswer';
 import fetchPollQuestionAnswer from './fetchPollQuestionAnswer';
+import fetchAmountAnsweredAsync from './fetchAmountAnsweredAsync';
 
 const pollService = {
   fetchAllAsync,
@@ -26,6 +27,7 @@ const pollService = {
   closeByIdAsync,
   setPollQuestionAnswer,
   fetchPollQuestionAnswer,
+  fetchAmountAnsweredAsync,
 };
 
 export default pollService;

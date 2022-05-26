@@ -15,6 +15,7 @@ import Curtain from '../components/containers/Curtain';
 import Header from '../components/labels/Header';
 import ProgressIndicator from '../components/containers/ProgressIndicator';
 import AnswerPollQuestionForm from '../components/forms/AnswerPollQuestionForm';
+import PollProgress from '../components/containers/PollProgress';
 
 const curtainHeight = Dimensions.get('window').height - scale(100);
 
@@ -33,7 +34,6 @@ const styles = ScaledSheet.create({
 
 const MainPollScreen = () => {
   const { t } = i18n;
-  const firstName = useSelector((state) => state.user.firstName);
   const pollTitle = useSelector((state) => state.poll.pollTitle);
 
   return (
@@ -45,7 +45,7 @@ const MainPollScreen = () => {
         </View>
       </Curtain>
 
-      <ProgressIndicator />
+      <PollProgress />
       <LoadingBar />
       <NavBar />
     </View>
