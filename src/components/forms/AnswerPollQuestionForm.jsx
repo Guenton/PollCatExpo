@@ -57,7 +57,7 @@ const AnswerPollQuestionForm = () => {
       .fetchPollQuestionAnswer(pollId, questionNumber)
       .then((answer) => setSelectedAnswer(answer))
       .catch((err) => dispatch(setAlert(err)));
-  }, []);
+  }, [questionNumber]);
 
   const handleAnswerSelection = (answer) => {
     dispatch(setLoading());
