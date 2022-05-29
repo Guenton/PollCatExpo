@@ -71,7 +71,7 @@ const SelectPollCardList = () => {
         ListHeaderComponent={<Header label={t('currentlyOpenPolls')} />}
         ListHeaderComponentStyle={styles.centerContent}
         ListEmptyComponent={<Header label={t('noPollHeader')} />}
-        ItemSeparatorComponent={<CurtainListSeparator />}
+        ItemSeparatorComponent={CurtainListSeparator}
       />
     </View>
   );
